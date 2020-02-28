@@ -1,0 +1,14 @@
+<owl-carousel-o [options]="customOptions" (dragging)="isDragging = $event">
+    <ng-container *ngFor="let img of listCarousel">
+        <ng-template carouselSlide>
+            <div class="slider text-center pieAnuncio">
+                <a [owlRouterLink]="['/anunciosDetalle',img.idAnuncio_idCategoria]" [stopLink]="isDragging">
+                    <img class="img-top" [src]="img.url_fotoPortada" [alt]="img.alt" [title]="img.nombre_anuncio">
+                </a>
+                <a class="outer-link" [routerLink]="['/anunciosDetalle',img.idAnuncio_idCategoria]">
+                    {{img.nombre_anuncio}}
+                </a>
+            </div>
+        </ng-template>
+    </ng-container>
+</owl-carousel-o>

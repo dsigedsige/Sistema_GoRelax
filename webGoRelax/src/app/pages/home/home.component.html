@@ -1,0 +1,23 @@
+<div class="container mt-5">
+
+    <h1> <strong>Busco relajarme con </strong></h1>
+    <br>
+    <div class="row mt-2">
+        <app-spinnerloading></app-spinnerloading>
+
+        <div class="card-columns">
+            <div class="card shadow  bg-dark tarjeta-articulo animated fadeIn" *ngFor="let categoria of categorias ">
+                <a [routerLink]="['/anuncios',categoria.id_Categoria]">
+                    <img [src]="categoria.url_foto" class="card-img-top img_anuncio" alt="...">
+                </a>
+
+                <div class="card-body">
+                    <div class="tituloAnuncio pieAnuncio">
+                        <h5> <a [routerLink]="['/anuncios',categoria.id_Categoria]">{{categoria.nombre_Categoria}}  </a></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

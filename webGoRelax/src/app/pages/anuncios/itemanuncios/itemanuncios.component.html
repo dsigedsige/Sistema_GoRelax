@@ -1,0 +1,233 @@
+<app-spinnerloading></app-spinnerloading>
+
+<!-- <a class='flotante' [routerLink]="['/anuncios',idAnuncio_idCategoria]"> <i class="fas fa-backward"></i> <img src='boton-flotante.png' border="0" /> </a> -->
+
+<a class='flotante' [routerLink]="['/anuncios',idCategoriaGlobal]" title="Regresar"> <img src='assets/img/itemAnuncio/back.png' border="0" /> </a>
+<br>
+<div class="container">
+
+    <div class="row animated fadeIn fast" *ngIf="anuncioDetalle.length>0">
+        <div class="col-sm-12 col-sm-9 col-md-6 shadow bg-dark " style="background-color: white;">
+            <!-- 
+            <div class="d-flex flex-row shadow container_principal mt-3 border-cards">
+                <div class="col-2 p-2">
+                    <div class="card imgLightbox " *ngFor="let image of Lightboximagenes; let i=index">
+                        <img class="imgLightbox" [src]="image.thumb" (click)="open(i)" />
+                    </div>
+                </div>
+                <div class="col-10 p-2">
+                    <div class="card mb-3" *ngIf="anuncioDetalle.length>0">
+                        <img [src]="anuncioDetalle[0].url_fotoPortada" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <div class="text-center " style="color: red;">
+                                <h1>{{anuncioDetalle[0].telefono_Anuncion}}</h1>
+                            </div>
+                            <div class=" text-center">
+                                <img src="../assets/img/itemAnuncio/celular.png" alt="whatsapp">
+                                <img src="../assets/img/itemAnuncio/audio.png" alt="Audio">
+                                <img src="../assets/img/itemAnuncio/video.png" alt="video">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+
+            <!-- 
+            <div class="card mb-3">
+                <img [src]="anuncioDetalle[0].url_fotoPortada" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <div class="card-group">
+                        <div class="card imgLightbox2" *ngFor="let image of Lightboximagenes; let i=index">
+                            <img class="imgLightbox2" [src]="image.thumb" (click)="open(i)" />
+                        </div>
+                    </div>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div> -->
+
+
+
+
+            <div class="card m-3">
+                <img [src]="anuncioDetalle[0].url_fotoPortada" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <div class="text-center " style="color: red;">
+                        <h1>{{anuncioDetalle[0].telefono_Anuncion}}</h1>
+                    </div>
+                </div>
+            </div>
+
+            <hr style="color: blanchedalmond;">
+            <div class="card-group">
+                <div class="card imgLightbox2" *ngFor="let image of Lightboximagenes; let i=index">
+                    <img class="imgLightbox2" [src]="image.thumb" (click)="open(i)" />
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-sm-12 col-sm-3 col-md-6 shadow  bg-dark" style="background-color: white;" *ngFor="let anuncio of anuncioDetalle">
+            <div class="d-flex flex-row shadow container_principal mt-3 border-cards">
+                <div class="col-12 ">
+                    <h1><strong id="idNombreAnuncio">{{anuncio.nombre_anuncio}} </strong></h1>
+                    <p>{{anuncio.descripcion_departamento}} - {{anuncio.nombre_distrito}}</p>
+                </div>
+            </div>
+            <br>
+            <div class="d-flex flex-row shadow container_principal border-cards">
+                <div class="col-12 p-2">
+                    <b>{{anuncio.titulo_anuncio}}</b>
+                </div>
+            </div>
+            <br>
+            <div class="d-flex flex-row shadow container_principal">
+                <div class="col-12 p-2" style="text-align: center;">
+                    <h3 style="color: red;;">{{anuncio.telefono_Anuncion}}</h3>
+                </div>
+            </div>
+
+
+            <br>
+            <div class="d-flex flex-row shadow container_principal">
+                <div class="col-12 p-2">
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item TabControl" *ngFor="let nameTab of tabControl; let first = first;">
+                            <a class="nav-link active" (click)="selectedTabControl = nameTab" data-toggle="pill" [class.active]="selectedTabControl===nameTab" role="tab" aria-controls="pills-home" aria-selected="true">{{nameTab}}</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div *ngIf="selectedTabControl === tabControl[0]" role="tabpanel" class="tab-pane active" id="one">
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <!-- google maps -->
+                                    <agm-map [latitude]="lat" [zoom]="zoom" [longitude]="lng">
+                                        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                                    </agm-map>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="selectedTabControl === tabControl[1]" role="tabpanel" class="tab-pane active" id="two">
+                            <div style="height: 342px;">
+                                <p>{{anuncio.descripcion_anuncio}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+    <br>
+    <!-- Caracteristicas/ -->
+    <div class="container bg-dark" animated fadeIn delay-1s *ngIf="anuncioDetalleCaracteristica.length>0">
+
+        <div class="row p-2">
+            <div class="col-sm-6 col-md-4">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item active">Caracteristicas</li>
+                    <li class="list-group-item list-group-item2 " *ngFor="let caract of anuncioDetalleCaracteristica | filtergroup : 1 ">{{caract.dato1}} - {{caract.dato2}} </li>
+                </ul>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item active">Servicios</li>
+                    <li class="list-group-item list-group-item2" *ngFor="let caract of anuncioDetalleCaracteristica | filtergroup : 2 ">{{caract.dato1}} </li>
+                </ul>
+            </div>
+            <div class="col-sm-12 col-md-4">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item active">Servicios Especiales</li>
+                    <li class="list-group-item list-group-item2" *ngFor="let caract of anuncioDetalleCaracteristica | filtergroup : 3 ">{{caract.dato1}} </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class=" col-xs-12 col-md-6">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item active">Horarios</li>
+                    <li class="list-group-item list-group-item2" *ngFor="let caract of anuncioDetalleCaracteristica | filtergroup : 4 ">{{caract.dato1}} </li>
+                </ul>
+            </div>
+            <div class="col-xs-12  col-md-6">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item active">Lugar Encuentro</li>
+                    <li class="list-group-item list-group-item2" *ngFor="let caract of anuncioDetalleCaracteristica | filtergroup : 5 ">{{caract.dato1}} </li>
+                </ul>
+            </div>
+        </div>
+        <br>
+    </div>
+    <br>
+
+    <!-- Archivos Multimedias/ -->
+    <div class="container bg-dark">
+        <div class="row shadow animated fadeIn delay-2s  p-2">
+            <div class="col-12">
+
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item TabControl" *ngFor="let nameTab of tabControlDetalle; let first = first;">
+                        <a class="nav-link active" (click)="selectedTabControlDetalle = nameTab" data-toggle="pill" [class.active]="selectedTabControlDetalle===nameTab" role="tab" aria-controls="pills-home" aria-selected="true">{{nameTab}}</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="pills-tabContent">
+                    <div *ngIf="selectedTabControlDetalle === tabControlDetalle[0]" role="tabpanel" class="tab-pane active" id="idFoto">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card-columns">
+                                    <div class="card shadow tarjeta-articulo" *ngFor="let img of Lightboximagenes; let i=index">
+                                        <img class="imgLightboxDetallado" [src]="img.thumb" (click)="open(i)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="selectedTabControlDetalle === tabControlDetalle[1]" role="tabpanel" class="tab-pane active" id="idvideo">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card-columns" *ngIf="anuncioDetalleVideo.length>0">
+                                    <div class="card shadow tarjeta-articulo" *ngFor="let video of anuncioDetalleVideo ">
+                                        <video width="100%" height="295" controls>
+                                            <source [src]="video.url_video | domseguro " type="video/mp4">
+                                            <source [src]="video.url_video | domseguro " type="video/ogg">
+                                        </video>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <hr>
+
+    <div class="row mt-2">
+        <div class="col-md-12">
+            <h1> <strong class="tituloH1"> Modelos Premium  </strong> </h1>
+            <div class="container bg-dark">
+                <br>
+                <owl-carousel-o [options]="customOptions" (dragging)="isDragging = $event">
+                    <ng-container *ngFor="let img of anunciosTop">
+                        <ng-template carouselSlide>
+                            <div class="slider text-center pieAnuncio">
+                                <img class="img-top" [src]="img.url_fotoPortada" [alt]="img.alt" [title]="img.nombre_anuncio">
+                                <a class="outer-link" style="cursor: pointer;" (click)="getCambiandoRuta(img.idAnuncio_idCategoria)">
+                                    {{img.nombre_anuncio}}
+                                </a>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                </owl-carousel-o>
+            </div>
+        </div>
+    </div>
+
+
+</div>

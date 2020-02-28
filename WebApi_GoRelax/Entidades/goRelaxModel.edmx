@@ -1,0 +1,1644 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GoRelaxModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'GoRelax.dbo.back_modelo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="back_modelo">
+          <Key>
+            <PropertyRef Name="modeloId" />
+          </Key>
+          <Property Name="modeloId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="descripcionBreve" Type="varchar" MaxLength="500" />
+          <Property Name="descripcion" Type="varchar" MaxLength="1000" />
+          <Property Name="precioEstandar" Type="decimal" Precision="13" Scale="2" />
+          <Property Name="portada" Type="varchar" MaxLength="100" />
+          <Property Name="orden" Type="int" />
+          <Property Name="tipo" Type="int" />
+          <Property Name="estado" Type="int" />
+          <Property Name="telefono" Type="varchar" MaxLength="20" />
+          <Property Name="distritoId" Type="int" />
+          <Property Name="latitud" Type="varchar" MaxLength="50" />
+          <Property Name="longitud" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbl_Anuncio">
+          <Key>
+            <PropertyRef Name="id_Anuncio" />
+          </Key>
+          <Property Name="id_Anuncio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Usuario" Type="int" />
+          <Property Name="email_usuario" Type="varchar" MaxLength="150" />
+          <Property Name="id_Categoria" Type="int" />
+          <Property Name="CodigoPostal_Usuario" Type="nchar" MaxLength="10" />
+          <Property Name="telefono_Anuncion" Type="varchar" MaxLength="20" />
+          <Property Name="id_Departemento" Type="int" />
+          <Property Name="id_Distrito" Type="int" />
+          <Property Name="titulo_anuncio" Type="varchar" MaxLength="250" />
+          <Property Name="descripcion_anuncio" Type="text" />
+          <Property Name="nombre_anuncio" Type="varchar" MaxLength="150" />
+          <Property Name="edad_anuncio" Type="int" />
+          <Property Name="audio_anuncio" Type="varchar" MaxLength="250" />
+          <Property Name="contactoWhatsapp" Type="int" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+          <Property Name="portada" Type="varchar" MaxLength="50" />
+          <Property Name="tipo_Anuncio" Type="int" />
+          <Property Name="latitud_anuncio" Type="varchar" MaxLength="150" />
+          <Property Name="longitud_anuncio" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="tbl_Anuncio_Caracteristicas">
+          <Key>
+            <PropertyRef Name="id_CaracteristicaAnuncio" />
+          </Key>
+          <Property Name="id_CaracteristicaAnuncio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Anuncio" Type="int" />
+          <Property Name="id_Nacionalidad" Type="int" />
+          <Property Name="id_Piel" Type="int" />
+          <Property Name="id_Cabello" Type="int" />
+          <Property Name="id_Estatura" Type="int" />
+          <Property Name="id_Cuerpo" Type="int" />
+          <Property Name="id_Pechos" Type="int" />
+          <Property Name="id_Pubis" Type="int" />
+          <Property Name="atencion_Mujer" Type="varchar" MaxLength="2" />
+          <Property Name="atencion_Parejas" Type="varchar" MaxLength="2" />
+          <Property Name="atencion_Discapacitados" Type="varchar" MaxLength="2" />
+          <Property Name="atencion_Hombres" Type="varchar" MaxLength="2" />
+          <Property Name="medioPago_Efectivo" Type="varchar" MaxLength="2" />
+          <Property Name="medioPago_Tarjeta" Type="varchar" MaxLength="2" />
+          <Property Name="otro_Servicio" Type="varchar" MaxLength="50" />
+          <Property Name="otro_ServicioEspecial" Type="varchar" MaxLength="50" />
+          <Property Name="otro_Lugar" Type="varchar" MaxLength="50" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Anuncio_Galeria">
+          <Key>
+            <PropertyRef Name="id_GaleriaAnuncio" />
+          </Key>
+          <Property Name="id_GaleriaAnuncio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Anuncio" Type="int" />
+          <Property Name="nombre_GaleriaAnuncio" Type="varchar" MaxLength="150" />
+          <Property Name="tipoArchivo_GaleriaAnuncio" Type="varchar" MaxLength="10" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Anuncio_Horarios">
+          <Key>
+            <PropertyRef Name="id_HorarioAnuncio" />
+          </Key>
+          <Property Name="id_HorarioAnuncio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Anuncio" Type="int" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" />
+          <Property Name="horaInicial" Type="varchar" MaxLength="10" />
+          <Property Name="horaFinal" Type="varchar" MaxLength="10" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Anuncio_Lugar">
+          <Key>
+            <PropertyRef Name="id_AnuncioLugar" />
+          </Key>
+          <Property Name="id_AnuncioLugar" Type="int" Nullable="false" />
+          <Property Name="id_Anuncio" Type="int" />
+          <Property Name="id_lugar" Type="int" />
+          <Property Name="otro_AnuncioLugar" Type="varchar" MaxLength="50" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Anuncio_Servicio">
+          <Key>
+            <PropertyRef Name="id_AnuncioServicio" />
+          </Key>
+          <Property Name="id_AnuncioServicio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Anuncio" Type="int" />
+          <Property Name="idGrupoServicio" Type="int" />
+          <Property Name="id_servicio" Type="int" />
+          <Property Name="otro_AnuncioServicio" Type="varchar" MaxLength="50" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Anuncio_Tarifa">
+          <Key>
+            <PropertyRef Name="id_tarifaAnuncio" />
+          </Key>
+          <Property Name="id_tarifaAnuncio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Anuncio" Type="int" Nullable="false" />
+          <Property Name="descripcion_tarifa" Type="varchar" MaxLength="100" />
+          <Property Name="precio_tarifa" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Caracteristicas">
+          <Key>
+            <PropertyRef Name="id_caracteristica" />
+          </Key>
+          <Property Name="id_caracteristica" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="grupo_caracteristica" Type="int" />
+          <Property Name="codigo_caracteristica" Type="varchar" MaxLength="10" />
+          <Property Name="descripcion_caracteristica" Type="varchar" MaxLength="150" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="tbl_Caracteristicas_Model">
+          <Key>
+            <PropertyRef Name="id_CaracteristicaAnuncio" />
+          </Key>
+          <Property Name="id_CaracteristicaAnuncio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Anuncio" Type="int" />
+          <Property Name="id_GrupoCaracteristica" Type="int" />
+          <Property Name="id_Nacionalidad" Type="varchar" MaxLength="2" />
+          <Property Name="id_Piel" Type="varchar" MaxLength="2" />
+          <Property Name="id_CabelloNegro" Type="varchar" MaxLength="2" />
+          <Property Name="id_CabelloRubio" Type="varchar" MaxLength="2" />
+          <Property Name="id_CabelloCastanio" Type="varchar" MaxLength="2" />
+          <Property Name="id_CabelloRojo" Type="varchar" MaxLength="2" />
+          <Property Name="id_Estatura" Type="varchar" MaxLength="2" />
+          <Property Name="id_Cuerpo" Type="varchar" MaxLength="2" />
+          <Property Name="id_Pechos" Type="varchar" MaxLength="2" />
+          <Property Name="id_Pubis" Type="varchar" MaxLength="2" />
+          <Property Name="atencion_Mujer" Type="varchar" MaxLength="2" />
+          <Property Name="atencion_Parejas" Type="varchar" MaxLength="2" />
+          <Property Name="atencion_Discapacitados" Type="varchar" MaxLength="2" />
+          <Property Name="atencion_Hombres" Type="varchar" MaxLength="2" />
+          <Property Name="medioPago_Efectivo" Type="varchar" MaxLength="2" />
+          <Property Name="medioPago_Tarjeta" Type="varchar" MaxLength="2" />
+          <Property Name="servicio1_1" Type="varchar" MaxLength="2" />
+          <Property Name="servicio1_2" Type="varchar" MaxLength="2" />
+          <Property Name="servicio1_3" Type="varchar" MaxLength="2" />
+          <Property Name="servicio1_4" Type="varchar" MaxLength="2" />
+          <Property Name="servicio1_5" Type="varchar" MaxLength="2" />
+          <Property Name="servicio1_6" Type="varchar" MaxLength="2" />
+          <Property Name="servicio1_7" Type="varchar" MaxLength="2" />
+          <Property Name="servicio1_8" Type="varchar" MaxLength="2" />
+          <Property Name="servicio1_9" Type="varchar" MaxLength="2" />
+          <Property Name="servicio1_10" Type="varchar" MaxLength="2" />
+          <Property Name="servicio1_Otro" Type="varchar" MaxLength="50" />
+          <Property Name="servicio2_1" Type="varchar" MaxLength="2" />
+          <Property Name="servicio2_2" Type="varchar" MaxLength="2" />
+          <Property Name="servicio2_3" Type="varchar" MaxLength="2" />
+          <Property Name="servicio2_4" Type="varchar" MaxLength="2" />
+          <Property Name="servicio2_5" Type="varchar" MaxLength="2" />
+          <Property Name="servicio2_6" Type="varchar" MaxLength="2" />
+          <Property Name="servicio2_7" Type="varchar" MaxLength="2" />
+          <Property Name="servicio2_8" Type="varchar" MaxLength="2" />
+          <Property Name="servicio2_Otro" Type="varchar" MaxLength="50" />
+          <Property Name="lugarEncuentro_1" Type="varchar" MaxLength="2" />
+          <Property Name="lugarEncuentro_2" Type="varchar" MaxLength="2" />
+          <Property Name="lugarEncuentro_3" Type="varchar" MaxLength="2" />
+          <Property Name="lugarEncuentro_4" Type="varchar" MaxLength="2" />
+          <Property Name="lugarEncuentro_5" Type="varchar" MaxLength="2" />
+          <Property Name="lugarEncuentro_6" Type="varchar" MaxLength="2" />
+          <Property Name="lugarEncuentro_Otro" Type="varchar" MaxLength="50" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Categoria">
+          <Key>
+            <PropertyRef Name="id_Categoria" />
+          </Key>
+          <Property Name="id_Categoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_Categoria" Type="varchar" MaxLength="100" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+          <Property Name="url_imagen" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tbl_CodigoVerificacion">
+          <Key>
+            <PropertyRef Name="id_CodigoVerificacion" />
+          </Key>
+          <Property Name="id_CodigoVerificacion" Type="int" Nullable="false" />
+          <Property Name="email_usuario" Type="varchar" MaxLength="150" />
+          <Property Name="codigoVerificacion" Type="decimal" Precision="28" Scale="0" />
+          <Property Name="estado" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_Departamentos">
+          <Key>
+            <PropertyRef Name="id_departamento" />
+          </Key>
+          <Property Name="id_departamento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion_departamento" Type="varchar" MaxLength="250" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Distritos">
+          <Key>
+            <PropertyRef Name="id_distrito" />
+          </Key>
+          <Property Name="id_distrito" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_departamento" Type="int" />
+          <Property Name="id_provincia" Type="int" />
+          <Property Name="nombre_distrito" Type="varchar" MaxLength="100" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Grupo_Detalle">
+          <Key>
+            <PropertyRef Name="id_grupo_detalle" />
+          </Key>
+          <Property Name="id_grupo_detalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_grupo" Type="int" />
+          <Property Name="descripcion_detalle" Type="varchar" MaxLength="150" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Grupos">
+          <Key>
+            <PropertyRef Name="id_grupo" />
+          </Key>
+          <Property Name="id_grupo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion_grupo" Type="varchar" MaxLength="150" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Lugares">
+          <Key>
+            <PropertyRef Name="id_lugar" />
+          </Key>
+          <Property Name="id_lugar" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion_lugar" Type="varchar" MaxLength="250" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Nacionalidad">
+          <Key>
+            <PropertyRef Name="id_nacionalidad" />
+          </Key>
+          <Property Name="id_nacionalidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion_nacionalidad" Type="varchar" MaxLength="150" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Provincia">
+          <Key>
+            <PropertyRef Name="id_provincia" />
+          </Key>
+          <Property Name="id_provincia" Type="int" Nullable="false" />
+          <Property Name="id_departamento" Type="int" />
+          <Property Name="nombre_provincia" Type="varchar" MaxLength="150" />
+          <Property Name="estado" Type="nchar" MaxLength="10" />
+          <Property Name="usuario_creacion" Type="nchar" MaxLength="10" />
+          <Property Name="fecha_creacion" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="tbl_Servicios">
+          <Key>
+            <PropertyRef Name="id_servicio" />
+          </Key>
+          <Property Name="id_servicio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tipo_servicio" Type="varchar" MaxLength="2" />
+          <Property Name="codigo_servicio" Type="varchar" MaxLength="10" />
+          <Property Name="descripcion_servicio" Type="varchar" MaxLength="150" />
+          <Property Name="abreviatura_servicio" Type="varchar" MaxLength="50" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Tipo_Anuncio">
+          <Key>
+            <PropertyRef Name="id_tipoAnuncio" />
+          </Key>
+          <Property Name="id_tipoAnuncio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion_tipo" Type="varchar" MaxLength="50" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Usuarios">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodigoPostal_Usuario" Type="varchar" MaxLength="20" />
+          <Property Name="nroCelular_Usuario" Type="varchar" MaxLength="20" />
+          <Property Name="email_usuario" Type="varchar" MaxLength="150" />
+          <Property Name="contrasena_usuario" Type="varchar" MaxLength="50" />
+          <Property Name="nombre_usuario" Type="varchar" MaxLength="150" />
+          <Property Name="idPreferencias" Type="int" />
+          <Property Name="vip_usuario" Type="int" />
+          <Property Name="nro_tarjeta" Type="varchar" MaxLength="50" />
+          <Property Name="cvv_tarjeta" Type="varchar" MaxLength="10" />
+          <Property Name="fechaVec_tarjeta" Type="datetime" />
+          <Property Name="subscripcion_usuario" Type="int" />
+          <Property Name="nombre_tarjeta" Type="varchar" MaxLength="150" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+          <Property Name="codigo_verification" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK_tbl_Caracteristicas_tbl_Grupo_Detalle">
+          <End Role="tbl_Grupo_Detalle" Type="Self.tbl_Grupo_Detalle" Multiplicity="0..1" />
+          <End Role="tbl_Caracteristicas" Type="Self.tbl_Caracteristicas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Grupo_Detalle">
+              <PropertyRef Name="id_grupo_detalle" />
+            </Principal>
+            <Dependent Role="tbl_Caracteristicas">
+              <PropertyRef Name="grupo_caracteristica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Distritos_tbl_Departamentos">
+          <End Role="tbl_Departamentos" Type="Self.tbl_Departamentos" Multiplicity="0..1" />
+          <End Role="tbl_Distritos" Type="Self.tbl_Distritos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Departamentos">
+              <PropertyRef Name="id_departamento" />
+            </Principal>
+            <Dependent Role="tbl_Distritos">
+              <PropertyRef Name="id_departamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Distritos_tbl_Provincia">
+          <End Role="tbl_Provincia" Type="Self.tbl_Provincia" Multiplicity="0..1" />
+          <End Role="tbl_Distritos" Type="Self.tbl_Distritos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Provincia">
+              <PropertyRef Name="id_provincia" />
+            </Principal>
+            <Dependent Role="tbl_Distritos">
+              <PropertyRef Name="id_provincia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Grupo_Detalle_tbl_Grupos">
+          <End Role="tbl_Grupos" Type="Self.tbl_Grupos" Multiplicity="0..1" />
+          <End Role="tbl_Grupo_Detalle" Type="Self.tbl_Grupo_Detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Grupos">
+              <PropertyRef Name="id_grupo" />
+            </Principal>
+            <Dependent Role="tbl_Grupo_Detalle">
+              <PropertyRef Name="id_grupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Horarios_tbl_Modelo">
+          <End Role="tbl_Anuncio" Type="Self.tbl_Anuncio" Multiplicity="0..1" />
+          <End Role="tbl_Anuncio_Horarios" Type="Self.tbl_Anuncio_Horarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Anuncio">
+              <PropertyRef Name="id_Anuncio" />
+            </Principal>
+            <Dependent Role="tbl_Anuncio_Horarios">
+              <PropertyRef Name="id_Anuncio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Lugar_Modelo_tbl_Lugares">
+          <End Role="tbl_Lugares" Type="Self.tbl_Lugares" Multiplicity="0..1" />
+          <End Role="tbl_Anuncio_Lugar" Type="Self.tbl_Anuncio_Lugar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Lugares">
+              <PropertyRef Name="id_lugar" />
+            </Principal>
+            <Dependent Role="tbl_Anuncio_Lugar">
+              <PropertyRef Name="id_lugar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Lugar_Modelo_tbl_Modelo">
+          <End Role="tbl_Anuncio" Type="Self.tbl_Anuncio" Multiplicity="0..1" />
+          <End Role="tbl_Anuncio_Lugar" Type="Self.tbl_Anuncio_Lugar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Anuncio">
+              <PropertyRef Name="id_Anuncio" />
+            </Principal>
+            <Dependent Role="tbl_Anuncio_Lugar">
+              <PropertyRef Name="id_Anuncio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Modelo_Caracteristicas_tbl_Modelo">
+          <End Role="tbl_Anuncio" Type="Self.tbl_Anuncio" Multiplicity="0..1" />
+          <End Role="tbl_Anuncio_Caracteristicas" Type="Self.tbl_Anuncio_Caracteristicas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Anuncio">
+              <PropertyRef Name="id_Anuncio" />
+            </Principal>
+            <Dependent Role="tbl_Anuncio_Caracteristicas">
+              <PropertyRef Name="id_Anuncio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Modelo_Servicio_tbl_Modelo">
+          <End Role="tbl_Anuncio" Type="Self.tbl_Anuncio" Multiplicity="0..1" />
+          <End Role="tbl_Anuncio_Servicio" Type="Self.tbl_Anuncio_Servicio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Anuncio">
+              <PropertyRef Name="id_Anuncio" />
+            </Principal>
+            <Dependent Role="tbl_Anuncio_Servicio">
+              <PropertyRef Name="id_Anuncio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Modelo_Servicio_tbl_servicios">
+          <End Role="tbl_Servicios" Type="Self.tbl_Servicios" Multiplicity="0..1" />
+          <End Role="tbl_Anuncio_Servicio" Type="Self.tbl_Anuncio_Servicio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Servicios">
+              <PropertyRef Name="id_servicio" />
+            </Principal>
+            <Dependent Role="tbl_Anuncio_Servicio">
+              <PropertyRef Name="id_servicio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Provencia_tbl_Departamentos">
+          <End Role="tbl_Departamentos" Type="Self.tbl_Departamentos" Multiplicity="0..1" />
+          <End Role="tbl_Provincia" Type="Self.tbl_Provincia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Departamentos">
+              <PropertyRef Name="id_departamento" />
+            </Principal>
+            <Dependent Role="tbl_Provincia">
+              <PropertyRef Name="id_departamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Tarifa_tbl_Modelo">
+          <End Role="tbl_Anuncio" Type="Self.tbl_Anuncio" Multiplicity="1" />
+          <End Role="tbl_Anuncio_Tarifa" Type="Self.tbl_Anuncio_Tarifa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Anuncio">
+              <PropertyRef Name="id_Anuncio" />
+            </Principal>
+            <Dependent Role="tbl_Anuncio_Tarifa">
+              <PropertyRef Name="id_Anuncio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GoRelaxModelStoreContainer">
+          <EntitySet Name="tbl_Anuncio" EntityType="Self.tbl_Anuncio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Anuncio_Caracteristicas" EntityType="Self.tbl_Anuncio_Caracteristicas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Anuncio_Galeria" EntityType="Self.tbl_Anuncio_Galeria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Anuncio_Horarios" EntityType="Self.tbl_Anuncio_Horarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Anuncio_Lugar" EntityType="Self.tbl_Anuncio_Lugar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Anuncio_Servicio" EntityType="Self.tbl_Anuncio_Servicio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Anuncio_Tarifa" EntityType="Self.tbl_Anuncio_Tarifa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Caracteristicas" EntityType="Self.tbl_Caracteristicas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Categoria" EntityType="Self.tbl_Categoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_CodigoVerificacion" EntityType="Self.tbl_CodigoVerificacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Departamentos" EntityType="Self.tbl_Departamentos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Distritos" EntityType="Self.tbl_Distritos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Grupo_Detalle" EntityType="Self.tbl_Grupo_Detalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Grupos" EntityType="Self.tbl_Grupos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Lugares" EntityType="Self.tbl_Lugares" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Nacionalidad" EntityType="Self.tbl_Nacionalidad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Provincia" EntityType="Self.tbl_Provincia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Servicios" EntityType="Self.tbl_Servicios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Tipo_Anuncio" EntityType="Self.tbl_Tipo_Anuncio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Usuarios" EntityType="Self.tbl_Usuarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="back_modelo" EntityType="Self.back_modelo" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [back_modelo].[modeloId] AS [modeloId], 
+    [back_modelo].[nombre] AS [nombre], 
+    [back_modelo].[descripcionBreve] AS [descripcionBreve], 
+    [back_modelo].[descripcion] AS [descripcion], 
+    [back_modelo].[precioEstandar] AS [precioEstandar], 
+    [back_modelo].[portada] AS [portada], 
+    [back_modelo].[orden] AS [orden], 
+    [back_modelo].[tipo] AS [tipo], 
+    [back_modelo].[estado] AS [estado], 
+    [back_modelo].[telefono] AS [telefono], 
+    [back_modelo].[distritoId] AS [distritoId], 
+    [back_modelo].[latitud] AS [latitud], 
+    [back_modelo].[longitud] AS [longitud]
+    FROM [dbo].[back_modelo] AS [back_modelo]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_Caracteristicas_Model" EntityType="Self.tbl_Caracteristicas_Model" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tbl_Caracteristicas_Model].[id_CaracteristicaAnuncio] AS [id_CaracteristicaAnuncio], 
+    [tbl_Caracteristicas_Model].[id_Anuncio] AS [id_Anuncio], 
+    [tbl_Caracteristicas_Model].[id_GrupoCaracteristica] AS [id_GrupoCaracteristica], 
+    [tbl_Caracteristicas_Model].[id_Nacionalidad] AS [id_Nacionalidad], 
+    [tbl_Caracteristicas_Model].[id_Piel] AS [id_Piel], 
+    [tbl_Caracteristicas_Model].[id_CabelloNegro] AS [id_CabelloNegro], 
+    [tbl_Caracteristicas_Model].[id_CabelloRubio] AS [id_CabelloRubio], 
+    [tbl_Caracteristicas_Model].[id_CabelloCastanio] AS [id_CabelloCastanio], 
+    [tbl_Caracteristicas_Model].[id_CabelloRojo] AS [id_CabelloRojo], 
+    [tbl_Caracteristicas_Model].[id_Estatura] AS [id_Estatura], 
+    [tbl_Caracteristicas_Model].[id_Cuerpo] AS [id_Cuerpo], 
+    [tbl_Caracteristicas_Model].[id_Pechos] AS [id_Pechos], 
+    [tbl_Caracteristicas_Model].[id_Pubis] AS [id_Pubis], 
+    [tbl_Caracteristicas_Model].[atencion_Mujer] AS [atencion_Mujer], 
+    [tbl_Caracteristicas_Model].[atencion_Parejas] AS [atencion_Parejas], 
+    [tbl_Caracteristicas_Model].[atencion_Discapacitados] AS [atencion_Discapacitados], 
+    [tbl_Caracteristicas_Model].[atencion_Hombres] AS [atencion_Hombres], 
+    [tbl_Caracteristicas_Model].[medioPago_Efectivo] AS [medioPago_Efectivo], 
+    [tbl_Caracteristicas_Model].[medioPago_Tarjeta] AS [medioPago_Tarjeta], 
+    [tbl_Caracteristicas_Model].[servicio1_1] AS [servicio1_1], 
+    [tbl_Caracteristicas_Model].[servicio1_2] AS [servicio1_2], 
+    [tbl_Caracteristicas_Model].[servicio1_3] AS [servicio1_3], 
+    [tbl_Caracteristicas_Model].[servicio1_4] AS [servicio1_4], 
+    [tbl_Caracteristicas_Model].[servicio1_5] AS [servicio1_5], 
+    [tbl_Caracteristicas_Model].[servicio1_6] AS [servicio1_6], 
+    [tbl_Caracteristicas_Model].[servicio1_7] AS [servicio1_7], 
+    [tbl_Caracteristicas_Model].[servicio1_8] AS [servicio1_8], 
+    [tbl_Caracteristicas_Model].[servicio1_9] AS [servicio1_9], 
+    [tbl_Caracteristicas_Model].[servicio1_10] AS [servicio1_10], 
+    [tbl_Caracteristicas_Model].[servicio1_Otro] AS [servicio1_Otro], 
+    [tbl_Caracteristicas_Model].[servicio2_1] AS [servicio2_1], 
+    [tbl_Caracteristicas_Model].[servicio2_2] AS [servicio2_2], 
+    [tbl_Caracteristicas_Model].[servicio2_3] AS [servicio2_3], 
+    [tbl_Caracteristicas_Model].[servicio2_4] AS [servicio2_4], 
+    [tbl_Caracteristicas_Model].[servicio2_5] AS [servicio2_5], 
+    [tbl_Caracteristicas_Model].[servicio2_6] AS [servicio2_6], 
+    [tbl_Caracteristicas_Model].[servicio2_7] AS [servicio2_7], 
+    [tbl_Caracteristicas_Model].[servicio2_8] AS [servicio2_8], 
+    [tbl_Caracteristicas_Model].[servicio2_Otro] AS [servicio2_Otro], 
+    [tbl_Caracteristicas_Model].[lugarEncuentro_1] AS [lugarEncuentro_1], 
+    [tbl_Caracteristicas_Model].[lugarEncuentro_2] AS [lugarEncuentro_2], 
+    [tbl_Caracteristicas_Model].[lugarEncuentro_3] AS [lugarEncuentro_3], 
+    [tbl_Caracteristicas_Model].[lugarEncuentro_4] AS [lugarEncuentro_4], 
+    [tbl_Caracteristicas_Model].[lugarEncuentro_5] AS [lugarEncuentro_5], 
+    [tbl_Caracteristicas_Model].[lugarEncuentro_6] AS [lugarEncuentro_6], 
+    [tbl_Caracteristicas_Model].[lugarEncuentro_Otro] AS [lugarEncuentro_Otro], 
+    [tbl_Caracteristicas_Model].[estado] AS [estado], 
+    [tbl_Caracteristicas_Model].[usuario_creacion] AS [usuario_creacion], 
+    [tbl_Caracteristicas_Model].[fecha_creacion] AS [fecha_creacion]
+    FROM [dbo].[tbl_Caracteristicas_Model] AS [tbl_Caracteristicas_Model]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_tbl_Caracteristicas_tbl_Grupo_Detalle" Association="Self.FK_tbl_Caracteristicas_tbl_Grupo_Detalle">
+            <End Role="tbl_Grupo_Detalle" EntitySet="tbl_Grupo_Detalle" />
+            <End Role="tbl_Caracteristicas" EntitySet="tbl_Caracteristicas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Distritos_tbl_Departamentos" Association="Self.FK_tbl_Distritos_tbl_Departamentos">
+            <End Role="tbl_Departamentos" EntitySet="tbl_Departamentos" />
+            <End Role="tbl_Distritos" EntitySet="tbl_Distritos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Distritos_tbl_Provincia" Association="Self.FK_tbl_Distritos_tbl_Provincia">
+            <End Role="tbl_Provincia" EntitySet="tbl_Provincia" />
+            <End Role="tbl_Distritos" EntitySet="tbl_Distritos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Grupo_Detalle_tbl_Grupos" Association="Self.FK_tbl_Grupo_Detalle_tbl_Grupos">
+            <End Role="tbl_Grupos" EntitySet="tbl_Grupos" />
+            <End Role="tbl_Grupo_Detalle" EntitySet="tbl_Grupo_Detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Horarios_tbl_Modelo" Association="Self.FK_tbl_Horarios_tbl_Modelo">
+            <End Role="tbl_Anuncio" EntitySet="tbl_Anuncio" />
+            <End Role="tbl_Anuncio_Horarios" EntitySet="tbl_Anuncio_Horarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Lugar_Modelo_tbl_Lugares" Association="Self.FK_tbl_Lugar_Modelo_tbl_Lugares">
+            <End Role="tbl_Lugares" EntitySet="tbl_Lugares" />
+            <End Role="tbl_Anuncio_Lugar" EntitySet="tbl_Anuncio_Lugar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Lugar_Modelo_tbl_Modelo" Association="Self.FK_tbl_Lugar_Modelo_tbl_Modelo">
+            <End Role="tbl_Anuncio" EntitySet="tbl_Anuncio" />
+            <End Role="tbl_Anuncio_Lugar" EntitySet="tbl_Anuncio_Lugar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Modelo_Caracteristicas_tbl_Modelo" Association="Self.FK_tbl_Modelo_Caracteristicas_tbl_Modelo">
+            <End Role="tbl_Anuncio" EntitySet="tbl_Anuncio" />
+            <End Role="tbl_Anuncio_Caracteristicas" EntitySet="tbl_Anuncio_Caracteristicas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Modelo_Servicio_tbl_Modelo" Association="Self.FK_tbl_Modelo_Servicio_tbl_Modelo">
+            <End Role="tbl_Anuncio" EntitySet="tbl_Anuncio" />
+            <End Role="tbl_Anuncio_Servicio" EntitySet="tbl_Anuncio_Servicio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Modelo_Servicio_tbl_servicios" Association="Self.FK_tbl_Modelo_Servicio_tbl_servicios">
+            <End Role="tbl_Servicios" EntitySet="tbl_Servicios" />
+            <End Role="tbl_Anuncio_Servicio" EntitySet="tbl_Anuncio_Servicio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Provencia_tbl_Departamentos" Association="Self.FK_tbl_Provencia_tbl_Departamentos">
+            <End Role="tbl_Departamentos" EntitySet="tbl_Departamentos" />
+            <End Role="tbl_Provincia" EntitySet="tbl_Provincia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Tarifa_tbl_Modelo" Association="Self.FK_tbl_Tarifa_tbl_Modelo">
+            <End Role="tbl_Anuncio" EntitySet="tbl_Anuncio" />
+            <End Role="tbl_Anuncio_Tarifa" EntitySet="tbl_Anuncio_Tarifa" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GoRelaxModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="GoRelaxEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_Anuncio" EntityType="GoRelaxModel.tbl_Anuncio" />
+          <EntitySet Name="tbl_Anuncio_Caracteristicas" EntityType="GoRelaxModel.tbl_Anuncio_Caracteristicas" />
+          <EntitySet Name="tbl_Anuncio_Galeria" EntityType="GoRelaxModel.tbl_Anuncio_Galeria" />
+          <EntitySet Name="tbl_Anuncio_Horarios" EntityType="GoRelaxModel.tbl_Anuncio_Horarios" />
+          <EntitySet Name="tbl_Anuncio_Lugar" EntityType="GoRelaxModel.tbl_Anuncio_Lugar" />
+          <EntitySet Name="tbl_Anuncio_Servicio" EntityType="GoRelaxModel.tbl_Anuncio_Servicio" />
+          <EntitySet Name="tbl_Anuncio_Tarifa" EntityType="GoRelaxModel.tbl_Anuncio_Tarifa" />
+          <EntitySet Name="tbl_Caracteristicas" EntityType="GoRelaxModel.tbl_Caracteristicas" />
+          <EntitySet Name="tbl_CodigoVerificacion" EntityType="GoRelaxModel.tbl_CodigoVerificacion" />
+          <EntitySet Name="tbl_Departamentos" EntityType="GoRelaxModel.tbl_Departamentos" />
+          <EntitySet Name="tbl_Distritos" EntityType="GoRelaxModel.tbl_Distritos" />
+          <EntitySet Name="tbl_Grupo_Detalle" EntityType="GoRelaxModel.tbl_Grupo_Detalle" />
+          <EntitySet Name="tbl_Grupos" EntityType="GoRelaxModel.tbl_Grupos" />
+          <EntitySet Name="tbl_Lugares" EntityType="GoRelaxModel.tbl_Lugares" />
+          <EntitySet Name="tbl_Nacionalidad" EntityType="GoRelaxModel.tbl_Nacionalidad" />
+          <EntitySet Name="tbl_Provincia" EntityType="GoRelaxModel.tbl_Provincia" />
+          <EntitySet Name="tbl_Servicios" EntityType="GoRelaxModel.tbl_Servicios" />
+          <EntitySet Name="tbl_Tipo_Anuncio" EntityType="GoRelaxModel.tbl_Tipo_Anuncio" />
+          <EntitySet Name="tbl_Usuarios" EntityType="GoRelaxModel.tbl_Usuarios" />
+          <EntitySet Name="back_modelo" EntityType="GoRelaxModel.back_modelo" />
+          <EntitySet Name="tbl_Caracteristicas_Model" EntityType="GoRelaxModel.tbl_Caracteristicas_Model" />
+          <AssociationSet Name="FK_tbl_Horarios_tbl_Modelo" Association="GoRelaxModel.FK_tbl_Horarios_tbl_Modelo">
+            <End Role="tbl_Anuncio" EntitySet="tbl_Anuncio" />
+            <End Role="tbl_Anuncio_Horarios" EntitySet="tbl_Anuncio_Horarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Lugar_Modelo_tbl_Modelo" Association="GoRelaxModel.FK_tbl_Lugar_Modelo_tbl_Modelo">
+            <End Role="tbl_Anuncio" EntitySet="tbl_Anuncio" />
+            <End Role="tbl_Anuncio_Lugar" EntitySet="tbl_Anuncio_Lugar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Modelo_Caracteristicas_tbl_Modelo" Association="GoRelaxModel.FK_tbl_Modelo_Caracteristicas_tbl_Modelo">
+            <End Role="tbl_Anuncio" EntitySet="tbl_Anuncio" />
+            <End Role="tbl_Anuncio_Caracteristicas" EntitySet="tbl_Anuncio_Caracteristicas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Modelo_Servicio_tbl_Modelo" Association="GoRelaxModel.FK_tbl_Modelo_Servicio_tbl_Modelo">
+            <End Role="tbl_Anuncio" EntitySet="tbl_Anuncio" />
+            <End Role="tbl_Anuncio_Servicio" EntitySet="tbl_Anuncio_Servicio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Tarifa_tbl_Modelo" Association="GoRelaxModel.FK_tbl_Tarifa_tbl_Modelo">
+            <End Role="tbl_Anuncio" EntitySet="tbl_Anuncio" />
+            <End Role="tbl_Anuncio_Tarifa" EntitySet="tbl_Anuncio_Tarifa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Lugar_Modelo_tbl_Lugares" Association="GoRelaxModel.FK_tbl_Lugar_Modelo_tbl_Lugares">
+            <End Role="tbl_Lugares" EntitySet="tbl_Lugares" />
+            <End Role="tbl_Anuncio_Lugar" EntitySet="tbl_Anuncio_Lugar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Modelo_Servicio_tbl_servicios" Association="GoRelaxModel.FK_tbl_Modelo_Servicio_tbl_servicios">
+            <End Role="tbl_Servicios" EntitySet="tbl_Servicios" />
+            <End Role="tbl_Anuncio_Servicio" EntitySet="tbl_Anuncio_Servicio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Caracteristicas_tbl_Grupo_Detalle" Association="GoRelaxModel.FK_tbl_Caracteristicas_tbl_Grupo_Detalle">
+            <End Role="tbl_Grupo_Detalle" EntitySet="tbl_Grupo_Detalle" />
+            <End Role="tbl_Caracteristicas" EntitySet="tbl_Caracteristicas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Distritos_tbl_Departamentos" Association="GoRelaxModel.FK_tbl_Distritos_tbl_Departamentos">
+            <End Role="tbl_Departamentos" EntitySet="tbl_Departamentos" />
+            <End Role="tbl_Distritos" EntitySet="tbl_Distritos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Provencia_tbl_Departamentos" Association="GoRelaxModel.FK_tbl_Provencia_tbl_Departamentos">
+            <End Role="tbl_Departamentos" EntitySet="tbl_Departamentos" />
+            <End Role="tbl_Provincia" EntitySet="tbl_Provincia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Distritos_tbl_Provincia" Association="GoRelaxModel.FK_tbl_Distritos_tbl_Provincia">
+            <End Role="tbl_Provincia" EntitySet="tbl_Provincia" />
+            <End Role="tbl_Distritos" EntitySet="tbl_Distritos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Grupo_Detalle_tbl_Grupos" Association="GoRelaxModel.FK_tbl_Grupo_Detalle_tbl_Grupos">
+            <End Role="tbl_Grupos" EntitySet="tbl_Grupos" />
+            <End Role="tbl_Grupo_Detalle" EntitySet="tbl_Grupo_Detalle" />
+          </AssociationSet>
+          <EntitySet Name="tbl_Categoria" EntityType="GoRelaxModel.tbl_Categoria" />
+        </EntityContainer>
+        <EntityType Name="tbl_Anuncio">
+          <Key>
+            <PropertyRef Name="id_Anuncio" />
+          </Key>
+          <Property Name="id_Anuncio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Usuario" Type="Int32" />
+          <Property Name="email_usuario" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="id_Categoria" Type="Int32" />
+          <Property Name="CodigoPostal_Usuario" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="telefono_Anuncion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="id_Departemento" Type="Int32" />
+          <Property Name="id_Distrito" Type="Int32" />
+          <Property Name="titulo_anuncio" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion_anuncio" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="nombre_anuncio" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="edad_anuncio" Type="Int32" />
+          <Property Name="audio_anuncio" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="contactoWhatsapp" Type="Int32" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+          <Property Name="portada" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tipo_Anuncio" Type="Int32" />
+          <NavigationProperty Name="tbl_Anuncio_Horarios" Relationship="GoRelaxModel.FK_tbl_Horarios_tbl_Modelo" FromRole="tbl_Anuncio" ToRole="tbl_Anuncio_Horarios" />
+          <NavigationProperty Name="tbl_Anuncio_Lugar" Relationship="GoRelaxModel.FK_tbl_Lugar_Modelo_tbl_Modelo" FromRole="tbl_Anuncio" ToRole="tbl_Anuncio_Lugar" />
+          <NavigationProperty Name="tbl_Anuncio_Caracteristicas" Relationship="GoRelaxModel.FK_tbl_Modelo_Caracteristicas_tbl_Modelo" FromRole="tbl_Anuncio" ToRole="tbl_Anuncio_Caracteristicas" />
+          <NavigationProperty Name="tbl_Anuncio_Servicio" Relationship="GoRelaxModel.FK_tbl_Modelo_Servicio_tbl_Modelo" FromRole="tbl_Anuncio" ToRole="tbl_Anuncio_Servicio" />
+          <NavigationProperty Name="tbl_Anuncio_Tarifa" Relationship="GoRelaxModel.FK_tbl_Tarifa_tbl_Modelo" FromRole="tbl_Anuncio" ToRole="tbl_Anuncio_Tarifa" />
+          <Property Name="latitud_anuncio" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="longitud_anuncio" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbl_Anuncio_Caracteristicas">
+          <Key>
+            <PropertyRef Name="id_CaracteristicaAnuncio" />
+          </Key>
+          <Property Name="id_CaracteristicaAnuncio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Anuncio" Type="Int32" />
+          <Property Name="id_Nacionalidad" Type="Int32" />
+          <Property Name="id_Piel" Type="Int32" />
+          <Property Name="id_Cabello" Type="Int32" />
+          <Property Name="id_Estatura" Type="Int32" />
+          <Property Name="id_Cuerpo" Type="Int32" />
+          <Property Name="id_Pechos" Type="Int32" />
+          <Property Name="id_Pubis" Type="Int32" />
+          <Property Name="atencion_Mujer" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="atencion_Parejas" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="atencion_Discapacitados" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="atencion_Hombres" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="medioPago_Efectivo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="medioPago_Tarjeta" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="otro_Servicio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="otro_ServicioEspecial" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="otro_Lugar" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_Anuncio" Relationship="GoRelaxModel.FK_tbl_Modelo_Caracteristicas_tbl_Modelo" FromRole="tbl_Anuncio_Caracteristicas" ToRole="tbl_Anuncio" />
+        </EntityType>
+        <EntityType Name="tbl_Anuncio_Galeria">
+          <Key>
+            <PropertyRef Name="id_GaleriaAnuncio" />
+          </Key>
+          <Property Name="id_GaleriaAnuncio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Anuncio" Type="Int32" />
+          <Property Name="nombre_GaleriaAnuncio" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="tipoArchivo_GaleriaAnuncio" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_Anuncio_Horarios">
+          <Key>
+            <PropertyRef Name="id_HorarioAnuncio" />
+          </Key>
+          <Property Name="id_HorarioAnuncio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Anuncio" Type="Int32" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="horaInicial" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="horaFinal" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_Anuncio" Relationship="GoRelaxModel.FK_tbl_Horarios_tbl_Modelo" FromRole="tbl_Anuncio_Horarios" ToRole="tbl_Anuncio" />
+        </EntityType>
+        <EntityType Name="tbl_Anuncio_Lugar">
+          <Key>
+            <PropertyRef Name="id_AnuncioLugar" />
+          </Key>
+          <Property Name="id_AnuncioLugar" Type="Int32" Nullable="false" />
+          <Property Name="id_Anuncio" Type="Int32" />
+          <Property Name="id_lugar" Type="Int32" />
+          <Property Name="otro_AnuncioLugar" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_Anuncio" Relationship="GoRelaxModel.FK_tbl_Lugar_Modelo_tbl_Modelo" FromRole="tbl_Anuncio_Lugar" ToRole="tbl_Anuncio" />
+          <NavigationProperty Name="tbl_Lugares" Relationship="GoRelaxModel.FK_tbl_Lugar_Modelo_tbl_Lugares" FromRole="tbl_Anuncio_Lugar" ToRole="tbl_Lugares" />
+        </EntityType>
+        <EntityType Name="tbl_Anuncio_Servicio">
+          <Key>
+            <PropertyRef Name="id_AnuncioServicio" />
+          </Key>
+          <Property Name="id_AnuncioServicio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Anuncio" Type="Int32" />
+          <Property Name="idGrupoServicio" Type="Int32" />
+          <Property Name="id_servicio" Type="Int32" />
+          <Property Name="otro_AnuncioServicio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_Anuncio" Relationship="GoRelaxModel.FK_tbl_Modelo_Servicio_tbl_Modelo" FromRole="tbl_Anuncio_Servicio" ToRole="tbl_Anuncio" />
+          <NavigationProperty Name="tbl_Servicios" Relationship="GoRelaxModel.FK_tbl_Modelo_Servicio_tbl_servicios" FromRole="tbl_Anuncio_Servicio" ToRole="tbl_Servicios" />
+        </EntityType>
+        <EntityType Name="tbl_Anuncio_Tarifa">
+          <Key>
+            <PropertyRef Name="id_tarifaAnuncio" />
+          </Key>
+          <Property Name="id_tarifaAnuncio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Anuncio" Type="Int32" Nullable="false" />
+          <Property Name="descripcion_tarifa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="precio_tarifa" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_Anuncio" Relationship="GoRelaxModel.FK_tbl_Tarifa_tbl_Modelo" FromRole="tbl_Anuncio_Tarifa" ToRole="tbl_Anuncio" />
+        </EntityType>
+        <EntityType Name="tbl_Caracteristicas">
+          <Key>
+            <PropertyRef Name="id_caracteristica" />
+          </Key>
+          <Property Name="id_caracteristica" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="grupo_caracteristica" Type="Int32" />
+          <Property Name="codigo_caracteristica" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion_caracteristica" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_Grupo_Detalle" Relationship="GoRelaxModel.FK_tbl_Caracteristicas_tbl_Grupo_Detalle" FromRole="tbl_Caracteristicas" ToRole="tbl_Grupo_Detalle" />
+        </EntityType>
+        <EntityType Name="tbl_CodigoVerificacion">
+          <Key>
+            <PropertyRef Name="id_CodigoVerificacion" />
+          </Key>
+          <Property Name="id_CodigoVerificacion" Type="Int32" Nullable="false" />
+          <Property Name="email_usuario" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="codigoVerificacion" Type="Decimal" Precision="28" Scale="0" />
+          <Property Name="estado" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbl_Departamentos">
+          <Key>
+            <PropertyRef Name="id_departamento" />
+          </Key>
+          <Property Name="id_departamento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion_departamento" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_Distritos" Relationship="GoRelaxModel.FK_tbl_Distritos_tbl_Departamentos" FromRole="tbl_Departamentos" ToRole="tbl_Distritos" />
+          <NavigationProperty Name="tbl_Provincia" Relationship="GoRelaxModel.FK_tbl_Provencia_tbl_Departamentos" FromRole="tbl_Departamentos" ToRole="tbl_Provincia" />
+        </EntityType>
+        <EntityType Name="tbl_Distritos">
+          <Key>
+            <PropertyRef Name="id_distrito" />
+          </Key>
+          <Property Name="id_distrito" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_departamento" Type="Int32" />
+          <Property Name="id_provincia" Type="Int32" />
+          <Property Name="nombre_distrito" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_Departamentos" Relationship="GoRelaxModel.FK_tbl_Distritos_tbl_Departamentos" FromRole="tbl_Distritos" ToRole="tbl_Departamentos" />
+          <NavigationProperty Name="tbl_Provincia" Relationship="GoRelaxModel.FK_tbl_Distritos_tbl_Provincia" FromRole="tbl_Distritos" ToRole="tbl_Provincia" />
+        </EntityType>
+        <EntityType Name="tbl_Grupo_Detalle">
+          <Key>
+            <PropertyRef Name="id_grupo_detalle" />
+          </Key>
+          <Property Name="id_grupo_detalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_grupo" Type="Int32" />
+          <Property Name="descripcion_detalle" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_Caracteristicas" Relationship="GoRelaxModel.FK_tbl_Caracteristicas_tbl_Grupo_Detalle" FromRole="tbl_Grupo_Detalle" ToRole="tbl_Caracteristicas" />
+          <NavigationProperty Name="tbl_Grupos" Relationship="GoRelaxModel.FK_tbl_Grupo_Detalle_tbl_Grupos" FromRole="tbl_Grupo_Detalle" ToRole="tbl_Grupos" />
+        </EntityType>
+        <EntityType Name="tbl_Grupos">
+          <Key>
+            <PropertyRef Name="id_grupo" />
+          </Key>
+          <Property Name="id_grupo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion_grupo" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_Grupo_Detalle" Relationship="GoRelaxModel.FK_tbl_Grupo_Detalle_tbl_Grupos" FromRole="tbl_Grupos" ToRole="tbl_Grupo_Detalle" />
+        </EntityType>
+        <EntityType Name="tbl_Lugares">
+          <Key>
+            <PropertyRef Name="id_lugar" />
+          </Key>
+          <Property Name="id_lugar" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion_lugar" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_Anuncio_Lugar" Relationship="GoRelaxModel.FK_tbl_Lugar_Modelo_tbl_Lugares" FromRole="tbl_Lugares" ToRole="tbl_Anuncio_Lugar" />
+        </EntityType>
+        <EntityType Name="tbl_Nacionalidad">
+          <Key>
+            <PropertyRef Name="id_nacionalidad" />
+          </Key>
+          <Property Name="id_nacionalidad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion_nacionalidad" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_Provincia">
+          <Key>
+            <PropertyRef Name="id_provincia" />
+          </Key>
+          <Property Name="id_provincia" Type="Int32" Nullable="false" />
+          <Property Name="id_departamento" Type="Int32" />
+          <Property Name="nombre_provincia" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="usuario_creacion" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="fecha_creacion" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="tbl_Departamentos" Relationship="GoRelaxModel.FK_tbl_Provencia_tbl_Departamentos" FromRole="tbl_Provincia" ToRole="tbl_Departamentos" />
+          <NavigationProperty Name="tbl_Distritos" Relationship="GoRelaxModel.FK_tbl_Distritos_tbl_Provincia" FromRole="tbl_Provincia" ToRole="tbl_Distritos" />
+        </EntityType>
+        <EntityType Name="tbl_Servicios">
+          <Key>
+            <PropertyRef Name="id_servicio" />
+          </Key>
+          <Property Name="id_servicio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tipo_servicio" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="codigo_servicio" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion_servicio" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="abreviatura_servicio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_Anuncio_Servicio" Relationship="GoRelaxModel.FK_tbl_Modelo_Servicio_tbl_servicios" FromRole="tbl_Servicios" ToRole="tbl_Anuncio_Servicio" />
+        </EntityType>
+        <EntityType Name="tbl_Tipo_Anuncio">
+          <Key>
+            <PropertyRef Name="id_tipoAnuncio" />
+          </Key>
+          <Property Name="id_tipoAnuncio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion_tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_Usuarios">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodigoPostal_Usuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="nroCelular_Usuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="email_usuario" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="contrasena_usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nombre_usuario" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="idPreferencias" Type="Int32" />
+          <Property Name="vip_usuario" Type="Int32" />
+          <Property Name="nro_tarjeta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cvv_tarjeta" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="fechaVec_tarjeta" Type="DateTime" Precision="3" />
+          <Property Name="subscripcion_usuario" Type="Int32" />
+          <Property Name="nombre_tarjeta" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+          <Property Name="codigo_verification" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="back_modelo">
+          <Key>
+            <PropertyRef Name="modeloId" />
+          </Key>
+          <Property Name="modeloId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descripcionBreve" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="precioEstandar" Type="Decimal" Precision="13" Scale="2" />
+          <Property Name="portada" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="orden" Type="Int32" />
+          <Property Name="tipo" Type="Int32" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="distritoId" Type="Int32" />
+          <Property Name="latitud" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="longitud" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbl_Caracteristicas_Model">
+          <Key>
+            <PropertyRef Name="id_CaracteristicaAnuncio" />
+          </Key>
+          <Property Name="id_CaracteristicaAnuncio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Anuncio" Type="Int32" />
+          <Property Name="id_GrupoCaracteristica" Type="Int32" />
+          <Property Name="id_Nacionalidad" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="id_Piel" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="id_CabelloNegro" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="id_CabelloRubio" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="id_CabelloCastanio" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="id_CabelloRojo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="id_Estatura" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="id_Cuerpo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="id_Pechos" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="id_Pubis" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="atencion_Mujer" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="atencion_Parejas" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="atencion_Discapacitados" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="atencion_Hombres" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="medioPago_Efectivo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="medioPago_Tarjeta" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="servicio1_1" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="servicio1_2" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="servicio1_3" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="servicio1_4" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="servicio1_5" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="servicio1_6" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="servicio1_7" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="servicio1_8" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="servicio1_9" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="servicio1_10" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="servicio1_Otro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="servicio2_1" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="servicio2_2" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="servicio2_3" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="servicio2_4" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="servicio2_5" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="servicio2_6" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="servicio2_7" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="servicio2_8" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="servicio2_Otro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="lugarEncuentro_1" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="lugarEncuentro_2" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="lugarEncuentro_3" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="lugarEncuentro_4" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="lugarEncuentro_5" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="lugarEncuentro_6" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="lugarEncuentro_Otro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_tbl_Horarios_tbl_Modelo">
+          <End Type="GoRelaxModel.tbl_Anuncio" Role="tbl_Anuncio" Multiplicity="0..1" />
+          <End Type="GoRelaxModel.tbl_Anuncio_Horarios" Role="tbl_Anuncio_Horarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Anuncio">
+              <PropertyRef Name="id_Anuncio" />
+            </Principal>
+            <Dependent Role="tbl_Anuncio_Horarios">
+              <PropertyRef Name="id_Anuncio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Lugar_Modelo_tbl_Modelo">
+          <End Type="GoRelaxModel.tbl_Anuncio" Role="tbl_Anuncio" Multiplicity="0..1" />
+          <End Type="GoRelaxModel.tbl_Anuncio_Lugar" Role="tbl_Anuncio_Lugar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Anuncio">
+              <PropertyRef Name="id_Anuncio" />
+            </Principal>
+            <Dependent Role="tbl_Anuncio_Lugar">
+              <PropertyRef Name="id_Anuncio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Modelo_Caracteristicas_tbl_Modelo">
+          <End Type="GoRelaxModel.tbl_Anuncio" Role="tbl_Anuncio" Multiplicity="0..1" />
+          <End Type="GoRelaxModel.tbl_Anuncio_Caracteristicas" Role="tbl_Anuncio_Caracteristicas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Anuncio">
+              <PropertyRef Name="id_Anuncio" />
+            </Principal>
+            <Dependent Role="tbl_Anuncio_Caracteristicas">
+              <PropertyRef Name="id_Anuncio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Modelo_Servicio_tbl_Modelo">
+          <End Type="GoRelaxModel.tbl_Anuncio" Role="tbl_Anuncio" Multiplicity="0..1" />
+          <End Type="GoRelaxModel.tbl_Anuncio_Servicio" Role="tbl_Anuncio_Servicio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Anuncio">
+              <PropertyRef Name="id_Anuncio" />
+            </Principal>
+            <Dependent Role="tbl_Anuncio_Servicio">
+              <PropertyRef Name="id_Anuncio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Tarifa_tbl_Modelo">
+          <End Type="GoRelaxModel.tbl_Anuncio" Role="tbl_Anuncio" Multiplicity="1" />
+          <End Type="GoRelaxModel.tbl_Anuncio_Tarifa" Role="tbl_Anuncio_Tarifa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Anuncio">
+              <PropertyRef Name="id_Anuncio" />
+            </Principal>
+            <Dependent Role="tbl_Anuncio_Tarifa">
+              <PropertyRef Name="id_Anuncio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Lugar_Modelo_tbl_Lugares">
+          <End Type="GoRelaxModel.tbl_Lugares" Role="tbl_Lugares" Multiplicity="0..1" />
+          <End Type="GoRelaxModel.tbl_Anuncio_Lugar" Role="tbl_Anuncio_Lugar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Lugares">
+              <PropertyRef Name="id_lugar" />
+            </Principal>
+            <Dependent Role="tbl_Anuncio_Lugar">
+              <PropertyRef Name="id_lugar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Modelo_Servicio_tbl_servicios">
+          <End Type="GoRelaxModel.tbl_Servicios" Role="tbl_Servicios" Multiplicity="0..1" />
+          <End Type="GoRelaxModel.tbl_Anuncio_Servicio" Role="tbl_Anuncio_Servicio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Servicios">
+              <PropertyRef Name="id_servicio" />
+            </Principal>
+            <Dependent Role="tbl_Anuncio_Servicio">
+              <PropertyRef Name="id_servicio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Caracteristicas_tbl_Grupo_Detalle">
+          <End Type="GoRelaxModel.tbl_Grupo_Detalle" Role="tbl_Grupo_Detalle" Multiplicity="0..1" />
+          <End Type="GoRelaxModel.tbl_Caracteristicas" Role="tbl_Caracteristicas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Grupo_Detalle">
+              <PropertyRef Name="id_grupo_detalle" />
+            </Principal>
+            <Dependent Role="tbl_Caracteristicas">
+              <PropertyRef Name="grupo_caracteristica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Distritos_tbl_Departamentos">
+          <End Type="GoRelaxModel.tbl_Departamentos" Role="tbl_Departamentos" Multiplicity="0..1" />
+          <End Type="GoRelaxModel.tbl_Distritos" Role="tbl_Distritos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Departamentos">
+              <PropertyRef Name="id_departamento" />
+            </Principal>
+            <Dependent Role="tbl_Distritos">
+              <PropertyRef Name="id_departamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Provencia_tbl_Departamentos">
+          <End Type="GoRelaxModel.tbl_Departamentos" Role="tbl_Departamentos" Multiplicity="0..1" />
+          <End Type="GoRelaxModel.tbl_Provincia" Role="tbl_Provincia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Departamentos">
+              <PropertyRef Name="id_departamento" />
+            </Principal>
+            <Dependent Role="tbl_Provincia">
+              <PropertyRef Name="id_departamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Distritos_tbl_Provincia">
+          <End Type="GoRelaxModel.tbl_Provincia" Role="tbl_Provincia" Multiplicity="0..1" />
+          <End Type="GoRelaxModel.tbl_Distritos" Role="tbl_Distritos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Provincia">
+              <PropertyRef Name="id_provincia" />
+            </Principal>
+            <Dependent Role="tbl_Distritos">
+              <PropertyRef Name="id_provincia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Grupo_Detalle_tbl_Grupos">
+          <End Type="GoRelaxModel.tbl_Grupos" Role="tbl_Grupos" Multiplicity="0..1" />
+          <End Type="GoRelaxModel.tbl_Grupo_Detalle" Role="tbl_Grupo_Detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Grupos">
+              <PropertyRef Name="id_grupo" />
+            </Principal>
+            <Dependent Role="tbl_Grupo_Detalle">
+              <PropertyRef Name="id_grupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tbl_Categoria">
+          <Key>
+            <PropertyRef Name="id_Categoria" />
+          </Key>
+          <Property Name="id_Categoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_Categoria" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+          <Property Name="url_imagen" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GoRelaxModelStoreContainer" CdmEntityContainer="GoRelaxEntities">
+          <EntitySetMapping Name="tbl_Anuncio">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Anuncio">
+              <MappingFragment StoreEntitySet="tbl_Anuncio">
+                <ScalarProperty Name="longitud_anuncio" ColumnName="longitud_anuncio" />
+                <ScalarProperty Name="latitud_anuncio" ColumnName="latitud_anuncio" />
+                <ScalarProperty Name="tipo_Anuncio" ColumnName="tipo_Anuncio" />
+                <ScalarProperty Name="portada" ColumnName="portada" />
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="contactoWhatsapp" ColumnName="contactoWhatsapp" />
+                <ScalarProperty Name="audio_anuncio" ColumnName="audio_anuncio" />
+                <ScalarProperty Name="edad_anuncio" ColumnName="edad_anuncio" />
+                <ScalarProperty Name="nombre_anuncio" ColumnName="nombre_anuncio" />
+                <ScalarProperty Name="descripcion_anuncio" ColumnName="descripcion_anuncio" />
+                <ScalarProperty Name="titulo_anuncio" ColumnName="titulo_anuncio" />
+                <ScalarProperty Name="id_Distrito" ColumnName="id_Distrito" />
+                <ScalarProperty Name="id_Departemento" ColumnName="id_Departemento" />
+                <ScalarProperty Name="telefono_Anuncion" ColumnName="telefono_Anuncion" />
+                <ScalarProperty Name="CodigoPostal_Usuario" ColumnName="CodigoPostal_Usuario" />
+                <ScalarProperty Name="id_Categoria" ColumnName="id_Categoria" />
+                <ScalarProperty Name="email_usuario" ColumnName="email_usuario" />
+                <ScalarProperty Name="id_Usuario" ColumnName="id_Usuario" />
+                <ScalarProperty Name="id_Anuncio" ColumnName="id_Anuncio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Anuncio_Caracteristicas">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Anuncio_Caracteristicas">
+              <MappingFragment StoreEntitySet="tbl_Anuncio_Caracteristicas">
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="otro_Lugar" ColumnName="otro_Lugar" />
+                <ScalarProperty Name="otro_ServicioEspecial" ColumnName="otro_ServicioEspecial" />
+                <ScalarProperty Name="otro_Servicio" ColumnName="otro_Servicio" />
+                <ScalarProperty Name="medioPago_Tarjeta" ColumnName="medioPago_Tarjeta" />
+                <ScalarProperty Name="medioPago_Efectivo" ColumnName="medioPago_Efectivo" />
+                <ScalarProperty Name="atencion_Hombres" ColumnName="atencion_Hombres" />
+                <ScalarProperty Name="atencion_Discapacitados" ColumnName="atencion_Discapacitados" />
+                <ScalarProperty Name="atencion_Parejas" ColumnName="atencion_Parejas" />
+                <ScalarProperty Name="atencion_Mujer" ColumnName="atencion_Mujer" />
+                <ScalarProperty Name="id_Pubis" ColumnName="id_Pubis" />
+                <ScalarProperty Name="id_Pechos" ColumnName="id_Pechos" />
+                <ScalarProperty Name="id_Cuerpo" ColumnName="id_Cuerpo" />
+                <ScalarProperty Name="id_Estatura" ColumnName="id_Estatura" />
+                <ScalarProperty Name="id_Cabello" ColumnName="id_Cabello" />
+                <ScalarProperty Name="id_Piel" ColumnName="id_Piel" />
+                <ScalarProperty Name="id_Nacionalidad" ColumnName="id_Nacionalidad" />
+                <ScalarProperty Name="id_Anuncio" ColumnName="id_Anuncio" />
+                <ScalarProperty Name="id_CaracteristicaAnuncio" ColumnName="id_CaracteristicaAnuncio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Anuncio_Galeria">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Anuncio_Galeria">
+              <MappingFragment StoreEntitySet="tbl_Anuncio_Galeria">
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="tipoArchivo_GaleriaAnuncio" ColumnName="tipoArchivo_GaleriaAnuncio" />
+                <ScalarProperty Name="nombre_GaleriaAnuncio" ColumnName="nombre_GaleriaAnuncio" />
+                <ScalarProperty Name="id_Anuncio" ColumnName="id_Anuncio" />
+                <ScalarProperty Name="id_GaleriaAnuncio" ColumnName="id_GaleriaAnuncio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Anuncio_Horarios">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Anuncio_Horarios">
+              <MappingFragment StoreEntitySet="tbl_Anuncio_Horarios">
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="horaFinal" ColumnName="horaFinal" />
+                <ScalarProperty Name="horaInicial" ColumnName="horaInicial" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id_Anuncio" ColumnName="id_Anuncio" />
+                <ScalarProperty Name="id_HorarioAnuncio" ColumnName="id_HorarioAnuncio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Anuncio_Lugar">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Anuncio_Lugar">
+              <MappingFragment StoreEntitySet="tbl_Anuncio_Lugar">
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="otro_AnuncioLugar" ColumnName="otro_AnuncioLugar" />
+                <ScalarProperty Name="id_lugar" ColumnName="id_lugar" />
+                <ScalarProperty Name="id_Anuncio" ColumnName="id_Anuncio" />
+                <ScalarProperty Name="id_AnuncioLugar" ColumnName="id_AnuncioLugar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Anuncio_Servicio">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Anuncio_Servicio">
+              <MappingFragment StoreEntitySet="tbl_Anuncio_Servicio">
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="otro_AnuncioServicio" ColumnName="otro_AnuncioServicio" />
+                <ScalarProperty Name="id_servicio" ColumnName="id_servicio" />
+                <ScalarProperty Name="idGrupoServicio" ColumnName="idGrupoServicio" />
+                <ScalarProperty Name="id_Anuncio" ColumnName="id_Anuncio" />
+                <ScalarProperty Name="id_AnuncioServicio" ColumnName="id_AnuncioServicio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Anuncio_Tarifa">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Anuncio_Tarifa">
+              <MappingFragment StoreEntitySet="tbl_Anuncio_Tarifa">
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="precio_tarifa" ColumnName="precio_tarifa" />
+                <ScalarProperty Name="descripcion_tarifa" ColumnName="descripcion_tarifa" />
+                <ScalarProperty Name="id_Anuncio" ColumnName="id_Anuncio" />
+                <ScalarProperty Name="id_tarifaAnuncio" ColumnName="id_tarifaAnuncio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Caracteristicas">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Caracteristicas">
+              <MappingFragment StoreEntitySet="tbl_Caracteristicas">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="descripcion_caracteristica" ColumnName="descripcion_caracteristica" />
+                <ScalarProperty Name="codigo_caracteristica" ColumnName="codigo_caracteristica" />
+                <ScalarProperty Name="grupo_caracteristica" ColumnName="grupo_caracteristica" />
+                <ScalarProperty Name="id_caracteristica" ColumnName="id_caracteristica" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_CodigoVerificacion">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_CodigoVerificacion">
+              <MappingFragment StoreEntitySet="tbl_CodigoVerificacion">
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="codigoVerificacion" ColumnName="codigoVerificacion" />
+                <ScalarProperty Name="email_usuario" ColumnName="email_usuario" />
+                <ScalarProperty Name="id_CodigoVerificacion" ColumnName="id_CodigoVerificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Departamentos">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Departamentos">
+              <MappingFragment StoreEntitySet="tbl_Departamentos">
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="descripcion_departamento" ColumnName="descripcion_departamento" />
+                <ScalarProperty Name="id_departamento" ColumnName="id_departamento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Distritos">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Distritos">
+              <MappingFragment StoreEntitySet="tbl_Distritos">
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="nombre_distrito" ColumnName="nombre_distrito" />
+                <ScalarProperty Name="id_provincia" ColumnName="id_provincia" />
+                <ScalarProperty Name="id_departamento" ColumnName="id_departamento" />
+                <ScalarProperty Name="id_distrito" ColumnName="id_distrito" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Grupo_Detalle">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Grupo_Detalle">
+              <MappingFragment StoreEntitySet="tbl_Grupo_Detalle">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="descripcion_detalle" ColumnName="descripcion_detalle" />
+                <ScalarProperty Name="id_grupo" ColumnName="id_grupo" />
+                <ScalarProperty Name="id_grupo_detalle" ColumnName="id_grupo_detalle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Grupos">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Grupos">
+              <MappingFragment StoreEntitySet="tbl_Grupos">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="descripcion_grupo" ColumnName="descripcion_grupo" />
+                <ScalarProperty Name="id_grupo" ColumnName="id_grupo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Lugares">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Lugares">
+              <MappingFragment StoreEntitySet="tbl_Lugares">
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="descripcion_lugar" ColumnName="descripcion_lugar" />
+                <ScalarProperty Name="id_lugar" ColumnName="id_lugar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Nacionalidad">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Nacionalidad">
+              <MappingFragment StoreEntitySet="tbl_Nacionalidad">
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="descripcion_nacionalidad" ColumnName="descripcion_nacionalidad" />
+                <ScalarProperty Name="id_nacionalidad" ColumnName="id_nacionalidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Provincia">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Provincia">
+              <MappingFragment StoreEntitySet="tbl_Provincia">
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="nombre_provincia" ColumnName="nombre_provincia" />
+                <ScalarProperty Name="id_departamento" ColumnName="id_departamento" />
+                <ScalarProperty Name="id_provincia" ColumnName="id_provincia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Servicios">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Servicios">
+              <MappingFragment StoreEntitySet="tbl_Servicios">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="abreviatura_servicio" ColumnName="abreviatura_servicio" />
+                <ScalarProperty Name="descripcion_servicio" ColumnName="descripcion_servicio" />
+                <ScalarProperty Name="codigo_servicio" ColumnName="codigo_servicio" />
+                <ScalarProperty Name="tipo_servicio" ColumnName="tipo_servicio" />
+                <ScalarProperty Name="id_servicio" ColumnName="id_servicio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Tipo_Anuncio">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Tipo_Anuncio">
+              <MappingFragment StoreEntitySet="tbl_Tipo_Anuncio">
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="descripcion_tipo" ColumnName="descripcion_tipo" />
+                <ScalarProperty Name="id_tipoAnuncio" ColumnName="id_tipoAnuncio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Usuarios">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Usuarios">
+              <MappingFragment StoreEntitySet="tbl_Usuarios">
+                <ScalarProperty Name="codigo_verification" ColumnName="codigo_verification" />
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="nombre_tarjeta" ColumnName="nombre_tarjeta" />
+                <ScalarProperty Name="subscripcion_usuario" ColumnName="subscripcion_usuario" />
+                <ScalarProperty Name="fechaVec_tarjeta" ColumnName="fechaVec_tarjeta" />
+                <ScalarProperty Name="cvv_tarjeta" ColumnName="cvv_tarjeta" />
+                <ScalarProperty Name="nro_tarjeta" ColumnName="nro_tarjeta" />
+                <ScalarProperty Name="vip_usuario" ColumnName="vip_usuario" />
+                <ScalarProperty Name="idPreferencias" ColumnName="idPreferencias" />
+                <ScalarProperty Name="nombre_usuario" ColumnName="nombre_usuario" />
+                <ScalarProperty Name="contrasena_usuario" ColumnName="contrasena_usuario" />
+                <ScalarProperty Name="email_usuario" ColumnName="email_usuario" />
+                <ScalarProperty Name="nroCelular_Usuario" ColumnName="nroCelular_Usuario" />
+                <ScalarProperty Name="CodigoPostal_Usuario" ColumnName="CodigoPostal_Usuario" />
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="back_modelo">
+            <EntityTypeMapping TypeName="GoRelaxModel.back_modelo">
+              <MappingFragment StoreEntitySet="back_modelo">
+                <ScalarProperty Name="longitud" ColumnName="longitud" />
+                <ScalarProperty Name="latitud" ColumnName="latitud" />
+                <ScalarProperty Name="distritoId" ColumnName="distritoId" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="orden" ColumnName="orden" />
+                <ScalarProperty Name="portada" ColumnName="portada" />
+                <ScalarProperty Name="precioEstandar" ColumnName="precioEstandar" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="descripcionBreve" ColumnName="descripcionBreve" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="modeloId" ColumnName="modeloId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Caracteristicas_Model">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Caracteristicas_Model">
+              <MappingFragment StoreEntitySet="tbl_Caracteristicas_Model">
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="lugarEncuentro_Otro" ColumnName="lugarEncuentro_Otro" />
+                <ScalarProperty Name="lugarEncuentro_6" ColumnName="lugarEncuentro_6" />
+                <ScalarProperty Name="lugarEncuentro_5" ColumnName="lugarEncuentro_5" />
+                <ScalarProperty Name="lugarEncuentro_4" ColumnName="lugarEncuentro_4" />
+                <ScalarProperty Name="lugarEncuentro_3" ColumnName="lugarEncuentro_3" />
+                <ScalarProperty Name="lugarEncuentro_2" ColumnName="lugarEncuentro_2" />
+                <ScalarProperty Name="lugarEncuentro_1" ColumnName="lugarEncuentro_1" />
+                <ScalarProperty Name="servicio2_Otro" ColumnName="servicio2_Otro" />
+                <ScalarProperty Name="servicio2_8" ColumnName="servicio2_8" />
+                <ScalarProperty Name="servicio2_7" ColumnName="servicio2_7" />
+                <ScalarProperty Name="servicio2_6" ColumnName="servicio2_6" />
+                <ScalarProperty Name="servicio2_5" ColumnName="servicio2_5" />
+                <ScalarProperty Name="servicio2_4" ColumnName="servicio2_4" />
+                <ScalarProperty Name="servicio2_3" ColumnName="servicio2_3" />
+                <ScalarProperty Name="servicio2_2" ColumnName="servicio2_2" />
+                <ScalarProperty Name="servicio2_1" ColumnName="servicio2_1" />
+                <ScalarProperty Name="servicio1_Otro" ColumnName="servicio1_Otro" />
+                <ScalarProperty Name="servicio1_10" ColumnName="servicio1_10" />
+                <ScalarProperty Name="servicio1_9" ColumnName="servicio1_9" />
+                <ScalarProperty Name="servicio1_8" ColumnName="servicio1_8" />
+                <ScalarProperty Name="servicio1_7" ColumnName="servicio1_7" />
+                <ScalarProperty Name="servicio1_6" ColumnName="servicio1_6" />
+                <ScalarProperty Name="servicio1_5" ColumnName="servicio1_5" />
+                <ScalarProperty Name="servicio1_4" ColumnName="servicio1_4" />
+                <ScalarProperty Name="servicio1_3" ColumnName="servicio1_3" />
+                <ScalarProperty Name="servicio1_2" ColumnName="servicio1_2" />
+                <ScalarProperty Name="servicio1_1" ColumnName="servicio1_1" />
+                <ScalarProperty Name="medioPago_Tarjeta" ColumnName="medioPago_Tarjeta" />
+                <ScalarProperty Name="medioPago_Efectivo" ColumnName="medioPago_Efectivo" />
+                <ScalarProperty Name="atencion_Hombres" ColumnName="atencion_Hombres" />
+                <ScalarProperty Name="atencion_Discapacitados" ColumnName="atencion_Discapacitados" />
+                <ScalarProperty Name="atencion_Parejas" ColumnName="atencion_Parejas" />
+                <ScalarProperty Name="atencion_Mujer" ColumnName="atencion_Mujer" />
+                <ScalarProperty Name="id_Pubis" ColumnName="id_Pubis" />
+                <ScalarProperty Name="id_Pechos" ColumnName="id_Pechos" />
+                <ScalarProperty Name="id_Cuerpo" ColumnName="id_Cuerpo" />
+                <ScalarProperty Name="id_Estatura" ColumnName="id_Estatura" />
+                <ScalarProperty Name="id_CabelloRojo" ColumnName="id_CabelloRojo" />
+                <ScalarProperty Name="id_CabelloCastanio" ColumnName="id_CabelloCastanio" />
+                <ScalarProperty Name="id_CabelloRubio" ColumnName="id_CabelloRubio" />
+                <ScalarProperty Name="id_CabelloNegro" ColumnName="id_CabelloNegro" />
+                <ScalarProperty Name="id_Piel" ColumnName="id_Piel" />
+                <ScalarProperty Name="id_Nacionalidad" ColumnName="id_Nacionalidad" />
+                <ScalarProperty Name="id_GrupoCaracteristica" ColumnName="id_GrupoCaracteristica" />
+                <ScalarProperty Name="id_Anuncio" ColumnName="id_Anuncio" />
+                <ScalarProperty Name="id_CaracteristicaAnuncio" ColumnName="id_CaracteristicaAnuncio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Categoria">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Categoria">
+              <MappingFragment StoreEntitySet="tbl_Categoria">
+                <ScalarProperty Name="url_imagen" ColumnName="url_imagen" />
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="nombre_Categoria" ColumnName="nombre_Categoria" />
+                <ScalarProperty Name="id_Categoria" ColumnName="id_Categoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

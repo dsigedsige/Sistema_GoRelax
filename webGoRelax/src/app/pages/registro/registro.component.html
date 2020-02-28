@@ -1,0 +1,158 @@
+<app-spinnerloading></app-spinnerloading>
+<div class="container">
+    <br>
+    <div class="main_registro">
+
+
+        <div class="d-flex justify-content-center">
+            <div class="card text-white bg-dark mb-3">
+                <div class="card-header">Registrarse </div>
+                <div class="card-body ">
+                    <h5 class="card-title">Ingrese un correo electrónico</h5>
+                    <p class="card-text">A este correo te enviaremos un codigo de verificacion</p>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form [formGroup]="formRegistro">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" required placeholder="Email" formControlName="email">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <!-- <button type="button" [disabled]="!formRegistro.valid" (click)="guardar()" class="btn btn-outline-danger">Enviar</button> -->
+                    <button type="button" (click)="enviarCorreo()" class="btn btn-outline-danger">Enviar</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal -->
+
+
+        <div class="modal fade" id="modalverificar" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content bg-dark">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Registrar</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">  <span aria-hidden="true">&times;</span>      </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card">
+                            <img src="..." class="card-img-top" alt="...">
+                        </div>
+                        <br>
+                        <section id="formVerificacion" *ngIf="!flagRegistro" class="shadow">
+                            <form>
+                                <div class="row">
+                                    <label for="txtcodigo" class="col-sm-3 col-form-label">Codigo</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" placeholder="Codigo de verificacion" name="codigo" [(ngModel)]="codVerificacion" class="form-control" id="txtcodigo">
+                                    </div>
+                                </div>
+                                <div class="text-center p-2">
+                                    <button type="button" class="btn btn-danger" (click)="VerificarRegistro();"> Verificar</button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section id="formRegistro" class="cuerpoRegistro animated bounceInDown " style="margin: 15px;" *ngIf="flagRegistro">
+                            <form [formGroup]="formRegistro2">
+                                <div class="form-group">
+                                    <label for="idnombre">Nombre</label>
+                                    <input type="text" class="form-control" id="idnombre" formControlName="nombre" placeholder="ingrese nombre">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="idcontra">Contraseña</label>
+                                    <input type="text" class="form-control" id="idcontra" formControlName="contra" placeholder="ingrese contraseña">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="idrepetir">Repetir contraseña</label>
+                                    <input type="text" class="form-control" id="idrepetir" formControlName="repetir" placeholder="repita la contraseña">
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="chkMayor" formControlName="mayor">
+                                        <label class="form-check-label" for="gridCheck"> Soy mayor de edad </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="chkPoliticas" formControlName="politicas">
+                                        <label class="form-check-label" for="gridCheck"> Acepto las politicas de privacidad  <label style=" cursor: pointer; color:red;text-decoration: underline;" (click)="verPolitica();"  > ver</label> </label>
+                                    </div>
+                                </div>
+
+
+                                <div class="text-center p-2">
+                                    <button type="button" class="btn btn-primary" (click)="ingresarRegistro()"> Ingresar</button>
+                                </div>
+
+                            </form>
+                        </section>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade animated fadeInDown" id="modalPoliticas" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="background-color: black;">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Politicas de privacidad</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <br>
+                            <div class="card text-white bg-dark">
+                                <br>
+                                <br>
+                                <div class="card-body">
+                                    <h1>Aviso importante</h1>
+                                    <h3 class="card-title text-danger"> <small> Contenido de esta pagina es para adultos </small> </h3>
+                                    <b class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</b>
+                                    <b class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</b>
+                                    <b class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</b>
+                                    <b class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</b>
+                                    <b class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</b>
+                                    <b class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</b>
+                                </div>
+                                <br>
+                                <br>
+                            </div>
+                            <hr>
+                            <div class="text-center">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"> Aceptar</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>

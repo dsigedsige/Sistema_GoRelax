@@ -1,0 +1,20 @@
+<div class="card-columns   animated fadeIn" *ngIf="listAnuncios.length>0">
+    <div class="card shadow  border-cards bg-dark tarjeta-articulo" *ngFor="let anuncio of listAnuncios ">
+        <a [routerLink]="['/anunciosDetalle',anuncio.idAnuncio_idCategoria]">
+            <img [src]="anuncio.url_fotoPortada" class="card-img-top img_anuncio" alt="...">
+        </a>
+        <div class="card-body">
+            <div class="tituloAnuncio">
+                <h1> <a class="card-title5" [routerLink]="['/anunciosDetalle',anuncio.idAnuncio_idCategoria]">{{anuncio.nombre_anuncio}}  </a> </h1>
+            </div>
+            <div class="cuerpoAnuncio">
+                <h5> <a [routerLink]="['/anunciosDetalle',anuncio.idAnuncio_idCategoria]">{{anuncio.titulo_anuncio}}  </a></h5>
+            </div>
+            <div class="pieAnuncio">
+                <h5> <a class="card-title5" [routerLink]="['/anunciosDetalle',anuncio.idAnuncio_idCategoria]">{{anuncio.edad_anuncio}}  años </a></h5>
+            </div>
+            <!-- <p>{{anuncio.descripcion_departamento }} - {{anuncio.nombre_distrito }}</p>
+            <p>{{anuncio.edad_anuncio}} años </p> -->
+        </div>
+    </div>
+</div>

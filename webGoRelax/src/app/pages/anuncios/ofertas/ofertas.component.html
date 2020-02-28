@@ -1,0 +1,21 @@
+<!-- <h1>
+
+    OFERTA RELAMPAGO</h1>
+<div class="card  shadow" style="margin: 4px;" *ngFor="let oferta of listOfertas">
+    <img [src]="oferta.url_img" class="card-img-top" alt="...">
+    <div class="card-body">
+        <p class="card-text">{{oferta.desc}}.</p>
+    </div>
+</div> -->
+
+
+<div class="container">
+    <h2> <strong class="tituloH1"> Oferta Relampago  </strong> </h2>
+    <div class="card text-white bg-primary mb-3" *ngFor="let oferta of listOfertas">
+        <img [src]="oferta.url_img" class="card-img-top imgMensajes" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Ana</h5>
+            <p class="card-text">{{oferta.desc}}.</p>
+        </div>
+    </div>
+</div>
