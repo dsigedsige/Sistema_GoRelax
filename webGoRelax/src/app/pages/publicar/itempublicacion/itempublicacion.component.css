@@ -1,0 +1,73 @@
+.bodyAnuncio {
+    padding: 15px;
+}
+
+.bodyAnuncio label {
+    font-size: 12px;
+}
+
+.bodyAnuncio .form-group {
+    margin-bottom: 5px;
+}
+
+.bodyAnuncio .form-control {
+    font-size: 12px;
+}
+
+.bgTarifa {
+    background-color: #bf930d !important;
+}
+
+.bodyAnuncio table {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.bodyAnuncio a {
+    color: #007bff;
+    text-decoration: underline;
+    background-color: transparent;
+}
+
+.imgLightboxDetallado {
+    width: 100%;
+    cursor: pointer;
+    height: 250;
+}
+
+.card-group {
+    flex-direction: row;
+}
+
+.botonFile {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.botonFile .btn {
+    border: 2px solid gray;
+    color: gray;
+    background-color: white;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.list-group-item2 {
+    background-color: #383d41;
+    border: 1px solid #e9ecef;
+    padding: 0.3.5rem 1.25rem;
+    border-left: 0px;
+    border-right: 0px;
+    font-size: 13px;
+}
+
+.badge-pill {
+    padding-bottom: 4px;
+}
+
+.custom-control-inline {
+    margin-bottom: 10px !important;
+}

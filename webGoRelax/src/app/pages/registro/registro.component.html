@@ -66,17 +66,17 @@
                             <form [formGroup]="formRegistro2">
                                 <div class="form-group">
                                     <label for="idnombre">Nombre</label>
-                                    <input type="text" class="form-control" id="idnombre" formControlName="nombre" placeholder="ingrese nombre">
+                                    <input type="text" class="form-control" id="idnombre" maxlength="150" formControlName="nombre" placeholder="ingrese nombre">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="idcontra">Contraseña</label>
-                                    <input type="text" class="form-control" id="idcontra" formControlName="contra" placeholder="ingrese contraseña">
+                                    <input type="password" class="form-control" id="idcontra" maxlength="50" formControlName="contra" placeholder="ingrese contraseña">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="idrepetir">Repetir contraseña</label>
-                                    <input type="text" class="form-control" id="idrepetir" formControlName="repetir" placeholder="repita la contraseña">
+                                    <input type="password" class="form-control" id="idrepetir" formControlName="repetir" placeholder="repita la contraseña">
                                 </div>
 
                                 <div class="form-group">

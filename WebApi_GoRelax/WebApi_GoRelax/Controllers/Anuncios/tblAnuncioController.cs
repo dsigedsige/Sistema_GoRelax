@@ -111,6 +111,7 @@ namespace WebApi_GoRelax.Controllers.Anuncios
                 return BadRequest(ModelState);
             }
 
+            tbl_Anuncio.fecha_creacion = DateTime.Now;
             db.tbl_Anuncio.Add(tbl_Anuncio);
             db.SaveChanges();
 

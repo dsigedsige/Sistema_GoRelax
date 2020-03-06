@@ -37,10 +37,12 @@ namespace WebApi_GoRelax.Controllers.Registro
                 {
                     string[] parametros = filtro.Split('|');
 
-                    string codVerificacion = parametros[0].ToString();
-                    string nombre = parametros[0].ToString();
-                    string contra = parametros[0].ToString();
+                    int idUsuario = Convert.ToInt32(parametros[0].ToString());
+                    string nombre = parametros[1].ToString();
+                    string contra = parametros[2].ToString();
 
+                    Registro_BL obj_negocio = new Registro_BL();
+                    resul = obj_negocio.set_actualizarRegistro(idUsuario, nombre, contra);
                 }
                 else
                 {
@@ -53,8 +55,6 @@ namespace WebApi_GoRelax.Controllers.Registro
             }
             return resul;
         }
-
-
 
 
         public object PostRegistro(string email)

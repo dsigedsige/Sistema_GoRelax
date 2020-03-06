@@ -28,9 +28,16 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /// google maps
-import { AgmCoreModule } from '@agm/core';
- 
+import { AgmCoreModule } from '@agm/core'; 
+
+///
+ import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+ import { TooltipModule } from 'ngx-bootstrap/tooltip';
+
 import { DomseguroPipe } from './pipes/domseguro.pipe'
+
+/// angular File
+import { ngfModule, ngf } from "angular-file"
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './pages/shared/navbar/navbar.component';
@@ -45,6 +52,9 @@ import { CarouselComponent } from './pages/anuncios/carousel/carousel.component'
 import { SpinnerloadingComponent } from './pages/shared/spinnerloading/spinnerloading.component';
 import { FiltergroupPipe } from './pipes/filtergroup.pipe';
 import { RegistroComponent } from './pages/registro/registro.component';
+import { ListpublicacionComponent } from './pages/publicar/listpublicacion/listpublicacion.component';
+import { ItempublicacionComponent } from './pages/publicar/itempublicacion/itempublicacion.component';
+
 
  
 
@@ -63,7 +73,10 @@ import { RegistroComponent } from './pages/registro/registro.component';
     SpinnerloadingComponent,
     DomseguroPipe,
     FiltergroupPipe,
-    RegistroComponent      
+    RegistroComponent,
+    ListpublicacionComponent,
+    ItempublicacionComponent,
+ 
   ],
   imports: [
     BrowserModule,
@@ -79,7 +92,10 @@ import { RegistroComponent } from './pages/registro/registro.component';
       apiKey: 'AIzaSyCODMQ6da1HjWKn_nMqSl9oD8RooAyCKzA'
     }),
     FormsModule,
-    ReactiveFormsModule 
+    ReactiveFormsModule ,
+    TimepickerModule.forRoot(),
+    TooltipModule.forRoot(),
+    ngfModule
   ],
   providers: [],
   bootstrap: [AppComponent]

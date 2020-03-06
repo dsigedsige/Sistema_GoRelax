@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../../services/login/login.service';
+ 
 
 @Component({
   selector: 'app-bienvenida',
@@ -6,12 +8,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./bienvenida.component.css']
 })
 export class BienvenidaComponent implements OnInit {
+  constructor( ) { 
 
-  constructor() { }
-
-  ngOnInit() {
   }
-
-  
+  ngOnInit() {
+  } 
 
 }

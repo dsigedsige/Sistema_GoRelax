@@ -20,6 +20,7 @@
     <WebStackScaffolding_DbContextTypeFullName>Entidades.GoRelaxEntities</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <NameOfLastUsedPublishProfile>FolderProfile</NameOfLastUsedPublishProfile>
+    <ProjectView>ShowAllFiles</ProjectView>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>

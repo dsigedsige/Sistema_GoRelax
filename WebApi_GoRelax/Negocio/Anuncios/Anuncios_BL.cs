@@ -1,4 +1,5 @@
 ﻿using Entidades.Anuncios;
+using Entidades.Publicar;
 using Negocio.Conexion;
 using Negocio.Resultados;
 using System;
@@ -257,6 +258,9 @@ namespace Negocio.Anuncios
             }
             return res;
         }
+               
+
+
 
 
     }

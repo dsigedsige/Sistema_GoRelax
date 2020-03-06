@@ -193,7 +193,9 @@
     <Compile Include="Controllers\Acceso\tblUsuariosController.cs" />
     <Compile Include="Controllers\Anuncios\tblAnuncioController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Publicar\PublicarController.cs" />
     <Compile Include="Controllers\Registro\RegistroController.cs" />
+    <Compile Include="Controllers\upload\UploadsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -209,6 +211,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Multimedia\readme.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />

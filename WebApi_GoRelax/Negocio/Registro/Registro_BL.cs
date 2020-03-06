@@ -20,7 +20,7 @@ namespace Negocio.Registro
                 using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
                 {
                     cn.Open();
-                    using (SqlCommand cmd = new SqlCommand("Movil_GetVerification", cn))
+                    using (SqlCommand cmd = new SqlCommand("WEB_S_REGISTRO_VERIFICAR_EMAIL", cn))
                     {
                         cmd.CommandTimeout = 0;
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -39,6 +39,44 @@ namespace Negocio.Registro
                 throw;
             }
         }
+
+
+        public object set_actualizarRegistro(int idUsuario, string nombre, string contra)
+        {
+            Resultado res = new Resultado();
+            DataTable dt_detalle = new DataTable();
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("WEB_U_REGISTRO", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+                        cmd.Parameters.Add("@nombreUsuario", SqlDbType.VarChar).Value = nombre;
+                        cmd.Parameters.Add("@contasenia", SqlDbType.VarChar).Value = contra;
+                        cmd.ExecuteNonQuery();
+
+                        res.ok = true;
+                        res.data = "OK";
+                        res.totalpage = 0;
+          
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+
+
 
     }
 }

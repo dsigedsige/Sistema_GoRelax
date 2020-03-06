@@ -65,7 +65,7 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "webGoRelax:build"
+                        "browserTarget": "webGoRelax:build",
                     },
                     "configurations": {
                         "production": {

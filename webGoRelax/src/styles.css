@@ -7,6 +7,11 @@ body {
     border-color: white !important;
 }
 
+.bs-timepicker-field {
+    width: 39px !important;
+    height: 27px !important;
+}
+
 
 /* a {
     color: white;

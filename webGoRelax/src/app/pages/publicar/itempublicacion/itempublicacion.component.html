@@ -1,0 +1,457 @@
+<app-spinnerloading></app-spinnerloading>
+
+<div class="container ">
+    <br>
+    <div>
+        <br>
+        <div class="card bg-dark">
+            <div class="card-body">
+                <h4 class="card-title">Datos del anuncio</h4>
+                <div class="bodyAnuncio">
+                    <form [formGroup]="formParams">
+                        <div class="row mb-1">
+                            <div class="col-xs-12 col-md-8">
+                                <label for="">Categoria:</label>
+                                <select class="form-control" id="cbo_categoria" formControlName="id_Categoria">
+                                    <option value="0"> [ --SELECCIONE-- ]</option>
+                                    <option [value]="cat.id_Categoria" *ngFor="let cat of categorias">{{cat.nombre_Categoria}}</option>
+                                  </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-1">
+                            <div class="col-xs-12 col-md-6">
+                                <label for="">Telefono:</label>
+                                <input type="number" class="form-control" maxlength="20" formControlName="telefono_Anuncion" placeholder="Ingrese el telefono">
+                            </div>
+                        </div>
+
+
+                        <div class="row mb-1">
+                            <div class="col-xs-12 col-md-6">
+                                <label for="email">Departamento:</label>
+                                <select class="form-control" id="cbo_departamento" formControlName="id_Departemento" (ngModelChange)="changeDepartamento_Distrito($event)">
+                                    <option value="0"> [ --SELECCIONE-- ]</option>
+                                    <option [value]="dep.id_departamento" *ngFor="let dep of departamentos">{{dep.descripcion_departamento}}</option>
+                                  </select>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <label for="email">Distrito:</label>
+                                <select class="form-control" id="cbo_distrito" formControlName="id_Distrito">
+                                    <option value="0"> [ --SELECCIONE-- ]</option>
+                                    <option [value]="dist.id_distrito" *ngFor="let dist of distritos"> {{dist.nombre_distrito}} </option>
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for=""> Titulo:</label>
+                            <input type="text" class="form-control" maxlength="250" placeholder="Ingrese el titulo" formControlName="titulo_anuncio">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Descripcion:</label>
+                            <textarea type="text" class="form-control" maxlength="500" rows="5" cols="15" formControlName="descripcion_anuncio"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for=""> Nombre:</label>
+                            <input type="text" class="form-control" maxlength="150" placeholder="Ingrese nombre" formControlName="nombre_anuncio">
+                        </div>
+
+
+
+                        <div class="row mb-1">
+                            <div class="col-xs-12 col-md-6">
+                                <label for="email"> Edad:</label>
+                                <select class="form-control" id="cbo_edad" formControlName="edad_anuncio">
+                                    <option [value]="edad" *ngFor="let edad of edades">{{edad}}</option>
+                                  </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                              <input class="form-check-input" type="checkbox" formControlName="contactoWhatsapp" > Contacto por  whatsapp
+                            </label>
+                        </div>
+                        <button type="button" class="btn btn-success" (click)="saveAnuncios();"> Grabar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+
+        <div class="row mb-1">
+            <div class="col-xs-12 col-md-6">
+                <div class="card text-white bgTarifa">
+                    <div class="card-body">
+                        <h4 class="card-title">Tarifa</h4>
+                        <div class="bodyAnuncio">
+                            <form [formGroup]="formParamsTarifa">
+                                <div class="row mb-1">
+                                    <div class="col-xs-12  col-sm-12 col-md-12 col-lg-5">
+                                        <label for="email">Descripcion:</label>
+                                        <input type="text" class="form-control" maxlength="100" required formControlName="descripcion_tarifa" placeholder="Descripcion">
+                                    </div>
+                                    <div class="col-xs-8  col-sm-8 col-md-8 col-lg-4">
+                                        <label for="email">Precio:</label>
+                                        <input type="number" class="form-control" maxlength="100" required formControlName="precio_tarifa" placeholder="Precio">
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3 text-right ">
+                                        <br>
+                                        <button type="button " class="btn btn-dark " (click)="agregarTarifa(); ">Agregar</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <hr style="color: white; ">
+
+                            <table class="table table-striped ">
+                                <thead class="thead-dark ">
+                                    <tr>
+                                        <th scope="col ">#</th>
+                                        <th scope="col ">Descripcion</th>
+                                        <th scope="col ">Tarifa</th>
+                                        <th scope="col ">Accion</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let tarifa of tarifas">
+                                        <td scope="col">#</td>
+                                        <td>{{tarifa.descripcion_tarifa}}</td>
+                                        <td>{{tarifa.precio_tarifa}}</td>
+                                        <td> <a style="cursor:pointer" (click)="eliminarTarifa(tarifa);">Eliminar</a> </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <button type="button" class="btn btn-success" (click)="saveTarifa();"> Grabar</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-6 ">
+                <div class="card text-white bgTarifa ">
+                    <div class="card-body ">
+                        <h4 class="card-title ">Horario</h4>
+                        <div class="bodyAnuncio ">
+
+                            <form [formGroup]="formParamsHorario">
+                                <div class="row mb-1 ">
+                                    <div class="col-sm-8 col-md-10 ">
+                                        <label for="email "> Mismo horario todos dias:</label>
+                                        <select class="form-control" id="cbo_si" name="opcion" (change)="changeHorario($event)"> 
+                                            <option [value] = "opcion.id"  *ngFor="let opcion of opcionHorario">  {{opcion.des}}  </option>                
+                                          </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-1 animated fadeInDown " *ngIf="!flagAllDias">
+                                    <div class="col-sm-8 col-md-10 ">
+                                        <label for="email "> Dia</label>
+                                        <select class="form-control" formControlName="dia"> 
+                                                <option value="Lunes">Lunes</option>
+                                                <option value="Martes">Martes</option>
+                                                <option value="Miercoles">Miercoles</option>
+                                                <option value="Jueves">Jueves</option>
+                                                <option value="Viernes">Viernes</option>
+                                                <option value="Sabado">Sabado</option>
+                                                <option value="Domingo">Domingo</option>
+                                                <option value="Feriados">Feriados</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-1 ">
+                                    <div class="col ">
+                                        <label for="email ">Desde:</label>
+                                        <timepicker formControlName="horaInicial"></timepicker>
+                                    </div>
+                                    <div class="col ">
+                                        <label for="email ">Hasta:</label>
+                                        <timepicker formControlName="horaFinal"></timepicker>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-1 animated fadeInDown " *ngIf="!flagAllDias">
+                                    <div class="col text-right ">
+                                        <button type="button " class="btn btn-dark " (click)="agregarHorario()"> Agregar</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <hr>
+
+                            <table class="table table-striped animated fadeInDown " *ngIf="!flagAllDias">
+                                <thead class="thead-dark ">
+                                    <tr>
+                                        <th scope="col ">#</th>
+                                        <th scope="col ">Dia</th>
+                                        <th scope="col ">Desde</th>
+                                        <th scope="col ">Hasta</th>
+                                        <th scope="col ">Accion</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let hora of horarios">
+                                        <td scope="col">#</td>
+                                        <td>{{hora.descripcion}}</td>
+                                        <td>{{hora.horaInicial}}</td>
+                                        <td>{{hora.horaFinal}}</td>
+                                        <td> <a style="cursor:pointer" (click)="eliminarHorario(hora);" tooltip="Eliminar horario">Eliminar</a> </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <button type="button" class="btn btn-success" (click)="saveHorarios();" tooltip="Grabar horario"> Grabar</button>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row mb-1">
+            <div class="col">
+                <div class="card text-white bg-dark">
+                    <div class="card-body">
+                        <h4 class="card-title">Imagenes</h4>
+                        <div class="bodyAnuncio">
+                            <div class="botonFile">
+                                <input type="file" class="form-control-file btn" accept="image/x-png,image/gif,image/jpeg" multiple (change)="onFileChange($event,1)" />
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card-columns">
+                                        <div class="card shadow tarjeta-articulo" *ngFor="let img of files; let i=index">
+                                            <img class="imgLightboxDetallado" [src]="img.urlfile">
+                                            <div class="card-body text-lg-center text-dark">
+                                                <p class="card-text">{{img.file.name}}</p>
+
+                                                <div *ngIf="img.status === 'ok'">
+                                                    <p class="card-text"><small class="text-success">{{img.message}}</small></p>
+                                                </div>
+
+                                                <div *ngIf="img.status === 'error'">
+                                                    <p class="card-text text-danger"><small class="text-danger">{{img.message}}</small></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-success" (click)="saveMultimedia(1);" tooltip="Grabar horario"> Grabar</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <br>
+
+        <div class="row mb-1">
+            <div class="col">
+                <div class="card text-white bg-dark">
+                    <div class="card-body">
+                        <h4 class="card-title">Videos</h4>
+                        <div class="bodyAnuncio">
+                            <div class="botonFile">
+                                <input type="file" class="form-control-file btn" accept="video/mp4,video/x-m4v,video/*" multiple (change)="onFileChange($event, 2)" />
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <div *ngIf="filesVideos.length>0">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item active">Videos elegidos</li>
+                                            <li class="list-group-item list-group-item2  " *ngFor="let video of filesVideos ">
+
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    {{ video.file.name}}
+                                                    <div *ngIf="video.status === 'ok'">
+                                                        <span class="badge badge-success badge-pill">{{video.message}}</span>
+                                                    </div>
+                                                    <div *ngIf="video.status === 'error'">
+                                                        <p class="card-text text-danger"><small class="text-danger">{{video.message}}</small></p>
+                                                    </div>
+                                                </div>
+
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-success" (click)="saveMultimedia(2);" tooltip="Grabar video"> Grabar</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="row mb-1">
+            <div class="col">
+                <div class="card text-white bg-dark">
+                    <div class="card-body">
+                        <h4 class="card-title">Apariencia</h4>
+                        <div class="bodyAnuncio">
+
+                            <form [formGroup]="formParamsCaracteristica">
+                                <div class="row mb-1">
+                                    <div class="col-xs-12 col-md-6">
+                                        <div class="col">
+                                            <label for=""> Nacionalidad :</label>
+                                            <select class="form-control" id="cbo_nacionalidad" formControlName="id_Nacionalidad">
+                                                <option value="0"> [ --SELECCIONE-- ]</option>
+                                                <option [value]="nacion.id_nacionalidad" *ngFor="let nacion of this.nacionalidades">{{nacion.descripcion_nacionalidad}}</option>
+                                              </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for=""> Piel :</label>
+                                            <select class="form-control" id="cbo_piel" formControlName="id_Piel">
+                                                <option value="0"> [ --SELECCIONE-- ]</option>
+                                                <option [value]="piel.id_caracteristica" *ngFor="let piel of pieles">{{piel.descripcion_caracteristica}}</option>
+                                              </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-12 col-md-6">
+                                        <div class="col">
+                                            <label for=""> Atencion : </label>
+                                            <br>
+                                            <form [formGroup]="formParamsCaracteristica">
+                                                <div class="custom-control custom-checkbox custom-control-inline">
+                                                    <input type="checkbox" id="99" value="SI" formControlName="atencion_Mujer" class="custom-control-input">
+                                                    <label class="custom-control-label" for="99">A mujeres</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox custom-control-inline">
+                                                    <input type="checkbox" id="100A" value="SI" formControlName="atencion_Parejas" class="custom-control-input">
+                                                    <label class="custom-control-label" for="100A">A parejas</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox custom-control-inline">
+                                                    <input type="checkbox" id="101A" value="SI" formControlName="atencion_Discapacitados" class="custom-control-input">
+                                                    <label class="custom-control-label" for="101A">A Discapacitados</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox custom-control-inline">
+                                                    <input type="checkbox" id="102A" value="SI" formControlName="atencion_Hombres" class="custom-control-input">
+                                                    <label class="custom-control-label" for="102A">A hombres</label>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col">
+                                            <label for=""> Medio Pago : </label>
+                                            <br>
+                                            <form [formGroup]="formParamsCaracteristica">
+                                                <div class="custom-control custom-checkbox custom-control-inline">
+                                                    <input type="checkbox" id="103P" value="SI" formControlName="medioPago_Efectivo" class="custom-control-input">
+                                                    <label class="custom-control-label" for="103P">Efectivo</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox custom-control-inline">
+                                                    <input type="checkbox" id="104P" value="SI" formControlName="medioPago_Tarjeta" class="custom-control-input">
+                                                    <label class="custom-control-label" for="104P">Tarjeta</label>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <hr style="background-color: aquamarine;">
+                                <div class="row mb-1" style="margin-left: 0px;">
+                                    <div class="col-xs-12 col-md-12">
+                                        <label for=""> Cabello : </label>
+                                        <br>
+                                        <form [formGroup]="formParamsCaracteristica">
+                                            <div class="custom-control custom-checkbox custom-control-inline" *ngFor="let cab of cabellos">
+                                                <input type="checkbox" [id]="cab.id_caracteristica" [value]="cab.id_caracteristica" formControlName="id_Cabello" class="custom-control-input">
+                                                <label class="custom-control-label" [for]="cab.id_caracteristica">{{cab.descripcion_caracteristica}}</label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="row " style="margin-left: 0px;">
+                                    <div class="col-xs-12 col-md-12">
+                                        <label for=""> Estatura : </label>
+                                        <br>
+                                        <form [formGroup]="formParamsCaracteristica">
+                                            <div class="custom-control custom-radio custom-control-inline" *ngFor="let item of estaturas">
+                                                <input type="radio" [id]="item.id_caracteristica" [value]="item.id_caracteristica" formControlName="id_Estatura" class="custom-control-input">
+                                                <label class="custom-control-label" [for]="item.id_caracteristica">{{item.descripcion_caracteristica}}</label>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+
+                                <div class="row mb-1" style="margin-left: 0px;">
+                                    <div class="col-xs-12 col-md-12">
+                                        <label for=""> Cuerpo : </label>
+                                        <br>
+                                        <form [formGroup]="formParamsCaracteristica">
+                                            <div class="custom-control custom-radio custom-control-inline" *ngFor="let item of cuerpos">
+                                                <input type="radio" [id]="item.id_caracteristica" [value]="item.id_caracteristica" formControlName="id_Cuerpo" class="custom-control-input">
+                                                <label class="custom-control-label" [for]="item.id_caracteristica">{{item.descripcion_caracteristica}}</label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-1" style="margin-left: 0px;">
+                                    <div class="col-xs-12 col-md-12">
+                                        <label for=""> Pechos : </label>
+                                        <br>
+                                        <form [formGroup]="formParamsCaracteristica">
+                                            <div class="custom-control custom-radio custom-control-inline" *ngFor="let item of pechos">
+                                                <input type="radio" [id]="item.id_caracteristica" [value]="item.id_caracteristica" formControlName="id_Pechos" class="custom-control-input">
+                                                <label class="custom-control-label" [for]="item.id_caracteristica">{{item.descripcion_caracteristica}}</label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-1" style="margin-left: 0px;">
+                                    <div class="col-xs-12 col-md-12">
+                                        <label for=""> Pubis : </label>
+                                        <br>
+                                        <form [formGroup]="formParamsCaracteristica">
+                                            <div class="custom-control custom-radio custom-control-inline" *ngFor="let item of pubis">
+                                                <input type="radio" [id]="item.id_caracteristica" [value]="item.id_caracteristica" formControlName="id_Pubis" class="custom-control-input">
+                                                <label class="custom-control-label" [for]="item.id_caracteristica">{{item.descripcion_caracteristica}}</label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </form>
+
+                            <button type="button" class="btn btn-success" (click)="saveApariencia();" tooltip="Grabar video"> Grabar</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <br>
+    <br> <br>
+    <br>
+</div>
