@@ -109,8 +109,16 @@ export class PublicarService {
   }
 
 
-  saveLugarEncuentro(obj:any[]){
+  saveLugarEncuentro(obj:any[]){ 
     return this.http.post(this.URL + 'Publicar/post_lugarAnuncio', JSON.stringify(obj) ,  httpOptions);
+  }
+
+  saveCoordenadas(idAnuncio:number,  latiud:number ,longitud: number){ 
+    let parametros = new HttpParams();
+    parametros = parametros.append('opcion', '7');
+    parametros = parametros.append('filtro', idAnuncio + '|' +  latiud + '|' + longitud);
+
+    return this.http.get(this.URL + 'Publicar' , {params: parametros});
   }
 
 

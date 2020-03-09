@@ -76,6 +76,40 @@ namespace Negocio.Registro
         }
 
 
+        public object set_grabarCoordinadasMapa(int idAnuncio, string latitud, string longitud)
+        {
+            Resultado res = new Resultado();
+            DataTable dt_detalle = new DataTable();
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("WEB_U_ANUNCIO_COORDENADAS", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idAnuncio", SqlDbType.Int).Value = idAnuncio;
+                        cmd.Parameters.Add("@latitud_anuncio", SqlDbType.VarChar).Value = latitud;
+                        cmd.Parameters.Add("@longitud_anuncio", SqlDbType.VarChar).Value = longitud;
+                        cmd.ExecuteNonQuery();
+
+                        res.ok = true;
+                        res.data = "OK";
+                        res.totalpage = 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+
 
 
     }

@@ -18,15 +18,12 @@
                                   </select>
                             </div>
                         </div>
-
                         <div class="row mb-1">
                             <div class="col-xs-12 col-md-6">
                                 <label for="">Telefono:</label>
                                 <input type="number" class="form-control" maxlength="20" formControlName="telefono_Anuncion" placeholder="Ingrese el telefono">
                             </div>
                         </div>
-
-
                         <div class="row mb-1">
                             <div class="col-xs-12 col-md-6">
                                 <label for="email">Departamento:</label>
@@ -55,9 +52,6 @@
                             <label for=""> Nombre:</label>
                             <input type="text" class="form-control" maxlength="150" placeholder="Ingrese nombre" formControlName="nombre_anuncio">
                         </div>
-
-
-
                         <div class="row mb-1">
                             <div class="col-xs-12 col-md-6">
                                 <label for="email"> Edad:</label>
@@ -66,7 +60,6 @@
                                   </select>
                             </div>
                         </div>
-
                         <div class="form-group form-check">
                             <label class="form-check-label">
                               <input class="form-check-input" type="checkbox" formControlName="contactoWhatsapp" > Contacto por  whatsapp
@@ -77,7 +70,6 @@
                 </div>
             </div>
         </div>
-        <br>
         <br>
 
         <div class="row mb-1">
@@ -291,11 +283,9 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
+        <br>
         <div class="row mb-1">
             <div class="col">
                 <div class="card text-white bg-dark">
@@ -432,8 +422,6 @@
                 </div>
             </div>
         </div>
-
-        <br>
         <br>
 
         <div class="row mb-1">
@@ -469,22 +457,17 @@
                 </div>
             </div>
         </div>
-
-
-
-
+        <br>
         <div class="row mb-1">
             <div class="col-xs-12 col-md-12">
                 <div class="card text-white bg-danger">
                     <div class="card-body">
                         <h4 class="card-title">Lugar de Encuentro</h4>
                         <div class="bodyAnuncio">
-
                             <div class="custom-control custom-checkbox custom-control-inline" *ngFor="let lug of servicios | filtercaracterist : 10">
                                 <input type="checkbox" [id]="lug.id_caracteristica" [(ngModel)]="lug.checkeado" class="custom-control-input" (change)="onCheckChange($event)">
                                 <label class="custom-control-label" [for]="lug.id_caracteristica">{{lug.descripcion_caracteristica }}  {{lug.checkeado }}  </label>
                             </div>
-
                             <button type="button" class="btn btn-success" (click)="saveLugarEncuentro();" tooltip="Grabar Servicios"> Grabar</button>
 
                         </div>
@@ -492,31 +475,48 @@
                 </div>
             </div>
         </div>
-
-        <!-- <div class="row mb-1">
+        <br>
+        <div class="row mb-1">
             <div class="col-xs-12 col-md-12">
-                <div class="card text-white bg-success">
+                <div class="card text-white bg-dark">
                     <div class="card-body">
                         <h4 class="card-title">Tu ubicación</h4>
                         <div class="bodyAnuncio">
+                            <h1>Busca tu direccion </h1>
+                            <h4> <small> Para facilitar que tus clientes encuentren tu departamento o local puedes
+                                mostrar en tu anuncio un mapa con tu ubicacion.
+                                Ejemplo : Gran via con calle Bernardo, Calle de Goya 125, Av. Brasil 148 etc </small></h4>
 
+                            <div class="form-group">
+                                <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()" placeholder="Busca tu dirección" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search>
+                            </div>
 
+                            <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+                                <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)"></agm-marker>
+                            </agm-map>
+                            <br>
+                            <h5> Direccion: {{address}}</h5>
+                            <!-- <div>Latitude: {{latitude}}</div>
+                            <div>Longitude: {{longitude}}</div> -->
+                            <br>
                             <button type="button" class="btn btn-success" (click)="saveUbicacion();" tooltip="Grabar Servicios"> Grabar</button>
-
                         </div>
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
+        <hr>
+        <div class="text-center">
+            <button type="button" class="btn btn-warning" (click)="publicarAnuncioGeneral()"> Publicar Anuncio</button>
+        </div>
+
+
 
 
 
 
 
     </div>
-
-
     <br>
-    <br> <br>
     <br>
 </div>

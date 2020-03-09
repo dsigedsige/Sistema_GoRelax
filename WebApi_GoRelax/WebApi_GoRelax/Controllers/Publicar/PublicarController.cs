@@ -1,4 +1,5 @@
 ﻿using Entidades;
+using Negocio.Registro;
 using Negocio.Resultados;
 using System;
 using System.Collections.Generic;
@@ -94,6 +95,16 @@ namespace WebApi_GoRelax.Controllers.Publicar
                                 checkeado=false
                             }).ToList();
 
+                }
+                else if (opcion == 7)
+                {
+                    string[] parametros = filtro.Split('|');
+                    int idAnuncio = Convert.ToInt32(parametros[0].ToString());
+                    string latitud = parametros[1].ToString();
+                    string longitud = parametros[2].ToString();
+
+                    Registro_BL obj_negocio = new Registro_BL();
+                    resul = obj_negocio.set_grabarCoordinadasMapa(idAnuncio, latitud, longitud);
                 }
                 else
                 {

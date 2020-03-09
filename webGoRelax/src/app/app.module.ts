@@ -91,7 +91,8 @@ import { FiltercaracteristPipe } from './pipes/filtercaracterist.pipe';
     NgxSpinnerModule,
     InfiniteScrollModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCODMQ6da1HjWKn_nMqSl9oD8RooAyCKzA'
+      apiKey: 'AIzaSyCODMQ6da1HjWKn_nMqSl9oD8RooAyCKzA',
+      libraries: ['places']
     }),
     FormsModule,
     ReactiveFormsModule ,

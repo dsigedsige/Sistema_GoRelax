@@ -71,3 +71,15 @@
 .custom-control-inline {
     margin-bottom: 10px !important;
 }
+
+agm-map {
+    height: 500px;
+}
+
+a {
+    color: darkblue;
+}
+
+.gm-style .gm-style-iw {
+    color: black;
+}
