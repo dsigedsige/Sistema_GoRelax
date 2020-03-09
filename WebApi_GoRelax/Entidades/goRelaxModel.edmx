@@ -108,7 +108,7 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.back_modelo' no tiene definida n
           <Key>
             <PropertyRef Name="id_AnuncioLugar" />
           </Key>
-          <Property Name="id_AnuncioLugar" Type="int" Nullable="false" />
+          <Property Name="id_AnuncioLugar" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="id_Anuncio" Type="int" />
           <Property Name="id_lugar" Type="int" />
           <Property Name="otro_AnuncioLugar" Type="varchar" MaxLength="50" />
@@ -290,6 +290,19 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
           <Property Name="usuario_creacion" Type="int" />
           <Property Name="fecha_creacion" Type="datetime" />
         </EntityType>
+        <EntityType Name="tbl_Mensajes_Anuncio">
+          <Key>
+            <PropertyRef Name="id_Mensaje" />
+          </Key>
+          <Property Name="id_Mensaje" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Anuncio" Type="int" />
+          <Property Name="descripcion_mensaje" Type="varchar" MaxLength="250" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+        </EntityType>
         <EntityType Name="tbl_Nacionalidad">
           <Key>
             <PropertyRef Name="id_nacionalidad" />
@@ -299,6 +312,22 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
           <Property Name="estado" Type="int" />
           <Property Name="usuario_creacion" Type="int" />
           <Property Name="fecha_creacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Oferta_Anuncio">
+          <Key>
+            <PropertyRef Name="id_Anuncio" />
+          </Key>
+          <Property Name="id_Oferta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Anuncio" Type="int" Nullable="false" />
+          <Property Name="precioActual_Oferta" Type="varchar" MaxLength="10" />
+          <Property Name="precio_Oferta" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="mensaje_Oferta" Type="varchar" MaxLength="250" />
+          <Property Name="tiempo_Oferta" Type="int" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
         </EntityType>
         <EntityType Name="tbl_Provincia">
           <Key>
@@ -358,8 +387,32 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
           <Property Name="fecha_creacion" Type="datetime" />
           <Property Name="usuario_edicion" Type="int" />
           <Property Name="fecha_edicion" Type="datetime" />
-          <Property Name="codigo_verification" Type="varchar" MaxLength="20" />
+          <Property Name="codigo_verification" Type="varchar" MaxLength="50" />
         </EntityType>
+        <Association Name="FK__tbl_Anunc__id_An__7C1A6C5A">
+          <End Role="tbl_Anuncio" Type="Self.tbl_Anuncio" Multiplicity="0..1" />
+          <End Role="tbl_Anuncio_Servicio" Type="Self.tbl_Anuncio_Servicio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Anuncio">
+              <PropertyRef Name="id_Anuncio" />
+            </Principal>
+            <Dependent Role="tbl_Anuncio_Servicio">
+              <PropertyRef Name="id_Anuncio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_Anunc__id_se__7D0E9093">
+          <End Role="tbl_Caracteristicas" Type="Self.tbl_Caracteristicas" Multiplicity="0..1" />
+          <End Role="tbl_Anuncio_Servicio" Type="Self.tbl_Anuncio_Servicio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Caracteristicas">
+              <PropertyRef Name="id_caracteristica" />
+            </Principal>
+            <Dependent Role="tbl_Anuncio_Servicio">
+              <PropertyRef Name="id_servicio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tbl_Caracteristicas_tbl_Grupo_Detalle">
           <End Role="tbl_Grupo_Detalle" Type="Self.tbl_Grupo_Detalle" Multiplicity="0..1" />
           <End Role="tbl_Caracteristicas" Type="Self.tbl_Caracteristicas" Multiplicity="*" />
@@ -421,11 +474,11 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_Lugar_Modelo_tbl_Lugares">
-          <End Role="tbl_Lugares" Type="Self.tbl_Lugares" Multiplicity="0..1" />
+          <End Role="tbl_Caracteristicas" Type="Self.tbl_Caracteristicas" Multiplicity="0..1" />
           <End Role="tbl_Anuncio_Lugar" Type="Self.tbl_Anuncio_Lugar" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tbl_Lugares">
-              <PropertyRef Name="id_lugar" />
+            <Principal Role="tbl_Caracteristicas">
+              <PropertyRef Name="id_caracteristica" />
             </Principal>
             <Dependent Role="tbl_Anuncio_Lugar">
               <PropertyRef Name="id_lugar" />
@@ -453,30 +506,6 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
             </Principal>
             <Dependent Role="tbl_Anuncio_Caracteristicas">
               <PropertyRef Name="id_Anuncio" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tbl_Modelo_Servicio_tbl_Modelo">
-          <End Role="tbl_Anuncio" Type="Self.tbl_Anuncio" Multiplicity="0..1" />
-          <End Role="tbl_Anuncio_Servicio" Type="Self.tbl_Anuncio_Servicio" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_Anuncio">
-              <PropertyRef Name="id_Anuncio" />
-            </Principal>
-            <Dependent Role="tbl_Anuncio_Servicio">
-              <PropertyRef Name="id_Anuncio" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tbl_Modelo_Servicio_tbl_servicios">
-          <End Role="tbl_Servicios" Type="Self.tbl_Servicios" Multiplicity="0..1" />
-          <End Role="tbl_Anuncio_Servicio" Type="Self.tbl_Anuncio_Servicio" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_Servicios">
-              <PropertyRef Name="id_servicio" />
-            </Principal>
-            <Dependent Role="tbl_Anuncio_Servicio">
-              <PropertyRef Name="id_servicio" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -520,7 +549,9 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
           <EntitySet Name="tbl_Grupo_Detalle" EntityType="Self.tbl_Grupo_Detalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Grupos" EntityType="Self.tbl_Grupos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Lugares" EntityType="Self.tbl_Lugares" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Mensajes_Anuncio" EntityType="Self.tbl_Mensajes_Anuncio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Nacionalidad" EntityType="Self.tbl_Nacionalidad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Oferta_Anuncio" EntityType="Self.tbl_Oferta_Anuncio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Provincia" EntityType="Self.tbl_Provincia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Servicios" EntityType="Self.tbl_Servicios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Tipo_Anuncio" EntityType="Self.tbl_Tipo_Anuncio" Schema="dbo" store:Type="Tables" />
@@ -595,6 +626,14 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
     [tbl_Caracteristicas_Model].[fecha_creacion] AS [fecha_creacion]
     FROM [dbo].[tbl_Caracteristicas_Model] AS [tbl_Caracteristicas_Model]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK__tbl_Anunc__id_An__7C1A6C5A" Association="Self.FK__tbl_Anunc__id_An__7C1A6C5A">
+            <End Role="tbl_Anuncio" EntitySet="tbl_Anuncio" />
+            <End Role="tbl_Anuncio_Servicio" EntitySet="tbl_Anuncio_Servicio" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_Anunc__id_se__7D0E9093" Association="Self.FK__tbl_Anunc__id_se__7D0E9093">
+            <End Role="tbl_Caracteristicas" EntitySet="tbl_Caracteristicas" />
+            <End Role="tbl_Anuncio_Servicio" EntitySet="tbl_Anuncio_Servicio" />
+          </AssociationSet>
           <AssociationSet Name="FK_tbl_Caracteristicas_tbl_Grupo_Detalle" Association="Self.FK_tbl_Caracteristicas_tbl_Grupo_Detalle">
             <End Role="tbl_Grupo_Detalle" EntitySet="tbl_Grupo_Detalle" />
             <End Role="tbl_Caracteristicas" EntitySet="tbl_Caracteristicas" />
@@ -616,7 +655,7 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
             <End Role="tbl_Anuncio_Horarios" EntitySet="tbl_Anuncio_Horarios" />
           </AssociationSet>
           <AssociationSet Name="FK_tbl_Lugar_Modelo_tbl_Lugares" Association="Self.FK_tbl_Lugar_Modelo_tbl_Lugares">
-            <End Role="tbl_Lugares" EntitySet="tbl_Lugares" />
+            <End Role="tbl_Caracteristicas" EntitySet="tbl_Caracteristicas" />
             <End Role="tbl_Anuncio_Lugar" EntitySet="tbl_Anuncio_Lugar" />
           </AssociationSet>
           <AssociationSet Name="FK_tbl_Lugar_Modelo_tbl_Modelo" Association="Self.FK_tbl_Lugar_Modelo_tbl_Modelo">
@@ -626,14 +665,6 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
           <AssociationSet Name="FK_tbl_Modelo_Caracteristicas_tbl_Modelo" Association="Self.FK_tbl_Modelo_Caracteristicas_tbl_Modelo">
             <End Role="tbl_Anuncio" EntitySet="tbl_Anuncio" />
             <End Role="tbl_Anuncio_Caracteristicas" EntitySet="tbl_Anuncio_Caracteristicas" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_Modelo_Servicio_tbl_Modelo" Association="Self.FK_tbl_Modelo_Servicio_tbl_Modelo">
-            <End Role="tbl_Anuncio" EntitySet="tbl_Anuncio" />
-            <End Role="tbl_Anuncio_Servicio" EntitySet="tbl_Anuncio_Servicio" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_Modelo_Servicio_tbl_servicios" Association="Self.FK_tbl_Modelo_Servicio_tbl_servicios">
-            <End Role="tbl_Servicios" EntitySet="tbl_Servicios" />
-            <End Role="tbl_Anuncio_Servicio" EntitySet="tbl_Anuncio_Servicio" />
           </AssociationSet>
           <AssociationSet Name="FK_tbl_Provencia_tbl_Departamentos" Association="Self.FK_tbl_Provencia_tbl_Departamentos">
             <End Role="tbl_Departamentos" EntitySet="tbl_Departamentos" />
@@ -657,19 +688,26 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
           <EntitySet Name="tbl_Anuncio_Servicio" EntityType="GoRelaxModel.tbl_Anuncio_Servicio" />
           <EntitySet Name="tbl_Anuncio_Tarifa" EntityType="GoRelaxModel.tbl_Anuncio_Tarifa" />
           <EntitySet Name="tbl_Caracteristicas" EntityType="GoRelaxModel.tbl_Caracteristicas" />
+          <EntitySet Name="tbl_Categoria" EntityType="GoRelaxModel.tbl_Categoria" />
           <EntitySet Name="tbl_CodigoVerificacion" EntityType="GoRelaxModel.tbl_CodigoVerificacion" />
           <EntitySet Name="tbl_Departamentos" EntityType="GoRelaxModel.tbl_Departamentos" />
           <EntitySet Name="tbl_Distritos" EntityType="GoRelaxModel.tbl_Distritos" />
           <EntitySet Name="tbl_Grupo_Detalle" EntityType="GoRelaxModel.tbl_Grupo_Detalle" />
           <EntitySet Name="tbl_Grupos" EntityType="GoRelaxModel.tbl_Grupos" />
           <EntitySet Name="tbl_Lugares" EntityType="GoRelaxModel.tbl_Lugares" />
+          <EntitySet Name="tbl_Mensajes_Anuncio" EntityType="GoRelaxModel.tbl_Mensajes_Anuncio" />
           <EntitySet Name="tbl_Nacionalidad" EntityType="GoRelaxModel.tbl_Nacionalidad" />
+          <EntitySet Name="tbl_Oferta_Anuncio" EntityType="GoRelaxModel.tbl_Oferta_Anuncio" />
           <EntitySet Name="tbl_Provincia" EntityType="GoRelaxModel.tbl_Provincia" />
           <EntitySet Name="tbl_Servicios" EntityType="GoRelaxModel.tbl_Servicios" />
           <EntitySet Name="tbl_Tipo_Anuncio" EntityType="GoRelaxModel.tbl_Tipo_Anuncio" />
           <EntitySet Name="tbl_Usuarios" EntityType="GoRelaxModel.tbl_Usuarios" />
           <EntitySet Name="back_modelo" EntityType="GoRelaxModel.back_modelo" />
           <EntitySet Name="tbl_Caracteristicas_Model" EntityType="GoRelaxModel.tbl_Caracteristicas_Model" />
+          <AssociationSet Name="FK__tbl_Anunc__id_An__7C1A6C5A" Association="GoRelaxModel.FK__tbl_Anunc__id_An__7C1A6C5A">
+            <End Role="tbl_Anuncio" EntitySet="tbl_Anuncio" />
+            <End Role="tbl_Anuncio_Servicio" EntitySet="tbl_Anuncio_Servicio" />
+          </AssociationSet>
           <AssociationSet Name="FK_tbl_Horarios_tbl_Modelo" Association="GoRelaxModel.FK_tbl_Horarios_tbl_Modelo">
             <End Role="tbl_Anuncio" EntitySet="tbl_Anuncio" />
             <End Role="tbl_Anuncio_Horarios" EntitySet="tbl_Anuncio_Horarios" />
@@ -682,20 +720,16 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
             <End Role="tbl_Anuncio" EntitySet="tbl_Anuncio" />
             <End Role="tbl_Anuncio_Caracteristicas" EntitySet="tbl_Anuncio_Caracteristicas" />
           </AssociationSet>
-          <AssociationSet Name="FK_tbl_Modelo_Servicio_tbl_Modelo" Association="GoRelaxModel.FK_tbl_Modelo_Servicio_tbl_Modelo">
-            <End Role="tbl_Anuncio" EntitySet="tbl_Anuncio" />
-            <End Role="tbl_Anuncio_Servicio" EntitySet="tbl_Anuncio_Servicio" />
-          </AssociationSet>
           <AssociationSet Name="FK_tbl_Tarifa_tbl_Modelo" Association="GoRelaxModel.FK_tbl_Tarifa_tbl_Modelo">
             <End Role="tbl_Anuncio" EntitySet="tbl_Anuncio" />
             <End Role="tbl_Anuncio_Tarifa" EntitySet="tbl_Anuncio_Tarifa" />
           </AssociationSet>
           <AssociationSet Name="FK_tbl_Lugar_Modelo_tbl_Lugares" Association="GoRelaxModel.FK_tbl_Lugar_Modelo_tbl_Lugares">
-            <End Role="tbl_Lugares" EntitySet="tbl_Lugares" />
+            <End Role="tbl_Caracteristicas" EntitySet="tbl_Caracteristicas" />
             <End Role="tbl_Anuncio_Lugar" EntitySet="tbl_Anuncio_Lugar" />
           </AssociationSet>
-          <AssociationSet Name="FK_tbl_Modelo_Servicio_tbl_servicios" Association="GoRelaxModel.FK_tbl_Modelo_Servicio_tbl_servicios">
-            <End Role="tbl_Servicios" EntitySet="tbl_Servicios" />
+          <AssociationSet Name="FK__tbl_Anunc__id_se__7D0E9093" Association="GoRelaxModel.FK__tbl_Anunc__id_se__7D0E9093">
+            <End Role="tbl_Caracteristicas" EntitySet="tbl_Caracteristicas" />
             <End Role="tbl_Anuncio_Servicio" EntitySet="tbl_Anuncio_Servicio" />
           </AssociationSet>
           <AssociationSet Name="FK_tbl_Caracteristicas_tbl_Grupo_Detalle" Association="GoRelaxModel.FK_tbl_Caracteristicas_tbl_Grupo_Detalle">
@@ -718,7 +752,6 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
             <End Role="tbl_Grupos" EntitySet="tbl_Grupos" />
             <End Role="tbl_Grupo_Detalle" EntitySet="tbl_Grupo_Detalle" />
           </AssociationSet>
-          <EntitySet Name="tbl_Categoria" EntityType="GoRelaxModel.tbl_Categoria" />
         </EntityContainer>
         <EntityType Name="tbl_Anuncio">
           <Key>
@@ -745,13 +778,13 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
           <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
           <Property Name="portada" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="tipo_Anuncio" Type="Int32" />
+          <Property Name="latitud_anuncio" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="longitud_anuncio" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_Anuncio_Servicio" Relationship="GoRelaxModel.FK__tbl_Anunc__id_An__7C1A6C5A" FromRole="tbl_Anuncio" ToRole="tbl_Anuncio_Servicio" />
           <NavigationProperty Name="tbl_Anuncio_Horarios" Relationship="GoRelaxModel.FK_tbl_Horarios_tbl_Modelo" FromRole="tbl_Anuncio" ToRole="tbl_Anuncio_Horarios" />
           <NavigationProperty Name="tbl_Anuncio_Lugar" Relationship="GoRelaxModel.FK_tbl_Lugar_Modelo_tbl_Modelo" FromRole="tbl_Anuncio" ToRole="tbl_Anuncio_Lugar" />
           <NavigationProperty Name="tbl_Anuncio_Caracteristicas" Relationship="GoRelaxModel.FK_tbl_Modelo_Caracteristicas_tbl_Modelo" FromRole="tbl_Anuncio" ToRole="tbl_Anuncio_Caracteristicas" />
-          <NavigationProperty Name="tbl_Anuncio_Servicio" Relationship="GoRelaxModel.FK_tbl_Modelo_Servicio_tbl_Modelo" FromRole="tbl_Anuncio" ToRole="tbl_Anuncio_Servicio" />
           <NavigationProperty Name="tbl_Anuncio_Tarifa" Relationship="GoRelaxModel.FK_tbl_Tarifa_tbl_Modelo" FromRole="tbl_Anuncio" ToRole="tbl_Anuncio_Tarifa" />
-          <Property Name="latitud_anuncio" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="longitud_anuncio" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tbl_Anuncio_Caracteristicas">
           <Key>
@@ -810,7 +843,7 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
           <Key>
             <PropertyRef Name="id_AnuncioLugar" />
           </Key>
-          <Property Name="id_AnuncioLugar" Type="Int32" Nullable="false" />
+          <Property Name="id_AnuncioLugar" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="id_Anuncio" Type="Int32" />
           <Property Name="id_lugar" Type="Int32" />
           <Property Name="otro_AnuncioLugar" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -818,7 +851,7 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
           <Property Name="usuario_creacion" Type="Int32" />
           <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tbl_Anuncio" Relationship="GoRelaxModel.FK_tbl_Lugar_Modelo_tbl_Modelo" FromRole="tbl_Anuncio_Lugar" ToRole="tbl_Anuncio" />
-          <NavigationProperty Name="tbl_Lugares" Relationship="GoRelaxModel.FK_tbl_Lugar_Modelo_tbl_Lugares" FromRole="tbl_Anuncio_Lugar" ToRole="tbl_Lugares" />
+          <NavigationProperty Name="tbl_Caracteristicas" Relationship="GoRelaxModel.FK_tbl_Lugar_Modelo_tbl_Lugares" FromRole="tbl_Anuncio_Lugar" ToRole="tbl_Caracteristicas" />
         </EntityType>
         <EntityType Name="tbl_Anuncio_Servicio">
           <Key>
@@ -832,8 +865,8 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
           <Property Name="estado" Type="Int32" />
           <Property Name="usuario_creacion" Type="Int32" />
           <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tbl_Anuncio" Relationship="GoRelaxModel.FK_tbl_Modelo_Servicio_tbl_Modelo" FromRole="tbl_Anuncio_Servicio" ToRole="tbl_Anuncio" />
-          <NavigationProperty Name="tbl_Servicios" Relationship="GoRelaxModel.FK_tbl_Modelo_Servicio_tbl_servicios" FromRole="tbl_Anuncio_Servicio" ToRole="tbl_Servicios" />
+          <NavigationProperty Name="tbl_Anuncio" Relationship="GoRelaxModel.FK__tbl_Anunc__id_An__7C1A6C5A" FromRole="tbl_Anuncio_Servicio" ToRole="tbl_Anuncio" />
+          <NavigationProperty Name="tbl_Caracteristicas" Relationship="GoRelaxModel.FK__tbl_Anunc__id_se__7D0E9093" FromRole="tbl_Anuncio_Servicio" ToRole="tbl_Caracteristicas" />
         </EntityType>
         <EntityType Name="tbl_Anuncio_Tarifa">
           <Key>
@@ -861,7 +894,22 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
           <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
           <Property Name="usuario_edicion" Type="Int32" />
           <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_Anuncio_Lugar" Relationship="GoRelaxModel.FK_tbl_Lugar_Modelo_tbl_Lugares" FromRole="tbl_Caracteristicas" ToRole="tbl_Anuncio_Lugar" />
+          <NavigationProperty Name="tbl_Anuncio_Servicio" Relationship="GoRelaxModel.FK__tbl_Anunc__id_se__7D0E9093" FromRole="tbl_Caracteristicas" ToRole="tbl_Anuncio_Servicio" />
           <NavigationProperty Name="tbl_Grupo_Detalle" Relationship="GoRelaxModel.FK_tbl_Caracteristicas_tbl_Grupo_Detalle" FromRole="tbl_Caracteristicas" ToRole="tbl_Grupo_Detalle" />
+        </EntityType>
+        <EntityType Name="tbl_Categoria">
+          <Key>
+            <PropertyRef Name="id_Categoria" />
+          </Key>
+          <Property Name="id_Categoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_Categoria" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+          <Property Name="url_imagen" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tbl_CodigoVerificacion">
           <Key>
@@ -935,7 +983,19 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
           <Property Name="estado" Type="Int32" />
           <Property Name="usuario_creacion" Type="Int32" />
           <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tbl_Anuncio_Lugar" Relationship="GoRelaxModel.FK_tbl_Lugar_Modelo_tbl_Lugares" FromRole="tbl_Lugares" ToRole="tbl_Anuncio_Lugar" />
+        </EntityType>
+        <EntityType Name="tbl_Mensajes_Anuncio">
+          <Key>
+            <PropertyRef Name="id_Mensaje" />
+          </Key>
+          <Property Name="id_Mensaje" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Anuncio" Type="Int32" />
+          <Property Name="descripcion_mensaje" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tbl_Nacionalidad">
           <Key>
@@ -946,6 +1006,22 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
           <Property Name="estado" Type="Int32" />
           <Property Name="usuario_creacion" Type="Int32" />
           <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_Oferta_Anuncio">
+          <Key>
+            <PropertyRef Name="id_Anuncio" />
+          </Key>
+          <Property Name="id_Oferta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Anuncio" Type="Int32" Nullable="false" />
+          <Property Name="precioActual_Oferta" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="precio_Oferta" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="mensaje_Oferta" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="tiempo_Oferta" Type="Int32" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tbl_Provincia">
           <Key>
@@ -974,7 +1050,6 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
           <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
           <Property Name="usuario_edicion" Type="Int32" />
           <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tbl_Anuncio_Servicio" Relationship="GoRelaxModel.FK_tbl_Modelo_Servicio_tbl_servicios" FromRole="tbl_Servicios" ToRole="tbl_Anuncio_Servicio" />
         </EntityType>
         <EntityType Name="tbl_Tipo_Anuncio">
           <Key>
@@ -1008,7 +1083,7 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
           <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
           <Property Name="usuario_edicion" Type="Int32" />
           <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
-          <Property Name="codigo_verification" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="codigo_verification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="back_modelo">
           <Key>
@@ -1082,6 +1157,18 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
           <Property Name="usuario_creacion" Type="Int32" />
           <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
         </EntityType>
+        <Association Name="FK__tbl_Anunc__id_An__7C1A6C5A">
+          <End Type="GoRelaxModel.tbl_Anuncio" Role="tbl_Anuncio" Multiplicity="0..1" />
+          <End Type="GoRelaxModel.tbl_Anuncio_Servicio" Role="tbl_Anuncio_Servicio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Anuncio">
+              <PropertyRef Name="id_Anuncio" />
+            </Principal>
+            <Dependent Role="tbl_Anuncio_Servicio">
+              <PropertyRef Name="id_Anuncio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tbl_Horarios_tbl_Modelo">
           <End Type="GoRelaxModel.tbl_Anuncio" Role="tbl_Anuncio" Multiplicity="0..1" />
           <End Type="GoRelaxModel.tbl_Anuncio_Horarios" Role="tbl_Anuncio_Horarios" Multiplicity="*" />
@@ -1118,18 +1205,6 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tbl_Modelo_Servicio_tbl_Modelo">
-          <End Type="GoRelaxModel.tbl_Anuncio" Role="tbl_Anuncio" Multiplicity="0..1" />
-          <End Type="GoRelaxModel.tbl_Anuncio_Servicio" Role="tbl_Anuncio_Servicio" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_Anuncio">
-              <PropertyRef Name="id_Anuncio" />
-            </Principal>
-            <Dependent Role="tbl_Anuncio_Servicio">
-              <PropertyRef Name="id_Anuncio" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tbl_Tarifa_tbl_Modelo">
           <End Type="GoRelaxModel.tbl_Anuncio" Role="tbl_Anuncio" Multiplicity="1" />
           <End Type="GoRelaxModel.tbl_Anuncio_Tarifa" Role="tbl_Anuncio_Tarifa" Multiplicity="*" />
@@ -1143,23 +1218,23 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_Lugar_Modelo_tbl_Lugares">
-          <End Type="GoRelaxModel.tbl_Lugares" Role="tbl_Lugares" Multiplicity="0..1" />
+          <End Type="GoRelaxModel.tbl_Caracteristicas" Role="tbl_Caracteristicas" Multiplicity="0..1" />
           <End Type="GoRelaxModel.tbl_Anuncio_Lugar" Role="tbl_Anuncio_Lugar" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tbl_Lugares">
-              <PropertyRef Name="id_lugar" />
+            <Principal Role="tbl_Caracteristicas">
+              <PropertyRef Name="id_caracteristica" />
             </Principal>
             <Dependent Role="tbl_Anuncio_Lugar">
               <PropertyRef Name="id_lugar" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tbl_Modelo_Servicio_tbl_servicios">
-          <End Type="GoRelaxModel.tbl_Servicios" Role="tbl_Servicios" Multiplicity="0..1" />
+        <Association Name="FK__tbl_Anunc__id_se__7D0E9093">
+          <End Type="GoRelaxModel.tbl_Caracteristicas" Role="tbl_Caracteristicas" Multiplicity="0..1" />
           <End Type="GoRelaxModel.tbl_Anuncio_Servicio" Role="tbl_Anuncio_Servicio" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tbl_Servicios">
-              <PropertyRef Name="id_servicio" />
+            <Principal Role="tbl_Caracteristicas">
+              <PropertyRef Name="id_caracteristica" />
             </Principal>
             <Dependent Role="tbl_Anuncio_Servicio">
               <PropertyRef Name="id_servicio" />
@@ -1226,20 +1301,7 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="tbl_Categoria">
-          <Key>
-            <PropertyRef Name="id_Categoria" />
-          </Key>
-          <Property Name="id_Categoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre_Categoria" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="estado" Type="Int32" />
-          <Property Name="usuario_creacion" Type="Int32" />
-          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
-          <Property Name="usuario_edicion" Type="Int32" />
-          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
-          <Property Name="url_imagen" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1383,6 +1445,20 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Categoria">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Categoria">
+              <MappingFragment StoreEntitySet="tbl_Categoria">
+                <ScalarProperty Name="url_imagen" ColumnName="url_imagen" />
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="nombre_Categoria" ColumnName="nombre_Categoria" />
+                <ScalarProperty Name="id_Categoria" ColumnName="id_Categoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tbl_CodigoVerificacion">
             <EntityTypeMapping TypeName="GoRelaxModel.tbl_CodigoVerificacion">
               <MappingFragment StoreEntitySet="tbl_CodigoVerificacion">
@@ -1455,6 +1531,20 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Mensajes_Anuncio">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Mensajes_Anuncio">
+              <MappingFragment StoreEntitySet="tbl_Mensajes_Anuncio">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="descripcion_mensaje" ColumnName="descripcion_mensaje" />
+                <ScalarProperty Name="id_Anuncio" ColumnName="id_Anuncio" />
+                <ScalarProperty Name="id_Mensaje" ColumnName="id_Mensaje" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tbl_Nacionalidad">
             <EntityTypeMapping TypeName="GoRelaxModel.tbl_Nacionalidad">
               <MappingFragment StoreEntitySet="tbl_Nacionalidad">
@@ -1463,6 +1553,23 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
                 <ScalarProperty Name="estado" ColumnName="estado" />
                 <ScalarProperty Name="descripcion_nacionalidad" ColumnName="descripcion_nacionalidad" />
                 <ScalarProperty Name="id_nacionalidad" ColumnName="id_nacionalidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Oferta_Anuncio">
+            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Oferta_Anuncio">
+              <MappingFragment StoreEntitySet="tbl_Oferta_Anuncio">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="tiempo_Oferta" ColumnName="tiempo_Oferta" />
+                <ScalarProperty Name="mensaje_Oferta" ColumnName="mensaje_Oferta" />
+                <ScalarProperty Name="precio_Oferta" ColumnName="precio_Oferta" />
+                <ScalarProperty Name="precioActual_Oferta" ColumnName="precioActual_Oferta" />
+                <ScalarProperty Name="id_Anuncio" ColumnName="id_Anuncio" />
+                <ScalarProperty Name="id_Oferta" ColumnName="id_Oferta" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1601,20 +1708,6 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
                 <ScalarProperty Name="id_GrupoCaracteristica" ColumnName="id_GrupoCaracteristica" />
                 <ScalarProperty Name="id_Anuncio" ColumnName="id_Anuncio" />
                 <ScalarProperty Name="id_CaracteristicaAnuncio" ColumnName="id_CaracteristicaAnuncio" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbl_Categoria">
-            <EntityTypeMapping TypeName="GoRelaxModel.tbl_Categoria">
-              <MappingFragment StoreEntitySet="tbl_Categoria">
-                <ScalarProperty Name="url_imagen" ColumnName="url_imagen" />
-                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
-                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
-                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
-                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="nombre_Categoria" ColumnName="nombre_Categoria" />
-                <ScalarProperty Name="id_Categoria" ColumnName="id_Categoria" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -119,7 +119,13 @@
     <Compile Include="tbl_Lugares.cs">
       <DependentUpon>goRelaxModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_Mensajes_Anuncio.cs">
+      <DependentUpon>goRelaxModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_Nacionalidad.cs">
+      <DependentUpon>goRelaxModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Oferta_Anuncio.cs">
       <DependentUpon>goRelaxModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_Provincia.cs">

@@ -81,6 +81,20 @@ namespace WebApi_GoRelax.Controllers.Publicar
                              }).ToList();
 
                 }
+                else if (opcion == 6)
+                {
+                    var ListGrupo = new string[] { "8", "9", "10" };
+                    resul = (from x in db.tbl_Caracteristicas
+                            where ListGrupo.Contains(x.grupo_caracteristica.ToString())
+                            select new
+                            {
+                                x.id_caracteristica,
+                                x.grupo_caracteristica,
+                                x.descripcion_caracteristica,
+                                checkeado=false
+                            }).ToList();
+
+                }
                 else
                 {
                     resul = "Opcion seleccionada invalida";
@@ -133,6 +147,12 @@ namespace WebApi_GoRelax.Controllers.Publicar
         public object post_horarioAnuncio(List<tbl_Anuncio_Horarios> listAnuncioHorario)
         {
             Resultado res = new Resultado();
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             try
             {
                 foreach (var horario in listAnuncioHorario)
@@ -166,6 +186,126 @@ namespace WebApi_GoRelax.Controllers.Publicar
         }
 
 
+        [HttpPost]
+        [Route("api/Publicar/post_caracteristicaAnuncio")]
+        public object post_caracteristicaAnuncio(tbl_Anuncio_Caracteristicas  tbl_Anuncio_Caracteristicas)
+        {
+            Resultado res = new Resultado();
+            try
+            {
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                tbl_Anuncio_Caracteristicas.fecha_creacion = DateTime.Now;
+                db.tbl_Anuncio_Caracteristicas.Add(tbl_Anuncio_Caracteristicas);
+                db.SaveChanges();
+ 
+                res.ok = true;
+                res.data = "OK";
+                res.totalpage = 0;
+
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+                res.totalpage = 0;
+            }
+            return res;
+
+        }
+
+
+        [HttpPost]
+        [Route("api/Publicar/post_serviciosAnuncio")]
+        public object post_serviciosAnuncio(List<tbl_Anuncio_Servicio> listAnuncioServices)
+        {
+            Resultado res = new Resultado();
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                foreach (var serv in listAnuncioServices)
+                {
+                    serv.fecha_creacion = DateTime.Now;
+                    db.tbl_Anuncio_Servicio.Add(serv);
+                    db.SaveChanges();
+                }
+
+                if (listAnuncioServices.Count > 0)
+                {
+                    res.ok = true;
+                    res.data = "OK";
+                    res.totalpage = 0;
+                }
+                else
+                {
+                    res.ok = false;
+                    res.data = "No hay informacion para almacenar";
+                    res.totalpage = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+                res.totalpage = 0;
+            }
+            return res;
+
+        }
+
+
+
+        [HttpPost]
+        [Route("api/Publicar/post_lugarAnuncio")]
+        public object post_lugarAnuncio(List<tbl_Anuncio_Lugar> listAnuncioLugar)
+        {
+            Resultado res = new Resultado();
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                foreach (var anun in listAnuncioLugar)
+                {
+                    anun.fecha_creacion = DateTime.Now;
+                    db.tbl_Anuncio_Lugar.Add(anun);
+                    db.SaveChanges();
+                }
+
+                if (listAnuncioLugar.Count > 0)
+                {
+                    res.ok = true;
+                    res.data = "OK";
+                    res.totalpage = 0;
+                }
+                else
+                {
+                    res.ok = false;
+                    res.data = "No hay informacion para almacenar";
+                    res.totalpage = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+                res.totalpage = 0;
+            }
+            return res;
+
+        }
 
 
 

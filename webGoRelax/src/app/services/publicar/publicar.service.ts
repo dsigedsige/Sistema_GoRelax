@@ -87,5 +87,31 @@ export class PublicarService {
     return this.http.post<any>(this.URL + 'Uploads', formData);
   }
 
+  
+  //----caracteristicas---
+  saveCaracteristicas(obj:any[]){
+    console.log(JSON.stringify(obj))
+    return this.http.post(this.URL + 'Publicar/post_caracteristicaAnuncio', JSON.stringify(obj) ,  httpOptions);
+  }
+
+
+  getServicios(){
+    let parametros = new HttpParams();
+    parametros = parametros.append('opcion', '6');
+    parametros = parametros.append('filtro', '');
+
+    return this.http.get(this.URL + 'Publicar' , {params: parametros});
+  }
+  
+  ///-----servicios servicios especiales
+  saveServicios(obj:any[]){
+    return this.http.post(this.URL + 'Publicar/post_serviciosAnuncio', JSON.stringify(obj) ,  httpOptions);
+  }
+
+
+  saveLugarEncuentro(obj:any[]){
+    return this.http.post(this.URL + 'Publicar/post_lugarAnuncio', JSON.stringify(obj) ,  httpOptions);
+  }
+
 
 }

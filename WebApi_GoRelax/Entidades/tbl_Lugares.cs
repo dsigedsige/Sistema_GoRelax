@@ -14,19 +14,10 @@ namespace Entidades
     
     public partial class tbl_Lugares
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tbl_Lugares()
-        {
-            this.tbl_Anuncio_Lugar = new HashSet<tbl_Anuncio_Lugar>();
-        }
-    
         public int id_lugar { get; set; }
         public string descripcion_lugar { get; set; }
         public Nullable<int> estado { get; set; }
         public Nullable<int> usuario_creacion { get; set; }
         public Nullable<System.DateTime> fecha_creacion { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_Anuncio_Lugar> tbl_Anuncio_Lugar { get; set; }
     }
 }

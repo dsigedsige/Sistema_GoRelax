@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { FormControl, FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { PublicarService } from '../../../services/publicar/publicar.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { AlertasService } from '../../../services/alertas/alertas.service';
@@ -21,6 +21,7 @@ export class ItempublicacionComponent implements OnInit {
   formParamsHorario : FormGroup;
   formParamsMultimedia : FormGroup;
   formParamsCaracteristica : FormGroup;
+  formParamsServicios : FormGroup;
 
   categorias:any = [];
   departamentos:any = [];
@@ -35,7 +36,7 @@ export class ItempublicacionComponent implements OnInit {
   pechos:any[] = [];
   pubis:any[] = [];
 
-
+  servicios:any[] = [];
   idUserGlobal=0;
   mytime: Date = new Date();
 
@@ -49,7 +50,7 @@ export class ItempublicacionComponent implements OnInit {
   filesVideos:InputFileI[] = []
   
   constructor(private  publicarService:PublicarService,  private spinner: NgxSpinnerService, private alertasService:AlertasService, 
-              private loginService: LoginService,private router:Router ) {   
+              private loginService: LoginService,private router:Router,private chRef: ChangeDetectorRef, private fb: FormBuilder ) {   
                 
     //---obteniendo el id del usuario, verificando si esta logeasdo ----
     this.idUserGlobal = this.loginService.getSession();
@@ -65,6 +66,7 @@ export class ItempublicacionComponent implements OnInit {
     this.inicializarFormularioHorarios();
     this.inicializarFormularioMultimedia();
     this.inicializarFormularioCaracteristica();
+    this.inicializarFormularioServicios();
 
     this.getCategorias();
     this.getDepartamento();
@@ -78,6 +80,7 @@ export class ItempublicacionComponent implements OnInit {
     this.getCuerpos();
     this.getPechos();
     this.getPubis();
+    this.getServicios();
 
   }
 
@@ -156,7 +159,7 @@ export class ItempublicacionComponent implements OnInit {
       id_Nacionalidad: new FormControl('0'), 
       id_Piel: new FormControl('0'), 
 
-      id_Cabello: new FormControl(''), 
+      id_Cabello: new FormControl('0'), 
       id_Estatura: new FormControl(''), 
       id_Cuerpo: new FormControl(''), 
       id_Pechos: new FormControl(''), 
@@ -175,6 +178,24 @@ export class ItempublicacionComponent implements OnInit {
       usuario_creacion: new FormControl(this.idUserGlobal) 
      })
   }
+
+
+  inicializarFormularioServicios(){
+    this.formParamsServicios  = this.fb.group({
+      id_AnuncioServicio: ['0'],
+      id_Anuncio: ['316'],
+      idGrupoServicio: [''],
+      id_servicio: [''],
+      listServicio: new FormArray([]),
+      estado: ['1'],
+      usuario_creacion: [this.idUserGlobal],
+ 
+    });
+
+  } 
+
+ 
+
 
   getCategorias(){
     this.spinner.show();
@@ -212,7 +233,6 @@ export class ItempublicacionComponent implements OnInit {
           this.distritos = res;
          })
   }
-
   getNacionalidad(){
     this.spinner.show();
      this.publicarService.getNacionalidad()
@@ -222,7 +242,6 @@ export class ItempublicacionComponent implements OnInit {
           this.nacionalidades = res;
          })
   }
-
   getPieles(){
     this.spinner.show();
      this.publicarService.getCaracateristicas('1')
@@ -232,7 +251,6 @@ export class ItempublicacionComponent implements OnInit {
           this.pieles = res;
          })
   }
-
   getCabellos(){
     this.spinner.show();
      this.publicarService.getCaracateristicas('2')
@@ -242,7 +260,6 @@ export class ItempublicacionComponent implements OnInit {
           this.cabellos = res;
          })
   }
-
   getEstatura(){
     this.spinner.show();
      this.publicarService.getCaracateristicas('3')
@@ -252,7 +269,6 @@ export class ItempublicacionComponent implements OnInit {
           this.estaturas = res;
          })
   }
-
   getCuerpos(){
     this.spinner.show();
      this.publicarService.getCaracateristicas('4')
@@ -262,7 +278,6 @@ export class ItempublicacionComponent implements OnInit {
           this.cuerpos = res;
          })
   }
-
   getPechos(){
     this.spinner.show();
      this.publicarService.getCaracateristicas('5')
@@ -272,7 +287,6 @@ export class ItempublicacionComponent implements OnInit {
           this.pechos = res;
          })
   }  
-
   getPubis(){
     this.spinner.show();
      this.publicarService.getCaracateristicas('6')
@@ -282,6 +296,17 @@ export class ItempublicacionComponent implements OnInit {
           this.pubis = res;
          })
   } 
+  getServicios(){
+    this.spinner.show();
+     this.publicarService.getServicios()
+         .subscribe((res:any)=>{
+          this.spinner.hide();
+          this.servicios = [];
+          this.servicios = res;
+         })
+  } 
+ 
+
  
   saveAnuncios(){
       if (this.formParams.value.id_Categoria == '' || this.formParams.value.id_Categoria == 0) {
@@ -490,7 +515,6 @@ export class ItempublicacionComponent implements OnInit {
     this.publicarService.saveHorarios(this.horarios)
         .subscribe(
           (res:any) => {
-            console.log(res);
             this.spinner.hide();
             if (res.ok==true) {               
                 
@@ -641,9 +665,143 @@ export class ItempublicacionComponent implements OnInit {
   ///---- INICIO DE APARIENCIA ----
 
   saveApariencia(){
-    console.log(this.formParamsCaracteristica.value)
+
+    if (this.formParamsCaracteristica.value.id_Nacionalidad == null || this.formParamsCaracteristica.value.id_Nacionalidad == '' || this.formParamsCaracteristica.value.id_Nacionalidad == 0) {
+      this.alertasService.Swal_alert('error','Seleccione una nacionalidad');
+      return 
+    }
+
+    if (this.formParamsCaracteristica.value.id_Piel == null || this.formParamsCaracteristica.value.id_Piel == '' || this.formParamsCaracteristica.value.id_Piel == 0) {
+      this.alertasService.Swal_alert('error','Seleccione un color de Piel');
+      return 
+    }
+   
+    let atencionMujer = (this.formParamsCaracteristica.value.atencion_Mujer) ? 'SI' : '';
+    let atencionParejas = (this.formParamsCaracteristica.value.atencion_Parejas) ?  'SI' : '';
+    let atencionDiscapa = (this.formParamsCaracteristica.value.atencion_Discapacitados) ?  'SI' : '';
+    let atencionMan = (this.formParamsCaracteristica.value.atencion_Hombres) ?  'SI' : '';
+    let efectivo = (this.formParamsCaracteristica.value.medioPago_Efectivo) ?  'SI' : '';
+    let tarjeta = (this.formParamsCaracteristica.value.medioPago_Tarjeta) ?  'SI' : '';
+    
+    //----formateando-----
+    this.formParamsCaracteristica.patchValue({"atencion_Mujer": atencionMujer , "atencion_Parejas" : atencionParejas, "atencion_Discapacitados" :  atencionDiscapa, "atencion_Hombres": atencionMan , "medioPago_Efectivo" : efectivo, "medioPago_Tarjeta" :  tarjeta,});
+
+    this.publicarService.saveCaracteristicas(this.formParamsCaracteristica.value)
+        .subscribe(
+          (res:any) => {
+            console.log(res)
+            this.spinner.hide();
+            if (res.ok==true) {               
+                
+            }else{
+    
+            }                                         
+          },
+          error => {
+            this.spinner.hide();
+            alert(JSON.stringify(error))
+          },
+        )   
+
   }
 
+  onCheckChange(event) {
+    const formArray: FormArray = this.formParamsServicios.get('listServicio') as FormArray;  
+    /* Selected */
+    if(event.target.checked){
+      // Add a new control in the arrayForm
+      formArray.push(new FormControl(event.target.value));
+    }else{
+      // find the unselected element
+      let i: number = 0;
+  
+      formArray.controls.forEach((ctrl: FormControl) => {
+        if(ctrl.value == event.target.value) {
+          // Remove the unselected element from the arrayForm
+          formArray.removeAt(i);
+          return;
+        }  
+        i++;
+      });
+    }
+  }
+
+  saveServicios(){
+ 
+
+  var serviciosBD = [];
+   const formArray: FormArray = this.formParamsServicios.get('listServicio') as FormArray;  
+   formArray.controls.forEach((ctrl: FormControl) => {
+        serviciosBD.push({
+          id_AnuncioServicio: this.formParamsServicios.value.id_AnuncioServicio,
+          id_Anuncio: this.formParamsServicios.value.id_Anuncio,
+          idGrupoServicio: this.formParamsServicios.value.idGrupoServicio,
+          id_servicio: ctrl.value,
+          estado:this.formParamsServicios.value.estado,
+          usuario_creacion: this.formParamsServicios.value.usuario_creacion,
+        });
+    }); 
+
+    if (  serviciosBD.length> 0) {    
+      this.spinner.show();  
+        this.publicarService.saveServicios(serviciosBD)
+          .subscribe((res:any) => {
+              console.log(res)
+              this.spinner.hide();
+              if (res.ok==true) {               
+                  
+              }else{
+      
+              }                                         
+            }, error => {
+              this.spinner.hide();
+              alert(JSON.stringify(error))
+            },
+          )     
+    } 
+
+
+  }
+
+
+  saveLugarEncuentro(){
+    var lugarEncuentros=[];
+    for (let obj of this.servicios) {
+      if (obj.grupo_caracteristica ==10) {
+        if (obj.checkeado ==true) {
+          lugarEncuentros.push({
+            id_AnuncioLugar : 0, 
+            id_Anuncio : 316, 
+            id_lugar : obj.id_caracteristica, 
+            otro_AnuncioLugar: '', 
+            estado : 1, 
+            usuario_creacion : this.idUserGlobal
+          })
+        }
+      }
+    }
+
+    if (lugarEncuentros.length>0) {
+      this.spinner.show();
+      this.publicarService.saveLugarEncuentro(lugarEncuentros)
+          .subscribe((res:any)=>{
+            console.log(res)
+            this.spinner.hide();
+            if (res.ok==true) {               
+                
+            }else{
+    
+            } 
+          }, (error)=>{
+            
+          })
+    }
+  }
+
+
+  // saveUbicacion(){
+
+  // }
 
   ///---- FIN DE APARIENCIA -----
 

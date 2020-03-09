@@ -17,10 +17,10 @@ namespace Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tbl_Anuncio()
         {
+            this.tbl_Anuncio_Servicio = new HashSet<tbl_Anuncio_Servicio>();
             this.tbl_Anuncio_Horarios = new HashSet<tbl_Anuncio_Horarios>();
             this.tbl_Anuncio_Lugar = new HashSet<tbl_Anuncio_Lugar>();
             this.tbl_Anuncio_Caracteristicas = new HashSet<tbl_Anuncio_Caracteristicas>();
-            this.tbl_Anuncio_Servicio = new HashSet<tbl_Anuncio_Servicio>();
             this.tbl_Anuncio_Tarifa = new HashSet<tbl_Anuncio_Tarifa>();
         }
     
@@ -49,13 +49,13 @@ namespace Entidades
         public string longitud_anuncio { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_Anuncio_Servicio> tbl_Anuncio_Servicio { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_Anuncio_Horarios> tbl_Anuncio_Horarios { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_Anuncio_Lugar> tbl_Anuncio_Lugar { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_Anuncio_Caracteristicas> tbl_Anuncio_Caracteristicas { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_Anuncio_Servicio> tbl_Anuncio_Servicio { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_Anuncio_Tarifa> tbl_Anuncio_Tarifa { get; set; }
     }

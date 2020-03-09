@@ -9,7 +9,7 @@ export class FiltergroupPipe implements PipeTransform {
 
     var caracteristicasFilter= [];
     for(let obj of caracteristicas ){
-      if (obj.Grupo == igGrupo){
+      if (obj.grupo_caracteristica == igGrupo){
         caracteristicasFilter.push(obj);
       } 
     }

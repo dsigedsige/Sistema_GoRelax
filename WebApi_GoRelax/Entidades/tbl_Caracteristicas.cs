@@ -14,6 +14,13 @@ namespace Entidades
     
     public partial class tbl_Caracteristicas
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tbl_Caracteristicas()
+        {
+            this.tbl_Anuncio_Lugar = new HashSet<tbl_Anuncio_Lugar>();
+            this.tbl_Anuncio_Servicio = new HashSet<tbl_Anuncio_Servicio>();
+        }
+    
         public int id_caracteristica { get; set; }
         public Nullable<int> grupo_caracteristica { get; set; }
         public string codigo_caracteristica { get; set; }
@@ -24,6 +31,10 @@ namespace Entidades
         public Nullable<int> usuario_edicion { get; set; }
         public Nullable<System.DateTime> fecha_edicion { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_Anuncio_Lugar> tbl_Anuncio_Lugar { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_Anuncio_Servicio> tbl_Anuncio_Servicio { get; set; }
         public virtual tbl_Grupo_Detalle tbl_Grupo_Detalle { get; set; }
     }
 }

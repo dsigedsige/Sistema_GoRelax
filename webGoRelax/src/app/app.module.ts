@@ -54,6 +54,7 @@ import { FiltergroupPipe } from './pipes/filtergroup.pipe';
 import { RegistroComponent } from './pages/registro/registro.component';
 import { ListpublicacionComponent } from './pages/publicar/listpublicacion/listpublicacion.component';
 import { ItempublicacionComponent } from './pages/publicar/itempublicacion/itempublicacion.component';
+import { FiltercaracteristPipe } from './pipes/filtercaracterist.pipe';
 
 
  
@@ -76,6 +77,7 @@ import { ItempublicacionComponent } from './pages/publicar/itempublicacion/itemp
     RegistroComponent,
     ListpublicacionComponent,
     ItempublicacionComponent,
+    FiltercaracteristPipe,
  
   ],
   imports: [

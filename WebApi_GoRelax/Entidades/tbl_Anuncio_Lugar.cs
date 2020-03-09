@@ -23,6 +23,6 @@ namespace Entidades
         public Nullable<System.DateTime> fecha_creacion { get; set; }
     
         public virtual tbl_Anuncio tbl_Anuncio { get; set; }
-        public virtual tbl_Lugares tbl_Lugares { get; set; }
+        public virtual tbl_Caracteristicas tbl_Caracteristicas { get; set; }
     }
 }

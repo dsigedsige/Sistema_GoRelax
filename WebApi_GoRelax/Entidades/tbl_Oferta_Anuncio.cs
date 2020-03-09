@@ -12,13 +12,14 @@ namespace Entidades
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_Servicios
+    public partial class tbl_Oferta_Anuncio
     {
-        public int id_servicio { get; set; }
-        public string tipo_servicio { get; set; }
-        public string codigo_servicio { get; set; }
-        public string descripcion_servicio { get; set; }
-        public string abreviatura_servicio { get; set; }
+        public int id_Oferta { get; set; }
+        public int id_Anuncio { get; set; }
+        public string precioActual_Oferta { get; set; }
+        public Nullable<decimal> precio_Oferta { get; set; }
+        public string mensaje_Oferta { get; set; }
+        public Nullable<int> tiempo_Oferta { get; set; }
         public Nullable<int> estado { get; set; }
         public Nullable<int> usuario_creacion { get; set; }
         public Nullable<System.DateTime> fecha_creacion { get; set; }
