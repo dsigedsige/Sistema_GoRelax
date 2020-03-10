@@ -70,10 +70,12 @@ export class PublicarService {
   }
 
   saveTarifas(objTarifa:any[]){
+    JSON.stringify(objTarifa)
     return this.http.post(this.URL + 'Publicar', JSON.stringify(objTarifa) ,  httpOptions);
   }
 
   saveHorarios(objHorario:any[]){
+    JSON.stringify(objHorario)
    return this.http.post(this.URL + 'Publicar/post_horarioAnuncio', JSON.stringify(objHorario) ,  httpOptions);
   }
 
@@ -90,7 +92,6 @@ export class PublicarService {
   
   //----caracteristicas---
   saveCaracteristicas(obj:any[]){
-    console.log(JSON.stringify(obj))
     return this.http.post(this.URL + 'Publicar/post_caracteristicaAnuncio', JSON.stringify(obj) ,  httpOptions);
   }
 
@@ -120,6 +121,16 @@ export class PublicarService {
 
     return this.http.get(this.URL + 'Publicar' , {params: parametros});
   }
+
+
+  verificarMultimedia(idAnuncio:number, tipoArchivo:string){ 
+    let parametros = new HttpParams();
+    parametros = parametros.append('opcion', '8');
+    parametros = parametros.append('filtro', idAnuncio + '|' +  tipoArchivo);
+
+    return this.http.get(this.URL + 'Publicar' , {params: parametros});
+  }
+
 
 
 }

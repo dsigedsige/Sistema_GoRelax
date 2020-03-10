@@ -4,10 +4,11 @@ import { PublicarService } from '../../../services/publicar/publicar.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { AlertasService } from '../../../services/alertas/alertas.service';
 import { LoginService } from '../../../services/login/login.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { InputFileI } from 'src/app/model/inputfile.interface';
 import { markerI } from 'src/app/model/market.interface';
 import { MapsAPILoader, MouseEvent } from '@agm/core';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-itempublicacion',
@@ -56,23 +57,44 @@ export class ItempublicacionComponent implements OnInit {
   zoom: number;
   address: string;
   private geoCoder;
+  flag_edicion=false;
 
   @ViewChild('search', {static: false})
   public searchElementRef: ElementRef;
 
   constructor(private  publicarService:PublicarService,  private spinner: NgxSpinnerService, private alertasService:AlertasService, 
               private loginService: LoginService,private router:Router,private chRef: ChangeDetectorRef, private fb: FormBuilder,  
-              private mapsAPILoader: MapsAPILoader, private ngZone: NgZone ) {   
+              private mapsAPILoader: MapsAPILoader, private ngZone: NgZone, private activatedRoute: ActivatedRoute ) {   
                 
     //---obteniendo el id del usuario, verificando si esta logeasdo ----
     this.idUserGlobal = this.loginService.getSession();
-    this.idAnuncioGlobal = 0;
-
 
     if ( !this.idUserGlobal) {   
       this.router.navigateByUrl('/home');
       return;
     }
+
+    //---obtener el parametro que viene por la url
+    this.activatedRoute.params.subscribe(params=>{
+      let urlValor = params['id_anuncio'];
+
+      if (isNaN(urlValor)) {
+        this.router.navigateByUrl('/home');
+        return;
+      }
+
+      if (urlValor ==0) { ///---nuevo 
+        this.idAnuncioGlobal =0; 
+        this.flag_edicion =false;
+
+        console.log('nuevo')
+      }else{  //----edicion
+        this.idAnuncioGlobal =urlValor; 
+        this.flag_edicion =true;
+        console.log('Editar')
+      }
+    })
+
     this.inicializarFormularioAnuncio();
     this.inicializarFormularioTarifa();
     this.inicializarFormularioHorarios();
@@ -80,23 +102,12 @@ export class ItempublicacionComponent implements OnInit {
     this.inicializarFormularioCaracteristica();
     this.inicializarFormularioServicios();
 
-    this.getCategorias();
-    this.getDepartamento();
-    this.getEdad();
-    this.getOpcionHorario();
-
-    this.getNacionalidad();
-    this.getPieles();
-    this.getCabellos();
-    this.getEstatura();
-    this.getCuerpos();
-    this.getPechos();
-    this.getPubis();
-    this.getServicios();
+    ///----combos, listas etc----
+    this.getInicializandoDatos();
 
   }
 
-  ngOnInit() {
+  ngOnInit() { 
     //load Places Autocomplete
     this.mapsAPILoader.load().then(() => {   
       this.setCurrentLocation();
@@ -124,6 +135,22 @@ export class ItempublicacionComponent implements OnInit {
     });
   }
 
+
+  getInicializandoDatos(){
+    this.getCategorias();
+    this.getDepartamento();
+    this.getEdad();
+    this.getOpcionHorario();
+
+    this.getNacionalidad();
+    this.getPieles();
+    this.getCabellos();
+    this.getEstatura();
+    this.getCuerpos();
+    this.getPechos();
+    this.getPubis();
+    this.getServicios();
+  }
 
    // Get Current Location Coordinates
    private setCurrentLocation() { 
@@ -164,33 +191,60 @@ export class ItempublicacionComponent implements OnInit {
     });
   }
 
-
-
-
   inicializarFormularioAnuncio(){
-    this.formParams = new FormGroup({
-      id_Anuncio : new FormControl(this.idAnuncioGlobal), 
-      id_Usuario : new FormControl(this.idUserGlobal),  
-      email_usuario : new FormControl(''),
-      id_Categoria : new FormControl('0',[Validators.required]),
-      CodigoPostal_Usuario : new FormControl(''),
-      telefono_Anuncion : new FormControl('',[Validators.required]),
-      id_Departemento : new FormControl('0',[Validators.required]),
-      id_Distrito : new FormControl('0',[Validators.required]),
-      titulo_anuncio : new FormControl('',[Validators.required]),
-      descripcion_anuncio : new FormControl('',[Validators.required]),
-      nombre_anuncio : new FormControl('',[Validators.required]),
-      edad_anuncio : new FormControl('18'),
-      audio_anuncio : new FormControl(''),
-      contactoWhatsapp : new FormControl(''),
-      estado  : new FormControl('1'),
-      usuario_creacion  : new FormControl(this.idUserGlobal),
-      fecha_creacion : new FormControl(''),
-      portada : new FormControl(''),
-      tipo_Anuncio : new FormControl('0'),
-      latitud_anuncio : new FormControl(''),
-      longitud_anuncio : new FormControl(''),
-     })
+    if ( this.flag_edicion==false) { //// nuevo
+      this.formParams = new FormGroup({
+        id_Anuncio : new FormControl(this.idAnuncioGlobal), 
+        id_Usuario : new FormControl(this.idUserGlobal),  
+        email_usuario : new FormControl(''),
+        id_Categoria : new FormControl('0',[Validators.required]),
+        CodigoPostal_Usuario : new FormControl(''),
+        telefono_Anuncion : new FormControl('',[Validators.required]),
+        id_Departemento : new FormControl('0',[Validators.required]),
+        id_Distrito : new FormControl('0',[Validators.required]),
+        titulo_anuncio : new FormControl('',[Validators.required]),
+        descripcion_anuncio : new FormControl('',[Validators.required]),
+        nombre_anuncio : new FormControl('',[Validators.required]),
+        edad_anuncio : new FormControl('18'),
+        audio_anuncio : new FormControl(''),
+        contactoWhatsapp : new FormControl(''),
+        estado  : new FormControl('1'),
+        usuario_creacion  : new FormControl(this.idUserGlobal),
+        fecha_creacion : new FormControl(''),
+        portada : new FormControl(''),
+        tipo_Anuncio : new FormControl('0'),
+        latitud_anuncio : new FormControl(''),
+        longitud_anuncio : new FormControl(''),
+       })
+    }else{  ////--- ediciion 
+
+      this.formParams = new FormGroup({
+        id_Anuncio : new FormControl(this.idAnuncioGlobal), 
+        id_Usuario : new FormControl(this.idUserGlobal),  
+        email_usuario : new FormControl(''),
+        id_Categoria : new FormControl('0',[Validators.required]),
+        CodigoPostal_Usuario : new FormControl(''),
+        telefono_Anuncion : new FormControl('',[Validators.required]),
+        id_Departemento : new FormControl('0',[Validators.required]),
+        id_Distrito : new FormControl('0',[Validators.required]),
+        titulo_anuncio : new FormControl('',[Validators.required]),
+        descripcion_anuncio : new FormControl('',[Validators.required]),
+        nombre_anuncio : new FormControl('',[Validators.required]),
+        edad_anuncio : new FormControl('18'),
+        audio_anuncio : new FormControl(''),
+        contactoWhatsapp : new FormControl(''),
+        estado  : new FormControl('1'),
+        usuario_creacion  : new FormControl(this.idUserGlobal),
+        fecha_creacion : new FormControl(''),
+        portada : new FormControl(''),
+        tipo_Anuncio : new FormControl('0'),
+        latitud_anuncio : new FormControl(''),
+        longitud_anuncio : new FormControl(''),
+       })
+
+    }
+
+
   }
 
   inicializarFormularioTarifa(){
@@ -263,11 +317,9 @@ export class ItempublicacionComponent implements OnInit {
       id_AnuncioServicio: ['0'],
       id_Anuncio: [this.idAnuncioGlobal],
       idGrupoServicio: [''],
-      id_servicio: [''],
-      listServicio: new FormArray([]),
+      id_servicio: ['0'],
       estado: ['1'],
-      usuario_creacion: [this.idUserGlobal],
- 
+      usuario_creacion: [this.idUserGlobal], 
     });
 
   } 
@@ -382,18 +434,41 @@ export class ItempublicacionComponent implements OnInit {
   } 
  
   saveAnuncios(){
-      this.spinner.show();    
+      this.spinner.show();   
+      
+      this.formParams.patchValue({"id_Anuncio": 325});   
+
       this.publicarService.saveAnuncios(this.formParams.value)
       .subscribe(
-        (res:any) => {  
-          console.log('res', res)  
-          this.spinner.hide();              
-          this.idAnuncioGlobal = res.id_Anuncio;          
+        (res:any) => {      
+          this.idAnuncioGlobal = res.id_Anuncio;        
+          
+          //----- convirtiendo la publicacion en edicion-----
+          this.router.navigateByUrl('/publicacion/' +  this.idAnuncioGlobal);
+
+          ///---- inicializando la variable del IdAnuncio-----------------------
+          this.formParamsTarifa.patchValue({"id_Anuncio": this.idAnuncioGlobal});
+          this.formParamsHorario.patchValue({"id_Anuncio": this.idAnuncioGlobal});
+          this.formParamsMultimedia.patchValue({"id_Anuncio": this.idAnuncioGlobal});          
+          this.formParamsCaracteristica.patchValue({"id_Anuncio": this.idAnuncioGlobal});
+          this.formParamsServicios.patchValue({"id_Anuncio": this.idAnuncioGlobal});
+          // ///---- Fin de inicializando la variable del IdAnuncio-----------------------
+                this.saveTarifa();
+                this.saveHorarios();
+                this.saveMultimedia(1);
+                this.saveMultimedia(2);
+                this.saveApariencia();
+                this.saveServicios();
+                this.saveLugarEncuentro();
+                this.saveUbicacion();     
+                
+                console.log('fin de Todo')
+                
         },
         error => {
           this.spinner.hide();
           this.idAnuncioGlobal = 0;
-          alert(JSON.stringify(error))          
+          alert('Error: Anuncio :'  + JSON.stringify(error))          
           console.log('error', error)
         },
       )  
@@ -414,7 +489,6 @@ export class ItempublicacionComponent implements OnInit {
     this.tarifas.push(this.formParamsTarifa.value); 
    ///--- limpiando ----
     this.formParamsTarifa.patchValue({"descripcion_tarifa":  '', "precio_tarifa" : ''});
-
   }
   
   eliminarTarifa(tarifa){
@@ -424,21 +498,28 @@ export class ItempublicacionComponent implements OnInit {
 
   saveTarifa(){
     if (this.tarifas.length> 0) {   
-      this.spinner.show();   
+     ////----actualizo el idAnuncio---
+      for (let obj of this.tarifas) {
+        obj.id_Anuncio = this.idAnuncioGlobal;
+      }
+      Swal.fire({
+        title: 'Sistemas',
+        text: 'Por favor espere ...',
+        icon: 'info',
+      })
+      Swal.showLoading(); 
       this.publicarService.saveTarifas(this.tarifas)
           .subscribe(
             (res:any) => {
               console.log(res);
-              this.spinner.hide();
               if (res.ok==true) {               
                   
               }else{
-                alert(JSON.stringify(res.data));
+                alert('Error: Tarifa :' + JSON.stringify(res.data));
               }                                         
             },
             error => {
-              this.spinner.hide();
-              alert(error)
+              alert('Error: Tarifa :' + error)
             },
           )
     }
@@ -535,43 +616,43 @@ export class ItempublicacionComponent implements OnInit {
 
     this.horarios= [];
     this.horarios.push(this.formParamsHorario.value);
-
-    this.spinner.show();   
+ 
     this.publicarService.saveHorarios(this.horarios)
         .subscribe(
           (res:any) => {
-            this.spinner.hide();
             if (res.ok==true) {               
                 
             }else{
-              alert(JSON.stringify(res.data));
+              alert('Error Horario :' + JSON.stringify(res.data));
             }                                         
           },
           error => {
-            this.spinner.hide();
-            alert(error)
+            alert( 'Error Horario :' + JSON.stringify(error))
           },
         )
 
+  }else{ //// opcion multiple de horas 
 
-  }else{ //// opcion multiple de horas   
+    if (this.horarios.length> 0) {  
 
-    if (this.horarios.length> 0) {   
-      this.spinner.show();   
+      //----refrescando el IdAnuncio---
+      for (let obj of this.horarios) {
+        obj.id_Anuncio = this.idAnuncioGlobal;
+      }
+ 
       this.publicarService.saveHorarios(this.horarios)
           .subscribe(
             (res:any) => {
               console.log(res);
-              this.spinner.hide();
+
               if (res.ok==true) {               
                   
               }else{
-                alert(JSON.stringify(res.data));
+                alert('Error Horario :' + JSON.stringify(res.data));
               }                                         
             },
             error => {
-              this.spinner.hide();
-              alert(error)
+              alert('Error Horario :' + JSON.stringify(error));
             },
           )
     }     
@@ -667,7 +748,20 @@ export class ItempublicacionComponent implements OnInit {
           (err) => enviarServidor(index+ 1),
         );
     }
-    enviarServidor(0);
+   
+    let tipoArchivo = (tipoFile==1) ? "1" : "2";
+    this.publicarService.verificarMultimedia(this.idAnuncioGlobal,  tipoArchivo )
+    .subscribe(
+      (res:any) => {
+        if (res =="OK") {               
+          enviarServidor(0);
+        }                                        
+      },
+      error => {
+        alert('Error Horario :' + JSON.stringify(error));
+      },
+    )
+
   }
 
  /// FIN DE MULTIMEDIA
@@ -686,21 +780,19 @@ export class ItempublicacionComponent implements OnInit {
     
     //----formateando-----
     this.formParamsCaracteristica.patchValue({"atencion_Mujer": atencionMujer , "atencion_Parejas" : atencionParejas, "atencion_Discapacitados" :  atencionDiscapa, "atencion_Hombres": atencionMan , "medioPago_Efectivo" : efectivo, "medioPago_Tarjeta" :  tarjeta,});
-
+   
     this.publicarService.saveCaracteristicas(this.formParamsCaracteristica.value)
         .subscribe(
           (res:any) => {
             console.log(res)
-            this.spinner.hide();
             if (res.ok==true) {               
                 
             }else{
-              alert(JSON.stringify(res.data));
+              alert('Error Apariencia :' + JSON.stringify(res.data));
             }                                         
           },
           error => {
-            this.spinner.hide();
-            alert(JSON.stringify(error))
+            alert('Error Apariencia :' + JSON.stringify(error))
           },
         )   
 
@@ -732,32 +824,39 @@ export class ItempublicacionComponent implements OnInit {
 
   saveServicios(){
     var serviciosBD = [];
-     const formArray: FormArray = this.formParamsServicios.get('listServicio') as FormArray;  
-     formArray.controls.forEach((ctrl: FormControl) => {
+    for (let obj of this.servicios) {
+      if (obj.grupo_caracteristica == 8 || obj.grupo_caracteristica == 9 ) {
+        if (obj.checkeado ==true) {
           serviciosBD.push({
             id_AnuncioServicio: this.formParamsServicios.value.id_AnuncioServicio,
-            id_Anuncio: this.formParamsServicios.value.id_Anuncio,
-            idGrupoServicio: this.formParamsServicios.value.idGrupoServicio,
-            id_servicio: ctrl.value,
+            id_Anuncio: this.idAnuncioGlobal,
+            idGrupoServicio: obj.grupo_caracteristica,
+            id_servicio: obj.id_caracteristica,
             estado:this.formParamsServicios.value.estado,
             usuario_creacion: this.formParamsServicios.value.usuario_creacion,
-          });
-      }); 
-  
+          })
+        }
+      }
+    }  
       if ( serviciosBD.length> 0) {    
-        this.spinner.show();  
+        Swal.fire({
+          title: 'Sistemas',
+          text: 'Por favor espere ...',
+          icon: 'info',
+        })
+        Swal.showLoading();
           this.publicarService.saveServicios(serviciosBD)
             .subscribe((res:any) => {
                 console.log(res)
-                this.spinner.hide();
+                Swal.close();
                 if (res.ok==true) {               
                     
                 }else{
-                  alert(JSON.stringify(res.data));
+                  alert(' Error Servicios :' + JSON.stringify(res.data));
                 }                                         
               }, error => {
-                this.spinner.hide();
-                alert(JSON.stringify(error))
+                Swal.close();
+                alert(' Error Servicios :' + JSON.stringify(error))
               },
             )     
       }  
@@ -793,7 +892,8 @@ export class ItempublicacionComponent implements OnInit {
               alert(JSON.stringify(res.data));
             } 
           }, (error)=>{
-            
+            this.spinner.hide();
+            alert(JSON.stringify(error));
           })
     }
   }
@@ -801,7 +901,6 @@ export class ItempublicacionComponent implements OnInit {
   ///ESTABLECIENDO MI UBICACION GOOGLE MAPS
 
   saveUbicacion(){
-
    this.spinner.show();
     this.publicarService.saveCoordenadas( this.idAnuncioGlobal, this.latitude, this.longitude )
         .subscribe((res:any)=>{
@@ -810,17 +909,15 @@ export class ItempublicacionComponent implements OnInit {
           if (res.ok==true) {               
               
           }else{
-            alert(JSON.stringify(res.data));
+            alert('Error Mapa :' +JSON.stringify(res.data));
           } 
         }, (error)=>{
-          
+          this.spinner.hide();
+          alert('Error Mapa :' +JSON.stringify(error));
         })
 
   }
   ///FIN ESTABLECIENDO MI UBICACION GOOGLE MAPS
-
-
-
 
   //------PARTE FINAL ALMACENAMIENTO GENERAL
 
@@ -903,10 +1000,7 @@ export class ItempublicacionComponent implements OnInit {
 
   /// Fin de validacion apariencia 
 
-
-
-
-
+    this.saveAnuncios();
    }
 
   ////--- FIN DE ALMACENAMIENTO GENERAL

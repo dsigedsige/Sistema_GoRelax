@@ -7,6 +7,7 @@
         <div class="card bg-dark">
             <div class="card-body">
                 <h4 class="card-title">Datos del anuncio</h4>
+
                 <div class="bodyAnuncio">
                     <form [formGroup]="formParams">
                         <div class="row mb-1">
@@ -65,7 +66,7 @@
                               <input class="form-check-input" type="checkbox" formControlName="contactoWhatsapp" > Contacto por  whatsapp
                             </label>
                         </div>
-                        <button type="button" class="btn btn-success" (click)="saveAnuncios();"> Grabar</button>
+                        <!-- <button type="button" class="btn btn-success" (click)="saveAnuncios();"> Grabar</button> -->
                     </form>
                 </div>
             </div>
@@ -115,7 +116,7 @@
                                 </tbody>
                             </table>
 
-                            <button type="button" class="btn btn-success" (click)="saveTarifa();"> Grabar</button>
+                            <!-- <button type="button" class="btn btn-success" (click)="saveTarifa();"> Grabar</button> -->
 
                         </div>
                     </div>
@@ -170,9 +171,7 @@
                                     </div>
                                 </div>
                             </form>
-
                             <hr>
-
                             <table class="table table-striped animated fadeInDown " *ngIf="!flagAllDias">
                                 <thead class="thead-dark ">
                                     <tr>
@@ -193,17 +192,13 @@
                                     </tr>
                                 </tbody>
                             </table>
-
-                            <button type="button" class="btn btn-success" (click)="saveHorarios();" tooltip="Grabar horario"> Grabar</button>
-
-
-
-
+                            <!-- <button type="button" class="btn btn-success" (click)="saveHorarios();" tooltip="Grabar horario"> Grabar</button> -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <br>
         <div class="row mb-1">
             <div class="col">
@@ -239,9 +234,7 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
         <br>
 
@@ -288,7 +281,7 @@
         <br>
         <div class="row mb-1">
             <div class="col">
-                <div class="card text-white bg-dark">
+                <div class="card text-white bg-info">
                     <div class="card-body">
                         <h4 class="card-title">Apariencia</h4>
                         <div class="bodyAnuncio">
@@ -308,6 +301,14 @@
                                             <select class="form-control" id="cbo_piel" formControlName="id_Piel">
                                                 <option value="0"> [ --SELECCIONE-- ]</option>
                                                 <option [value]="piel.id_caracteristica" *ngFor="let piel of pieles">{{piel.descripcion_caracteristica}}</option>
+                                              </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for=""> Cabello : </label>
+                                            <br>
+                                            <select class="form-control" id="cbo_cabello" formControlName="id_Cabello">
+                                                <option value="0"> [ --SELECCIONE-- ]</option>
+                                                <option [value]="pelo.id_caracteristica" *ngFor="let pelo of cabellos">{{pelo.descripcion_caracteristica}}</option>
                                               </select>
                                         </div>
                                     </div>
@@ -354,16 +355,7 @@
                                 </div>
 
                                 <hr style="background-color: aquamarine;">
-                                <div class="row mb-1" style="margin-left: 0px;">
-                                    <div class="col-xs-12 col-md-6">
-                                        <label for=""> Cabello : </label>
-                                        <br>
-                                        <select class="form-control" id="cbo_cabello" formControlName="id_Cabello">
-                                            <option value="0"> [ --SELECCIONE-- ]</option>
-                                            <option [value]="pelo.id_caracteristica" *ngFor="let pelo of cabellos">{{pelo.descripcion_caracteristica}}</option>
-                                          </select>
-                                    </div>
-                                </div>
+
 
                                 <div class="row " style="margin-left: 0px;">
                                     <div class="col-xs-12 col-md-12">
@@ -416,7 +408,7 @@
                                 </div>
                             </form>
 
-                            <button type="button" class="btn btn-success" (click)="saveApariencia();" tooltip="Grabar Caracteristicas"> Grabar</button>
+                            <!-- <button type="button" class="btn btn-success" (click)="saveApariencia();" tooltip="Grabar Caracteristicas"> Grabar</button> -->
                         </div>
                     </div>
                 </div>
@@ -426,55 +418,62 @@
 
         <div class="row mb-1">
             <div class="col-xs-12 col-md-6">
-                <div class="card text-white bg-info">
+                <div class="card text-white bg-dark">
                     <div class="card-body">
                         <h4 class="card-title">Servicios</h4>
                         <div class="bodyAnuncio">
-                            <form [formGroup]="formParamsServicios">
+                            <!-- <form [formGroup]="formParamsServicios">
                                 <div class="custom-control custom-checkbox custom-control-inline" *ngFor="let ser of servicios | filtercaracterist : 8">
                                     <input type="checkbox" [id]="ser.id_caracteristica" [value]="ser.id_caracteristica" (change)="onCheckChange($event)" class="custom-control-input">
                                     <label class="custom-control-label" [for]="ser.id_caracteristica">{{ser.descripcion_caracteristica }} </label>
                                 </div>
-                            </form>
+                            </form> -->
+
+                            <div class="custom-control custom-checkbox custom-control-inline animated fadeIn" *ngFor="let serv of servicios | filtercaracterist : 8">
+                                <input type="checkbox" [id]="serv.id_caracteristica" [(ngModel)]="serv.checkeado" class="custom-control-input">
+                                <label class="custom-control-label" [for]="serv.id_caracteristica">{{serv.descripcion_caracteristica }}  {{serv.checkeado }}  </label>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-xs-12 col-md-6 ">
-                <div class="card text-white  bg-info ">
+                <div class="card text-white  bg-dark ">
                     <div class="card-body ">
                         <h4 class="card-title ">Servicios Especiales</h4>
                         <div class="bodyAnuncio ">
-                            <form [formGroup]="formParamsServicios">
-                                <div class="custom-control custom-checkbox custom-control-inline" *ngFor="let ser of servicios | filtercaracterist : 9">
-                                    <input type="checkbox" [id]="ser.id_caracteristica" [value]="ser.id_caracteristica" (change)="onCheckChange($event)" class="custom-control-input">
-                                    <label class="custom-control-label" [for]="ser.id_caracteristica">{{ser.descripcion_caracteristica }} </label>
-                                </div>
-                            </form>
-                            <button type="button" class="btn btn-success" (click)="saveServicios();" tooltip="Grabar Servicios"> Grabar</button>
+                            <div class="custom-control custom-checkbox custom-control-inline animated fadeIn" *ngFor="let ser of servicios | filtercaracterist : 9">
+                                <input type="checkbox" [id]="ser.id_caracteristica" [(ngModel)]="ser.checkeado" class="custom-control-input">
+                                <label class="custom-control-label" [for]="ser.id_caracteristica">{{ser.descripcion_caracteristica }}  {{ser.checkeado }}  </label>
+                            </div>
+
+                            <!-- <button type="button" class="btn btn-success" (click)="saveServicios();" tooltip="Grabar Servicios"> Grabar</button> -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <br>
+
         <div class="row mb-1">
             <div class="col-xs-12 col-md-12">
                 <div class="card text-white bg-danger">
                     <div class="card-body">
                         <h4 class="card-title">Lugar de Encuentro</h4>
                         <div class="bodyAnuncio">
-                            <div class="custom-control custom-checkbox custom-control-inline" *ngFor="let lug of servicios | filtercaracterist : 10">
-                                <input type="checkbox" [id]="lug.id_caracteristica" [(ngModel)]="lug.checkeado" class="custom-control-input" (change)="onCheckChange($event)">
+                            <div class="custom-control custom-checkbox custom-control-inline animated fadeIn fast" *ngFor="let lug of servicios | filtercaracterist : 10">
+                                <input type="checkbox" [id]="lug.id_caracteristica" [(ngModel)]="lug.checkeado" class="custom-control-input">
                                 <label class="custom-control-label" [for]="lug.id_caracteristica">{{lug.descripcion_caracteristica }}  {{lug.checkeado }}  </label>
                             </div>
-                            <button type="button" class="btn btn-success" (click)="saveLugarEncuentro();" tooltip="Grabar Servicios"> Grabar</button>
+                            <!-- <button type="button" class="btn btn-success" (click)="saveLugarEncuentro();" tooltip="Grabar Servicios"> Grabar</button> -->
 
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <br>
         <div class="row mb-1">
             <div class="col-xs-12 col-md-12">
@@ -499,7 +498,7 @@
                             <!-- <div>Latitude: {{latitude}}</div>
                             <div>Longitude: {{longitude}}</div> -->
                             <br>
-                            <button type="button" class="btn btn-success" (click)="saveUbicacion();" tooltip="Grabar Servicios"> Grabar</button>
+                            <!-- <button type="button" class="btn btn-success" (click)="saveUbicacion();" tooltip="Grabar Servicios"> Grabar</button> -->
                         </div>
                     </div>
                 </div>
@@ -509,12 +508,6 @@
         <div class="text-center">
             <button type="button" class="btn btn-warning" (click)="publicarAnuncioGeneral()"> Publicar Anuncio</button>
         </div>
-
-
-
-
-
-
 
     </div>
     <br>

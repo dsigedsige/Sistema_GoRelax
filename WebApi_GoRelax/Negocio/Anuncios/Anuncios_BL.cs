@@ -1,4 +1,5 @@
 ﻿using Entidades.Anuncios;
+using Entidades.Publicacion;
 using Entidades.Publicar;
 using Negocio.Conexion;
 using Negocio.Resultados;
@@ -223,8 +224,7 @@ namespace Negocio.Anuncios
             }
             return res;
         }
-
-
+        
         public object get_categorias()
         {
             Resultado res = new Resultado();
@@ -258,7 +258,179 @@ namespace Negocio.Anuncios
             }
             return res;
         }
-               
+        
+
+        public object get_publicacionDetalle(int idAnuncio)
+        {
+            Resultado res = new Resultado();
+            Anuncios_List listaAnuncios = new Anuncios_List();
+
+            List<Anuncios_E> obj_List = new List<Anuncios_E>();
+            List<AnunciosFoto_E> obj_ListFoto = new List<AnunciosFoto_E>();
+            List<AnunciosVideo_E> obj_ListVideo = new List<AnunciosVideo_E>();
+            List<AnunciosCaracteristica_E> obj_ListCaract = new List<AnunciosCaracteristica_E>();
+                       
+
+            List<Publicacion_E> listAnuncios= new List<Publicacion_E>();
+            List<Tarifa_E> listTarifa = new List<Tarifa_E>();
+            List<Horario_E> listHorario = new List<Horario_E>();
+            List<Multimedias_E> listMultimedia = new List<Multimedias_E>();
+
+
+            try
+            {
+
+                using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("WEB_S_PUBLICACION_ANUNCIO_DETALLE", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_anuncio", SqlDbType.Int).Value = idAnuncio;
+
+                        DataTable dt_detalle = new DataTable();
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+
+                            foreach (DataRow row in dt_detalle.Rows)
+                            {
+                                Publicacion_E Entidad = new Publicacion_E();
+
+                                Entidad.id_Anuncio = Convert.ToInt32(row["id_Anuncio"].ToString());
+                                Entidad.id_Usuario = row["id_Usuario"].ToString();
+                                Entidad.email_usuario = row["email_usuario"].ToString();
+                                Entidad.id_Categoria = row["id_Categoria"].ToString();
+                                Entidad.CodigoPostal_Usuario = row["CodigoPostal_Usuario"].ToString();
+                                Entidad.telefono_Anuncion = row["telefono_Anuncion"].ToString();
+                                Entidad.id_Departemento = row["id_Departemento"].ToString();
+                                Entidad.id_Distrito = row["id_Distrito"].ToString();
+
+                                Entidad.titulo_anuncio = row["titulo_anuncio"].ToString();
+                                Entidad.descripcion_anuncio = row["descripcion_anuncio"].ToString();
+                                Entidad.nombre_anuncio = row["nombre_anuncio"].ToString();
+                                Entidad.edad_anuncio = row["edad_anuncio"].ToString();
+                                Entidad.contactoWhatsapp = row["contactoWhatsapp"].ToString();
+
+                                Entidad.estado = row["estado"].ToString();
+                                Entidad.portada = row["portada"].ToString();
+                                Entidad.tipo_Anuncio = row["tipo_Anuncio"].ToString();
+                                Entidad.latitud_anuncio = row["latitud_anuncio"].ToString();
+                                Entidad.longitud_anuncio = row["longitud_anuncio"].ToString();
+
+                                listAnuncios.Add(Entidad);
+                            }
+                        }
+                    }
+
+                    using (SqlCommand cmd = new SqlCommand("WEB_S_PUBLICACION_ANUNCIO_DET_TARIFA", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_Anuncio", SqlDbType.Int).Value = idAnuncio;
+
+                        DataTable dt_detalleTarifa = new DataTable();
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalleTarifa);
+
+                            foreach (DataRow row in dt_detalleTarifa.Rows)
+                            {
+                                Tarifa_E EntidadTar = new Tarifa_E();
+
+                                EntidadTar.id_Anuncio = Convert.ToInt32(row["id_Anuncio"].ToString());
+                                EntidadTar.id_tarifaAnuncio = row["id_tarifaAnuncio"].ToString();
+                                EntidadTar.descripcion_tarifa = row["descripcion_tarifa"].ToString();
+                                EntidadTar.precio_tarifa = row["precio_tarifa"].ToString();
+                                EntidadTar.estado = row["estado"].ToString();  
+
+                                listTarifa.Add(EntidadTar);
+                            }
+                        }
+                    }
+
+                    using (SqlCommand cmd = new SqlCommand("WEB_S_PUBLICACION_ANUNCIO_DET_HORARIO", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_Anuncio", SqlDbType.Int).Value = idAnuncio;
+
+                        DataTable dt_detalleHorario = new DataTable();
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalleHorario);
+
+                            foreach (DataRow row in dt_detalleHorario.Rows)
+                            {
+                                Horario_E EntidadHor = new Horario_E();
+
+                                EntidadHor.id_Anuncio = Convert.ToInt32(row["id_Anuncio"].ToString());
+                                EntidadHor.id_HorarioAnuncio = row["id_HorarioAnuncio"].ToString();
+                                EntidadHor.descripcion = row["descripcion"].ToString();
+                                EntidadHor.horaInicial = row["horaInicial"].ToString();
+                                EntidadHor.horaFinal = row["horaFinal"].ToString();
+                                EntidadHor.estado = row["estado"].ToString();
+
+                                listHorario.Add(EntidadHor);
+                            }
+                        }
+                    }
+
+
+
+                    using (SqlCommand cmd = new SqlCommand("WEB_S_PUBLICACION_ANUNCIO_DET_MULTIMEDIA", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_Anuncio", SqlDbType.Int).Value = idAnuncio;
+
+                        DataTable dt_detalleMultimedia = new DataTable();
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalleMultimedia);
+
+                            foreach (DataRow row in dt_detalleMultimedia.Rows)
+                            {
+                                Multimedias_E EntidadMultim = new Multimedias_E();
+
+
+                                EntidadMultim.id_Anuncio = Convert.ToInt32(row["id_Anuncio"].ToString());
+
+                                EntidadMultim.id_GaleriaAnuncio = row["id_GaleriaAnuncio"].ToString();
+                                EntidadMultim.nombre_GaleriaAnuncio = row["nombre_GaleriaAnuncio"].ToString();
+                                EntidadMultim.tipoArchivo_GaleriaAnuncio = row["tipoArchivo_GaleriaAnuncio"].ToString();
+                                EntidadMultim.estado = row["estado"].ToString();
+
+                                listMultimedia.Add(EntidadMultim);
+                            }
+                        }
+                    }
+
+
+                    listaAnuncios.list_anuncios = obj_List;
+                    listaAnuncios.list_fotos = obj_ListFoto;
+                    listaAnuncios.list_videos = obj_ListVideo;
+                    listaAnuncios.list_caracteristica = obj_ListCaract;
+
+                    res.ok = true;
+                    res.data = listaAnuncios;
+                    res.totalpage = 0;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
 
 
 

@@ -3,6 +3,8 @@ using Negocio.Registro;
 using Negocio.Resultados;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -40,6 +42,9 @@ namespace WebApi_GoRelax.Controllers.Publicar
                              {
                                  a.id_departamento,
                                  a.descripcion_departamento
+
+
+
                              }).ToList();
 
                 }
@@ -106,6 +111,22 @@ namespace WebApi_GoRelax.Controllers.Publicar
                     Registro_BL obj_negocio = new Registro_BL();
                     resul = obj_negocio.set_grabarCoordinadasMapa(idAnuncio, latitud, longitud);
                 }
+                else if (opcion == 8)
+                {
+                    string[] parametros = filtro.Split('|');
+                    int idAnuncio = Convert.ToInt32(parametros[0].ToString());
+                    string tipoArchivo = parametros[1].ToString();
+
+                    
+
+                    /// eliminando en bloque ------
+                    db.tbl_Anuncio_Galeria.RemoveRange(db.tbl_Anuncio_Galeria.Where(c => c.id_Anuncio == idAnuncio  &&  c.tipoArchivo_GaleriaAnuncio == tipoArchivo));
+                    db.SaveChanges();
+                    /// eliminando en bloque ------
+
+                    resul = "OK";
+
+                }
                 else
                 {
                     resul = "Opcion seleccionada invalida";
@@ -124,6 +145,20 @@ namespace WebApi_GoRelax.Controllers.Publicar
             Resultado res = new Resultado();
             try
             {
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                ///----eliminando todo los detalles,  para agregar en bloque .....                
+                if (listAnuncio.Count > 0)
+                {
+                    int idAnuncio = listAnuncio[0].id_Anuncio;
+                    db.tbl_Anuncio_Tarifa.RemoveRange(db.tbl_Anuncio_Tarifa.Where(c => c.id_Anuncio == idAnuncio));
+                    db.SaveChanges();
+                }
+
                 foreach (var tarifa in listAnuncio)
                 {
                     tarifa.fecha_creacion = DateTime.Now;
@@ -158,14 +193,22 @@ namespace WebApi_GoRelax.Controllers.Publicar
         public object post_horarioAnuncio(List<tbl_Anuncio_Horarios> listAnuncioHorario)
         {
             Resultado res = new Resultado();
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             try
             {
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                ///----eliminando todo los detalles,  para agregar en bloque .....                
+                if (listAnuncioHorario.Count > 0)
+                {
+                    int idAnuncio = Convert.ToInt32(listAnuncioHorario[0].id_Anuncio);
+                    db.tbl_Anuncio_Horarios.RemoveRange(db.tbl_Anuncio_Horarios.Where(c => c.id_Anuncio == idAnuncio));
+                    db.SaveChanges();
+                }
+
                 foreach (var horario in listAnuncioHorario)
                 {
                     horario.fecha_creacion = DateTime.Now;
@@ -204,19 +247,59 @@ namespace WebApi_GoRelax.Controllers.Publicar
             Resultado res = new Resultado();
             try
             {
-
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
                 }
+                if (db.tbl_Anuncio.Count((a) => a.id_Anuncio == tbl_Anuncio_Caracteristicas.id_Anuncio) == 0) //---- nuevo
+                {
 
-                tbl_Anuncio_Caracteristicas.fecha_creacion = DateTime.Now;
-                db.tbl_Anuncio_Caracteristicas.Add(tbl_Anuncio_Caracteristicas);
-                db.SaveChanges();
- 
-                res.ok = true;
-                res.data = "OK";
-                res.totalpage = 0;
+                    tbl_Anuncio_Caracteristicas.fecha_creacion = DateTime.Now;
+                    db.tbl_Anuncio_Caracteristicas.Add(tbl_Anuncio_Caracteristicas);
+                    db.SaveChanges();
+
+                    res.ok = true;
+                    res.data = "OK";
+                    res.totalpage = 0;
+
+                }
+                else {   ///----editar
+
+                    tbl_Anuncio_Caracteristicas objReemplazar;
+                    objReemplazar = db.tbl_Anuncio_Caracteristicas.Where(v => v.id_Anuncio == tbl_Anuncio_Caracteristicas.id_Anuncio).FirstOrDefault<tbl_Anuncio_Caracteristicas>();
+
+                    objReemplazar.id_Nacionalidad = tbl_Anuncio_Caracteristicas.id_Nacionalidad;
+                    objReemplazar.id_Piel = tbl_Anuncio_Caracteristicas.id_Piel;
+                    objReemplazar.id_Cabello = tbl_Anuncio_Caracteristicas.id_Cabello;
+                    objReemplazar.id_Estatura = tbl_Anuncio_Caracteristicas.id_Estatura;
+
+                    objReemplazar.id_Cuerpo = tbl_Anuncio_Caracteristicas.id_Cuerpo;
+                    objReemplazar.id_Pechos = tbl_Anuncio_Caracteristicas.id_Pechos;
+                    objReemplazar.id_Pubis = tbl_Anuncio_Caracteristicas.id_Pubis;
+
+                    objReemplazar.atencion_Mujer = tbl_Anuncio_Caracteristicas.atencion_Mujer;
+                    objReemplazar.atencion_Parejas = tbl_Anuncio_Caracteristicas.atencion_Parejas;
+                    objReemplazar.atencion_Discapacitados = tbl_Anuncio_Caracteristicas.atencion_Discapacitados;
+                    objReemplazar.atencion_Hombres = tbl_Anuncio_Caracteristicas.atencion_Hombres;
+                    objReemplazar.medioPago_Efectivo = tbl_Anuncio_Caracteristicas.medioPago_Efectivo;
+                    objReemplazar.medioPago_Tarjeta = tbl_Anuncio_Caracteristicas.medioPago_Tarjeta;
+
+                    db.Entry(objReemplazar).State = EntityState.Modified;
+
+                    try
+                    {
+                        db.SaveChanges();
+                        res.ok = true;
+                        res.data = "OK";
+                        res.totalpage = 0;
+                    }
+                    catch (DbUpdateConcurrencyException ex)
+                    {
+                        res.ok = false;
+                        res.data = ex.InnerException.Message;
+                        res.totalpage = 0;
+                    }
+                }
 
             }
             catch (Exception ex)
@@ -235,14 +318,21 @@ namespace WebApi_GoRelax.Controllers.Publicar
         public object post_serviciosAnuncio(List<tbl_Anuncio_Servicio> listAnuncioServices)
         {
             Resultado res = new Resultado();
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                ///----eliminando todo los detalles,  para agregar en bloque .....                
+                if (listAnuncioServices.Count > 0)
+                {
+                    int idAnuncio = Convert.ToInt32(listAnuncioServices[0].id_Anuncio);
+                    db.tbl_Anuncio_Servicio.RemoveRange(db.tbl_Anuncio_Servicio.Where(c => c.id_Anuncio == idAnuncio));
+                    db.SaveChanges();
+                }
+
                 foreach (var serv in listAnuncioServices)
                 {
                     serv.fecha_creacion = DateTime.Now;
@@ -272,22 +362,29 @@ namespace WebApi_GoRelax.Controllers.Publicar
             return res;
 
         }
-
-
+        
 
         [HttpPost]
         [Route("api/Publicar/post_lugarAnuncio")]
         public object post_lugarAnuncio(List<tbl_Anuncio_Lugar> listAnuncioLugar)
         {
             Resultado res = new Resultado();
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                ///----eliminando todo los detalles,  para agregar en bloque .....                
+                if (listAnuncioLugar.Count > 0)
+                {
+                    int idAnuncio = Convert.ToInt32(listAnuncioLugar[0].id_Anuncio);
+                    db.tbl_Anuncio_Lugar.RemoveRange(db.tbl_Anuncio_Lugar.Where(c => c.id_Anuncio == idAnuncio));
+                    db.SaveChanges();
+                }
+
+
                 foreach (var anun in listAnuncioLugar)
                 {
                     anun.fecha_creacion = DateTime.Now;

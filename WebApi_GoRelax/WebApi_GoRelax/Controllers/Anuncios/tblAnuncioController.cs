@@ -55,6 +55,14 @@ namespace WebApi_GoRelax.Controllers.Anuncios
                     Anuncios_BL obj_negocio = new Anuncios_BL();
                     resul = obj_negocio.get_categorias();
                 }
+                else if (opcion == 4)
+                {
+                    string[] parametros = filtro.Split('|');
+
+                    int id_anuncio = Convert.ToInt32(parametros[0].ToString());
+                    Anuncios_BL obj_negocio = new Anuncios_BL();
+                    resul = obj_negocio.get_publicacionDetalle(id_anuncio);
+                }
                 else
                 {
                     resul = "Opcion seleccionada invalida";
@@ -111,11 +119,50 @@ namespace WebApi_GoRelax.Controllers.Anuncios
                 return BadRequest(ModelState);
             }
 
-            tbl_Anuncio.fecha_creacion = DateTime.Now;
-            db.tbl_Anuncio.Add(tbl_Anuncio);
-            db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = tbl_Anuncio.id_Anuncio }, tbl_Anuncio);
+            if (db.tbl_Anuncio.Count((a) => a.id_Anuncio == tbl_Anuncio.id_Anuncio) == 0)
+            {
+                tbl_Anuncio.fecha_creacion = DateTime.Now;
+                db.tbl_Anuncio.Add(tbl_Anuncio);
+                db.SaveChanges();
+
+                return CreatedAtRoute("DefaultApi", new { id = tbl_Anuncio.id_Anuncio }, tbl_Anuncio);
+            }
+            else
+            {
+                tbl_Anuncio objReemplazar;
+                objReemplazar = db.tbl_Anuncio.Where(v => v.id_Anuncio == tbl_Anuncio.id_Anuncio).FirstOrDefault<tbl_Anuncio>();
+
+                objReemplazar.id_Usuario = tbl_Anuncio.id_Usuario;
+                objReemplazar.email_usuario = tbl_Anuncio.email_usuario;
+                objReemplazar.id_Categoria = tbl_Anuncio.id_Categoria;
+                objReemplazar.CodigoPostal_Usuario = tbl_Anuncio.CodigoPostal_Usuario;
+                objReemplazar.telefono_Anuncion = tbl_Anuncio.telefono_Anuncion;
+                objReemplazar.id_Departemento = tbl_Anuncio.id_Departemento;
+                objReemplazar.id_Distrito = tbl_Anuncio.id_Distrito;
+                objReemplazar.titulo_anuncio = tbl_Anuncio.titulo_anuncio;
+                objReemplazar.descripcion_anuncio = tbl_Anuncio.descripcion_anuncio;
+                objReemplazar.nombre_anuncio = tbl_Anuncio.nombre_anuncio;
+                objReemplazar.edad_anuncio = tbl_Anuncio.edad_anuncio;
+                objReemplazar.audio_anuncio = tbl_Anuncio.audio_anuncio;
+                objReemplazar.contactoWhatsapp = tbl_Anuncio.contactoWhatsapp;
+                objReemplazar.tipo_Anuncio = tbl_Anuncio.tipo_Anuncio;
+
+                objReemplazar.usuario_edicion = tbl_Anuncio.usuario_creacion;
+                objReemplazar.fecha_edicion = DateTime.Now;
+
+                db.Entry(objReemplazar).State = EntityState.Modified;
+
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                   throw;
+                }
+                return CreatedAtRoute("DefaultApi", new { id = tbl_Anuncio.id_Anuncio }, tbl_Anuncio);
+            }
         }
 
         // DELETE: api/tblAnuncio/5
