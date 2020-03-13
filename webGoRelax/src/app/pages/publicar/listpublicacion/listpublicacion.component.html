@@ -1,1 +1,52 @@
-<p>listpublicacion works!</p>
+<app-spinnerloading>
+</app-spinnerloading>
+<div class="container ">
+    <br>
+
+
+    <!-- <div class="search-results" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()" [scrollWindow]="false"> -->
+
+    <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
+        <div class="card mb-3 animated fadeIn" *ngFor="let item of publicaciones;let i = index">
+            <div class="row no-gutters">
+                <div class="col-md-3">
+                    <img [src]="item.url_fotoPortada" class="card-img img_anuncio" alt="...">
+                </div>
+                <div class="col-md-9 bg-dark">
+                    <div class="card-body ">
+                        <h5 class="card-title {{item.colorLetra_tipo}}"> {{item.descripcion_tipo}} </h5>
+                        <b>{{item.nombre_anuncio}}  {{ item.telefono_Anuncion}}</b>
+                        <p class="card-text"> {{item.titulo_anuncio}} </p>
+                    </div>
+                    <div class="card-footer border-white">
+                        <div class="row mb-2">
+                            <div class="col-sm-12 col-md-4   text-success">
+                                <b>Vistas</b> {{ item.totalvistas}}
+                            </div>
+                            <div class="col-sm-12 col-md-8   text-danger">
+                                <b>Finaliza en </b> {{ item.terminoDias}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12  col-sm-12 col-md-12 col-lg-4  text-warning">
+                                <b class="card-text"> Aumente la Exposicion  </b>
+                            </div>
+                            <div class="col-xs-12  col-sm-12 col-md-12 col-lg-8">
+                                <div class="form-group text-center">
+                                    <button type="button" class="btn btn-sm btn-outline-primary" (click)="irItemPublicacion(item)"> Modificar</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"> ver Publicacion</button>
+                                    <button type="button" class="btn btn-sm btn-outline-success">Pausar</button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger">Publicar Similar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>

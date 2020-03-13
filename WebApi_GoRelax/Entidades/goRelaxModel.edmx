@@ -90,6 +90,7 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.back_modelo' no tiene definida n
           <Property Name="estado" Type="int" />
           <Property Name="usuario_creacion" Type="int" />
           <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="url_GaleriaAnuncio" Type="varchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="tbl_Anuncio_Horarios">
           <Key>
@@ -824,6 +825,7 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
           <Property Name="estado" Type="Int32" />
           <Property Name="usuario_creacion" Type="Int32" />
           <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="url_GaleriaAnuncio" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tbl_Anuncio_Horarios">
           <Key>
@@ -1366,6 +1368,7 @@ advertencia 6002: La tabla o vista 'GoRelax.dbo.tbl_Caracteristicas_Model' no ti
           <EntitySetMapping Name="tbl_Anuncio_Galeria">
             <EntityTypeMapping TypeName="GoRelaxModel.tbl_Anuncio_Galeria">
               <MappingFragment StoreEntitySet="tbl_Anuncio_Galeria">
+                <ScalarProperty Name="url_GaleriaAnuncio" ColumnName="url_GaleriaAnuncio" />
                 <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
                 <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
                 <ScalarProperty Name="estado" ColumnName="estado" />

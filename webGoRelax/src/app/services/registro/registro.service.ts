@@ -14,10 +14,7 @@ const httpOptions = {
 })
 export class RegistroService {
 
-
-  URL:any= "/api/";
-
-  // URL:any= "http://192.168.0.4:8089/api/";
+  URL:any= "http://192.168.0.4:8089/api/";
   //URL:any= " http://www.dsige.com/WebApi_GoRelax/api/";
   
   constructor(private http:HttpClient, private loginService:LoginService) {
@@ -45,7 +42,6 @@ export class RegistroService {
     let parametros = new HttpParams();
     parametros = parametros.append('opcion', '2');
     parametros = parametros.append('filtro', idusuario + '| ' + nombreUsuario + '| ' + contrasenia );
-
 
     let infoUser = {
       id_usuario:idusuario,

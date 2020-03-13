@@ -1,4 +1,5 @@
-﻿using Negocio.Conexion;
+﻿using Entidades.Anuncios;
+using Negocio.Conexion;
 using Negocio.Resultados;
 using System;
 using System.Collections.Generic;
@@ -108,7 +109,71 @@ namespace Negocio.Registro
             }
             return res;
         }
+        
 
+        public object get_listadoPublicaciones(int idUsuario, int pageindex, int pageSise)
+        {
+            Resultado res = new Resultado();
+            int totalPage = 0;
+            List<Anuncios_E> obj_List = new List<Anuncios_E>();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("WEB_S_PUBLICACION_ANUNCIO_LISTAR", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idusuario", SqlDbType.Int).Value = idUsuario;
+                        cmd.Parameters.Add("@Pageindex", SqlDbType.Int).Value = pageindex;
+                        cmd.Parameters.Add("@Pagesize", SqlDbType.Int).Value = pageSise;
+                        DataTable dt_detalle = new DataTable();
+
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+
+                                Anuncios_E Entidad = new Anuncios_E();
+
+                                Entidad.id_Anuncio = Convert.ToInt32(dr["id_Anuncio"].ToString());             
+                      
+                                Entidad.nombre_anuncio = dr["nombre_anuncio"].ToString();
+                                Entidad.titulo_anuncio = dr["titulo_anuncio"].ToString();
+                                Entidad.telefono_Anuncion = dr["telefono_Anuncion"].ToString();
+                                Entidad.url_fotoPortada = dr["url_fotoPortada"].ToString();
+                                Entidad.descripcion_tipo = dr["descripcion_tipo"].ToString();
+                                Entidad.colorFondo_tipo = dr["colorFondo_tipo"].ToString();
+                                Entidad.colorLetra_tipo = dr["colorLetra_tipo"].ToString();
+                                Entidad.totalvistas = dr["totalvistas"].ToString();
+                                Entidad.terminoDias = dr["terminoDias"].ToString();
+
+                                obj_List.Add(Entidad);
+                            }
+                            dr.NextResult();
+
+                            while (dr.Read())
+                            {
+                                totalPage = Convert.ToInt32(dr["totalcount"]);
+                            }
+
+                            dr.Close();
+
+                            res.ok = true;
+                            res.data = obj_List;
+                            res.totalpage = totalPage;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
 
 
 

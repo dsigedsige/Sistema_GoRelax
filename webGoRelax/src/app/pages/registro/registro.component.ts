@@ -85,7 +85,7 @@ export class RegistroComponent implements OnInit {
       },
       error => {
          this.spinner.hide();
-         alert(error)
+         alert(JSON.stringify(error));
       },
     )
 
@@ -94,7 +94,6 @@ export class RegistroComponent implements OnInit {
   abrilModal_verificacion(){
     this.flagRegistro=false;
     $('#modalverificar').modal('show');
-
   }
 
   verPolitica(){

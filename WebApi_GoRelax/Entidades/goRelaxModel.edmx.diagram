@@ -6,12 +6,12 @@
     <edmx:Diagrams>
       <Diagram DiagramId="c1678248c554404da27b15a69d9309b0" Name="Diagram1" ZoomLevel="101">
         <EntityTypeShape EntityType="GoRelaxModel.tbl_Anuncio" Width="1.5" PointX="0.75" PointY="8.25" />
-        <EntityTypeShape EntityType="GoRelaxModel.tbl_Anuncio_Caracteristicas" Width="1.5" PointX="3" PointY="18.375" />
+        <EntityTypeShape EntityType="GoRelaxModel.tbl_Anuncio_Caracteristicas" Width="1.5" PointX="3" PointY="15.125" />
         <EntityTypeShape EntityType="GoRelaxModel.tbl_Anuncio_Galeria" Width="1.5" PointX="7.75" PointY="1.5" />
-        <EntityTypeShape EntityType="GoRelaxModel.tbl_Anuncio_Horarios" Width="1.5" PointX="3" PointY="15.125" />
-        <EntityTypeShape EntityType="GoRelaxModel.tbl_Anuncio_Lugar" Width="1.5" PointX="3" PointY="5.875" />
-        <EntityTypeShape EntityType="GoRelaxModel.tbl_Anuncio_Servicio" Width="1.5" PointX="6" PointY="9.75" />
-        <EntityTypeShape EntityType="GoRelaxModel.tbl_Anuncio_Tarifa" Width="1.5" PointX="3" PointY="9" />
+        <EntityTypeShape EntityType="GoRelaxModel.tbl_Anuncio_Horarios" Width="1.5" PointX="3" PointY="20.5" />
+        <EntityTypeShape EntityType="GoRelaxModel.tbl_Anuncio_Lugar" Width="1.5" PointX="6" PointY="9.875" />
+        <EntityTypeShape EntityType="GoRelaxModel.tbl_Anuncio_Servicio" Width="1.5" PointX="3" PointY="9.75" />
+        <EntityTypeShape EntityType="GoRelaxModel.tbl_Anuncio_Tarifa" Width="1.5" PointX="3" PointY="5.625" />
         <EntityTypeShape EntityType="GoRelaxModel.tbl_Caracteristicas" Width="1.5" PointX="0.75" PointY="4.625" />
         <EntityTypeShape EntityType="GoRelaxModel.tbl_Categoria" Width="1.5" PointX="9.75" PointY="1.5" />
         <EntityTypeShape EntityType="GoRelaxModel.tbl_CodigoVerificacion" Width="1.5" PointX="8.75" PointY="10.5" />
@@ -25,10 +25,10 @@
         <EntityTypeShape EntityType="GoRelaxModel.tbl_Oferta_Anuncio" Width="1.5" PointX="12.75" PointY="4.5" />
         <EntityTypeShape EntityType="GoRelaxModel.tbl_Provincia" Width="1.5" PointX="8" PointY="6.625" />
         <EntityTypeShape EntityType="GoRelaxModel.tbl_Servicios" Width="1.5" PointX="5.75" PointY="13.5" />
-        <EntityTypeShape EntityType="GoRelaxModel.tbl_Tipo_Anuncio" Width="1.5" PointX="2.75" PointY="12.5" />
-        <EntityTypeShape EntityType="GoRelaxModel.tbl_Usuarios" Width="1.5" PointX="12.75" PointY="8.5" />
-        <EntityTypeShape EntityType="GoRelaxModel.back_modelo" Width="1.5" PointX="7.75" PointY="13.5" />
-        <EntityTypeShape EntityType="GoRelaxModel.tbl_Caracteristicas_Model" Width="1.5" PointX="12.75" PointY="13.5" />
+        <EntityTypeShape EntityType="GoRelaxModel.tbl_Tipo_Anuncio" Width="1.5" PointX="12.75" PointY="8.5" />
+        <EntityTypeShape EntityType="GoRelaxModel.tbl_Usuarios" Width="1.5" PointX="7.75" PointY="13.5" />
+        <EntityTypeShape EntityType="GoRelaxModel.back_modelo" Width="1.5" PointX="12.75" PointY="11.5" />
+        <EntityTypeShape EntityType="GoRelaxModel.tbl_Caracteristicas_Model" Width="1.5" PointX="9.75" PointY="14.5" />
         <AssociationConnector Association="GoRelaxModel.FK__tbl_Anunc__id_An__7C1A6C5A" />
         <AssociationConnector Association="GoRelaxModel.FK_tbl_Horarios_tbl_Modelo" />
         <AssociationConnector Association="GoRelaxModel.FK_tbl_Lugar_Modelo_tbl_Modelo" />

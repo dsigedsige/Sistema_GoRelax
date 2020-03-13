@@ -132,8 +132,7 @@ namespace WebApi_GoRelax.Controllers.Anuncios
             {
                 tbl_Anuncio objReemplazar;
                 objReemplazar = db.tbl_Anuncio.Where(v => v.id_Anuncio == tbl_Anuncio.id_Anuncio).FirstOrDefault<tbl_Anuncio>();
-
-                objReemplazar.id_Usuario = tbl_Anuncio.id_Usuario;
+            
                 objReemplazar.email_usuario = tbl_Anuncio.email_usuario;
                 objReemplazar.id_Categoria = tbl_Anuncio.id_Categoria;
                 objReemplazar.CodigoPostal_Usuario = tbl_Anuncio.CodigoPostal_Usuario;

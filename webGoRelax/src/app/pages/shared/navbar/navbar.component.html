@@ -1,41 +1,4 @@
-<!-- <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <a class="navbar-brand" [routerLink]="['/inicio']">
-        Goo Relax
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" >
-        <ul class="navbar-nav text-center mt-1 ">
-            <button type="button" class="btn btn-warning">  Publica un Anuncio </button>
-        </ul>
-        <ul class="navbar-nav mr-auto" *ngIf="showMenu">
-            <li class="nav-item " routerLinkActive="active">
-                <a class="nav-link" [routerLink]="['home']">Publicaciones </a>
-            </li>
-            <li class="nav-item " routerLinkActive="active">
-                <a class="nav-link" [routerLink]="['home']">LanzarOferta </a>
-            </li>
-            <li class="nav-item " routerLinkActive="active">
-                <a class="nav-link" [routerLink]="['home']">EnviaMensaje </a>
-            </li>
-            <li class="nav-item " routerLinkActive="active">
-                <a class="nav-link" [routerLink]="['home']">Estadistica </a>
-            </li>
-            <li class="nav-item " routerLinkActive="active">
-                <a class="nav-link" [routerLink]="['home']">Facturacion </a>
-            </li>
-        </ul>
-         <form class="form-inline  my-2 my-lg-0">
-            <button class="btn btn-outline-success btn-sm my-2 my-sm-0" type="button"> Mi cuenta</button>
-            <button class="btn btn-outline-danger btn-sm my-2 my-sm-0 " (click)="registrarse();" type="button"> Registrate</button>
-            <button class="btn btn-outline-info btn-sm my-2 my-sm-0 " type="button"> Descarga App</button>
-        </form> 
-    </div>
-</nav> -->
-
-
+<app-spinnerloading> </app-spinnerloading>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <a class="navbar-brand" [routerLink]="['/inicio']">
@@ -48,10 +11,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item text-center " routerLinkActive="active">
-                <button type="button" class="btn btn-warning" routerLink="/publicacion/0">Publicar Anuncio </button>
+                <button type="button" class="btn btn-warning" (click)="publicar()">Publicar Anuncio </button>
             </li>
             <li class="nav-item " routerLinkActive="active" *ngIf="showMenu">
-                <a class="nav-link" [routerLink]="['home']">Publicaciones </a>
+                <a class="nav-link" [routerLink]="['publicaciones']">Publicaciones </a>
             </li>
             <li class="nav-item " routerLinkActive="active" *ngIf="showMenu">
                 <a class="nav-link" [routerLink]="['home']">LanzarOferta </a>
@@ -70,10 +33,60 @@
         <form class="form-inline my-2 my-lg-0 formBoton">
             <button class="btn btn-outline-success btn-sm my-2 my-sm-0" type="button"> Mi cuenta</button>
             <button class="btn btn-outline-danger btn-sm my-2 my-sm-0 " *ngIf="!showMenu" (click)="registrarse();" type="button"> Registrate</button>
+            <button class="btn btn-outline-danger btn-sm my-2 my-sm-0 " *ngIf="!showMenu" (click)="abrilModal_sesion();" type="button"> Iniciar Sesion</button>
             <button class="btn btn-outline-info btn-sm my-2 my-sm-0 " type="button"> Descarga App</button>
-            <button class="btn btn-outline-danger btn-sm my-2 my-sm-0 " type="button" (click)="cerrarSesion()" *ngIf="showMenu">  Cerrar Sesion</button>
+            <div class="dropdown" *ngIf="showMenu">
+                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{nameUser}}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div class="text-center">
+                        <button class="btn btn-outline-danger btn-sm my-2 my-sm-0 " type="button" (click)="cerrarSesion()">  Cerrar Sesion</button>
+                    </div>
+                </div>
+            </div>
         </form>
-
 
     </div>
 </nav>
+
+
+<div class="modal fade  " id="modalSesion" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel  " aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content bg-dark" style="border: 1px solid red;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Iniciar Sesion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <div class="loginBody animated fadeIn">
+                    <form [formGroup]="formParams">
+                        <div class="form-group">
+                            <label> Usuario</label>
+                            <input type="text" class="form-control" placeholder="Ingrese el usuario" formControlName="usuario">
+                        </div>
+                        <div class="form-group">
+                            <label> Contraseña</label>
+                            <input type="password" class="form-control" placeholder="Ingrese la contraseña" formControlName="contrasenia">
+                        </div>
+                        <div>
+                            <b (click)="SinCuenta()" style="cursor: pointer; text-decoration: underline; color: orange;"> 
+                                ¿ No tienes cuenta ?
+                            </b>
+                        </div>
+                        <br>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-outline-danger" (click)="iniciarSesion()"> Ingresar</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

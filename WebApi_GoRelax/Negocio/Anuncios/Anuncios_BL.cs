@@ -263,18 +263,16 @@ namespace Negocio.Anuncios
         public object get_publicacionDetalle(int idAnuncio)
         {
             Resultado res = new Resultado();
-            Anuncios_List listaAnuncios = new Anuncios_List();
+            Publicacion_List listaPublicacion = new Publicacion_List();
 
-            List<Anuncios_E> obj_List = new List<Anuncios_E>();
-            List<AnunciosFoto_E> obj_ListFoto = new List<AnunciosFoto_E>();
-            List<AnunciosVideo_E> obj_ListVideo = new List<AnunciosVideo_E>();
-            List<AnunciosCaracteristica_E> obj_ListCaract = new List<AnunciosCaracteristica_E>();
-                       
-
+                     
             List<Publicacion_E> listAnuncios= new List<Publicacion_E>();
             List<Tarifa_E> listTarifa = new List<Tarifa_E>();
             List<Horario_E> listHorario = new List<Horario_E>();
             List<Multimedias_E> listMultimedia = new List<Multimedias_E>();
+            List<Apariencia_E> listApariencia = new List<Apariencia_E>();
+            List<Servicios_E> listServicios = new List<Servicios_E>();
+            List<Lugar_E> listLugar = new List<Lugar_E>();
 
 
             try
@@ -379,9 +377,7 @@ namespace Negocio.Anuncios
                             }
                         }
                     }
-
-
-
+                                       
                     using (SqlCommand cmd = new SqlCommand("WEB_S_PUBLICACION_ANUNCIO_DET_MULTIMEDIA", cn))
                     {
                         cmd.CommandTimeout = 0;
@@ -404,21 +400,124 @@ namespace Negocio.Anuncios
                                 EntidadMultim.id_GaleriaAnuncio = row["id_GaleriaAnuncio"].ToString();
                                 EntidadMultim.nombre_GaleriaAnuncio = row["nombre_GaleriaAnuncio"].ToString();
                                 EntidadMultim.tipoArchivo_GaleriaAnuncio = row["tipoArchivo_GaleriaAnuncio"].ToString();
+                                EntidadMultim.url_GaleriaAnuncio = row["url_GaleriaAnuncio"].ToString();
                                 EntidadMultim.estado = row["estado"].ToString();
 
                                 listMultimedia.Add(EntidadMultim);
                             }
                         }
                     }
+                    
+                    using (SqlCommand cmd = new SqlCommand("WEB_S_PUBLICACION_ANUNCIO_DET_APARIENCIA", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_Anuncio", SqlDbType.Int).Value = idAnuncio;
 
+                        DataTable dt_detalleApariencia = new DataTable();
 
-                    listaAnuncios.list_anuncios = obj_List;
-                    listaAnuncios.list_fotos = obj_ListFoto;
-                    listaAnuncios.list_videos = obj_ListVideo;
-                    listaAnuncios.list_caracteristica = obj_ListCaract;
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalleApariencia);
+
+                            foreach (DataRow row in dt_detalleApariencia.Rows)
+                            {
+                                Apariencia_E EntidadApariencia = new Apariencia_E();
+
+                                EntidadApariencia.id_Anuncio = Convert.ToInt32(row["id_Anuncio"].ToString());
+                                EntidadApariencia.id_CaracteristicaAnuncio = row["id_CaracteristicaAnuncio"].ToString();
+                                EntidadApariencia.id_Nacionalidad = row["id_Nacionalidad"].ToString();
+                                EntidadApariencia.id_Piel = row["id_Piel"].ToString();
+                                EntidadApariencia.id_Cabello = row["id_Cabello"].ToString();
+                                EntidadApariencia.id_Estatura = row["id_Estatura"].ToString();
+                                EntidadApariencia.id_Cuerpo = row["id_Cuerpo"].ToString();
+
+                                EntidadApariencia.id_Pechos = row["id_Pechos"].ToString();
+                                EntidadApariencia.id_Pubis = row["id_Pubis"].ToString();
+                                EntidadApariencia.atencion_Mujer = row["atencion_Mujer"].ToString();
+                                EntidadApariencia.atencion_Parejas = row["atencion_Parejas"].ToString();
+
+                                EntidadApariencia.atencion_Discapacitados = row["atencion_Discapacitados"].ToString();
+                                EntidadApariencia.atencion_Hombres = row["atencion_Hombres"].ToString();
+                                EntidadApariencia.medioPago_Efectivo = row["medioPago_Efectivo"].ToString();
+                                EntidadApariencia.medioPago_Tarjeta = row["medioPago_Tarjeta"].ToString();
+                                EntidadApariencia.otro_Servicio = row["otro_Servicio"].ToString();
+                                EntidadApariencia.otro_ServicioEspecial = row["otro_ServicioEspecial"].ToString();
+                                EntidadApariencia.otro_Lugar = row["otro_Lugar"].ToString();
+                                EntidadApariencia.estado = row["estado"].ToString();
+
+                                listApariencia.Add(EntidadApariencia);
+                            }
+                        }
+                    }
+                                       
+                    using (SqlCommand cmd = new SqlCommand("WEB_S_PUBLICACION_ANUNCIO_DET_SERVICIOS", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_Anuncio", SqlDbType.Int).Value = idAnuncio;
+
+                        DataTable dt_detalleServices = new DataTable();
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalleServices);
+
+                            foreach (DataRow row in dt_detalleServices.Rows)
+                            {
+                                Servicios_E EntidadServ = new Servicios_E();
+
+                                EntidadServ.id_Anuncio = Convert.ToInt32(row["id_Anuncio"].ToString());
+                                EntidadServ.id_AnuncioServicio = row["id_AnuncioServicio"].ToString();
+                                EntidadServ.idGrupoServicio = row["idGrupoServicio"].ToString();
+                                EntidadServ.id_servicio = row["id_servicio"].ToString();
+                                EntidadServ.otro_AnuncioServicio = row["otro_AnuncioServicio"].ToString();
+                                EntidadServ.estado = row["estado"].ToString();
+
+                                listServicios.Add(EntidadServ);
+                            }
+                        }
+                    }
+                    
+                    using (SqlCommand cmd = new SqlCommand("WEB_S_PUBLICACION_ANUNCIO_DET_LUGAR", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_Anuncio", SqlDbType.Int).Value = idAnuncio;
+
+                        DataTable dt_detalleLugar = new DataTable();
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalleLugar);
+
+                            foreach (DataRow row in dt_detalleLugar.Rows)
+                            {
+                                Lugar_E EntidadLugar = new Lugar_E();
+                                
+                                EntidadLugar.id_Anuncio = Convert.ToInt32(row["id_Anuncio"].ToString());
+                                EntidadLugar.id_AnuncioLugar = row["id_AnuncioLugar"].ToString();
+                                EntidadLugar.id_lugar = row["id_lugar"].ToString();
+                                EntidadLugar.otro_AnuncioLugar = row["otro_AnuncioLugar"].ToString();
+                                EntidadLugar.estado = row["estado"].ToString();
+
+                                listLugar.Add(EntidadLugar);
+                            }
+                        }
+                    }
+                    
+
+                    listaPublicacion.list_anuncio = listAnuncios;
+                    listaPublicacion.list_tarifa = listTarifa;
+                    listaPublicacion.list_horario = listHorario;
+                    listaPublicacion.list_multimedia = listMultimedia;
+
+                    listaPublicacion.list_apariencia = listApariencia;
+                    listaPublicacion.list_servicios = listServicios;
+                    listaPublicacion.list_lugar = listLugar;
 
                     res.ok = true;
-                    res.data = listaAnuncios;
+                    res.data = listaPublicacion;
                     res.totalpage = 0;
 
                 }

@@ -22,6 +22,7 @@ namespace WebApi_GoRelax.Controllers.Registro
 
         public object Getregistro(int opcion, string filtro)
         {
+            Resultado res = new Resultado();
             object resul = null;
             try
             {
@@ -43,6 +44,34 @@ namespace WebApi_GoRelax.Controllers.Registro
 
                     Registro_BL obj_negocio = new Registro_BL();
                     resul = obj_negocio.set_actualizarRegistro(idUsuario, nombre, contra);
+                }
+                else if (opcion == 3)
+                {
+                    string[] parametros = filtro.Split('|');
+                    string nombre = parametros[0].ToString();
+                    string contra = parametros[1].ToString();
+                    
+                    var flagLogin = db.tbl_Usuarios.Count(e => e.nombre_usuario == nombre &&  e.contrasena_usuario == contra && e.estado == 1);
+
+                    if (flagLogin == 0)
+                    {
+                        res.ok = false;
+                        res.data = "El usuario y/o contraseña no son correctos, verifique";
+                        res.totalpage = 0;
+                        resul = res;
+                    }
+                    else {  
+                        res.ok = true;
+                        res.data = (from a in db.tbl_Usuarios
+                                    where a.nombre_usuario == nombre && a.contrasena_usuario == contra && a.estado == 1
+                                    select new
+                                    {
+                                        a.id_usuario,
+                                        a.nombre_usuario
+                                    }).ToList();
+                        res.totalpage = 0;
+                        resul = res;
+                    }
                 }
                 else
                 {
@@ -80,11 +109,14 @@ namespace WebApi_GoRelax.Controllers.Registro
 
                     using (var smtp = new SmtpClient())
                     {
+                        smtp.EnableSsl = true;
+                        smtp.UseDefaultCredentials = false;
+
                         var credential = new NetworkCredential("gorelax.contacto@gmail.com", "Go,123456");
                         smtp.Credentials = credential;
                         smtp.Host = "smtp.gmail.com";
                         smtp.Port = 587;
-                        smtp.EnableSsl = true;
+                
                         smtp.Send(message);
 
                         res.ok = true;

@@ -24,6 +24,16 @@ namespace Entidades.Anuncios
 
         public string latitud_anuncio { get; set; }
         public string longitud_anuncio { get; set; }
+
+        public string descripcion_tipo { get; set; }
+        public string colorFondo_tipo { get; set; }
+        public string colorLetra_tipo { get; set; }
+
+        public string totalvistas { get; set; }
+        public string terminoDias { get; set; }
+
+        
+
     }
 
     public class AnunciosFoto_E

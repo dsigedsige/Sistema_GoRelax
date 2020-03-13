@@ -192,6 +192,8 @@
                                     </tr>
                                 </tbody>
                             </table>
+
+                            <!-- {{formParamsHorario.value | json}} -->
                             <!-- <button type="button" class="btn btn-success" (click)="saveHorarios();" tooltip="Grabar horario"> Grabar</button> -->
                         </div>
                     </div>
@@ -214,10 +216,16 @@
                                 <div class="col-md-12">
                                     <div class="card-columns">
                                         <div class="card shadow tarjeta-articulo" *ngFor="let img of files; let i=index">
-                                            <img class="imgLightboxDetallado" [src]="img.urlfile">
+                                            <img class="imgPhoto" [src]="img.urlfile">
                                             <div class="card-body text-lg-center text-dark">
-                                                <p class="card-text">{{img.file.name}}</p>
-
+                                                <p class="card-text mb-2"> {{img.namefile}}</p>
+                                                <div class="txtPortada text-center">
+                                                    <div class="custom-control custom-checkbox custom-control-inline">
+                                                        <input type="checkbox" [id]="i" value="img.portada" [(ngModel)]="img.portada" (change)="change_seleccionPortada(img.portada,i)" class="custom-control-input">
+                                                        <label class="custom-control-label" *ngIf="img.portada === 0" [for]="i"> Foto Portada ?</label>
+                                                        <label class="custom-control-label text-success" style="font-size: 15px;" *ngIf="img.portada === 1" [for]="i"> Foto Portada </label>
+                                                    </div>
+                                                </div>
                                                 <div *ngIf="img.status === 'ok'">
                                                     <p class="card-text"><small class="text-success">{{img.message}}</small></p>
                                                 </div>
@@ -225,12 +233,13 @@
                                                 <div *ngIf="img.status === 'error'">
                                                     <p class="card-text text-danger"><small class="text-danger">{{img.message}}</small></p>
                                                 </div>
+                                                <button type="button" tooltip="Quitar Foto" (click)="EliminarMultimedia(img, 1)" class="btn btn-sm btn-outline-danger"> Eliminar </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-success" (click)="saveMultimedia(1);" tooltip="Grabar horario"> Grabar</button>
+                            <!-- <button type="button" class="btn btn-success" (click)="saveMultimedia(1);" tooltip="Grabar horario"> Grabar</button> -->
                         </div>
                     </div>
                 </div>
@@ -254,10 +263,12 @@
                                     <div *ngIf="filesVideos.length>0">
                                         <ul class="list-group list-group-flush">
                                             <li class="list-group-item active">Videos elegidos</li>
-                                            <li class="list-group-item list-group-item2  " *ngFor="let video of filesVideos ">
+                                            <li class="list-group-item list-group-item2  " *ngFor="let video of filesVideos ; let i=index ">
 
                                                 <div class="d-flex w-100 justify-content-between">
-                                                    {{ video.file.name}}
+                                                    <p class="card-text"> {{video.namefile}}</p>
+                                                    <button type="button" tooltip="Quitar Video" (click)="EliminarMultimedia(video, 2)" class="btn btn-sm btn-outline-danger"> Eliminar </button>
+
                                                     <div *ngIf="video.status === 'ok'">
                                                         <span class="badge badge-success badge-pill">{{video.message}}</span>
                                                     </div>
@@ -272,7 +283,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-success" (click)="saveMultimedia(2);" tooltip="Grabar video"> Grabar</button>
+
+                            <!-- <button type="button" class="btn btn-success" (click)="saveMultimedia(2);" tooltip="Grabar video"> Grabar</button> -->
+
                         </div>
                     </div>
                 </div>
@@ -408,7 +421,8 @@
                                 </div>
                             </form>
 
-                            <!-- <button type="button" class="btn btn-success" (click)="saveApariencia();" tooltip="Grabar Caracteristicas"> Grabar</button> -->
+                            <!-- {{formParamsCaracteristica.value | json}}
+                            <button type="button" class="btn btn-success" (click)="saveApariencia();" tooltip="Grabar Caracteristicas"> Grabar</button> -->
                         </div>
                     </div>
                 </div>
@@ -422,16 +436,9 @@
                     <div class="card-body">
                         <h4 class="card-title">Servicios</h4>
                         <div class="bodyAnuncio">
-                            <!-- <form [formGroup]="formParamsServicios">
-                                <div class="custom-control custom-checkbox custom-control-inline" *ngFor="let ser of servicios | filtercaracterist : 8">
-                                    <input type="checkbox" [id]="ser.id_caracteristica" [value]="ser.id_caracteristica" (change)="onCheckChange($event)" class="custom-control-input">
-                                    <label class="custom-control-label" [for]="ser.id_caracteristica">{{ser.descripcion_caracteristica }} </label>
-                                </div>
-                            </form> -->
-
                             <div class="custom-control custom-checkbox custom-control-inline animated fadeIn" *ngFor="let serv of servicios | filtercaracterist : 8">
                                 <input type="checkbox" [id]="serv.id_caracteristica" [(ngModel)]="serv.checkeado" class="custom-control-input">
-                                <label class="custom-control-label" [for]="serv.id_caracteristica">{{serv.descripcion_caracteristica }}  {{serv.checkeado }}  </label>
+                                <label class="custom-control-label" [for]="serv.id_caracteristica">{{serv.descripcion_caracteristica }}    </label>
                             </div>
                         </div>
                     </div>
@@ -444,7 +451,7 @@
                         <div class="bodyAnuncio ">
                             <div class="custom-control custom-checkbox custom-control-inline animated fadeIn" *ngFor="let ser of servicios | filtercaracterist : 9">
                                 <input type="checkbox" [id]="ser.id_caracteristica" [(ngModel)]="ser.checkeado" class="custom-control-input">
-                                <label class="custom-control-label" [for]="ser.id_caracteristica">{{ser.descripcion_caracteristica }}  {{ser.checkeado }}  </label>
+                                <label class="custom-control-label" [for]="ser.id_caracteristica">{{ser.descripcion_caracteristica }}    </label>
                             </div>
 
                             <!-- <button type="button" class="btn btn-success" (click)="saveServicios();" tooltip="Grabar Servicios"> Grabar</button> -->
@@ -464,7 +471,7 @@
                         <div class="bodyAnuncio">
                             <div class="custom-control custom-checkbox custom-control-inline animated fadeIn fast" *ngFor="let lug of servicios | filtercaracterist : 10">
                                 <input type="checkbox" [id]="lug.id_caracteristica" [(ngModel)]="lug.checkeado" class="custom-control-input">
-                                <label class="custom-control-label" [for]="lug.id_caracteristica">{{lug.descripcion_caracteristica }}  {{lug.checkeado }}  </label>
+                                <label class="custom-control-label" [for]="lug.id_caracteristica">{{lug.descripcion_caracteristica }}   </label>
                             </div>
                             <!-- <button type="button" class="btn btn-success" (click)="saveLugarEncuentro();" tooltip="Grabar Servicios"> Grabar</button> -->
 
@@ -507,9 +514,282 @@
         <hr>
         <div class="text-center">
             <button type="button" class="btn btn-warning" (click)="publicarAnuncioGeneral()"> Publicar Anuncio</button>
+
+            <button type="button" class="btn btn-warning" (click)="abrilModal_tipoAnuncio()"> Tipo de Anuncio</button>
         </div>
 
     </div>
     <br>
     <br>
+</div>
+
+
+<div class="modal fade bd-example-modal-xl" id="modalTipoAnuncio" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content modalContent_TipoAnuncio ">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> Tipo de Publicidad</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">  <span aria-hidden="true">&times;</span>      </button>
+            </div>
+            <div class="modal-body">
+
+
+                <div class="container">
+                    <h3>TOP</h3>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-deck">
+                                <div class="card shadow text-white bg-warning mb-3">
+                                    <div class="card-body text-center ">
+                                        <div class="tituloDiaAnuncio">
+                                            <a (click)="seleccionTipoAnuncio(1)" class="stretched-link"> 7 Dias</a>
+                                        </div>
+                                        <h5 class="card-title">13 Subidas por dia</h5>
+                                        <div class="text-center">
+                                            <span class="basepriceAnterior "> S/. 45</span>
+                                        </div>
+                                        <b class="card-text text-center">OFERTA</b>
+                                        <div class="text-center">
+                                            <span class="baseprice ">S/. 35</span>
+                                        </div>
+                                        <!-- <a (click)="seleccionTipoAnuncio()" style="cursor: pointer;" class="stretched-link">.</a> -->
+                                    </div>
+                                </div>
+
+                                <div class="card shadow text-white bg-warning mb-3">
+                                    <div class="card-body text-center">
+                                        <div class="tituloDiaAnuncio">
+                                            <a (click)="seleccionTipoAnuncio(2)" class="stretched-link"> 15 Dias</a>
+                                        </div>
+                                        <h5 class="card-title">26 Subidas por dia</h5>
+                                        <div class="text-center">
+                                            <span class="basepriceAnterior ">S/. 163</span>
+                                        </div>
+                                        <b class="card-text text-center">OFERTA</b>
+                                        <div class="text-center">
+                                            <span class="baseprice ">S/. 80</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card shadow text-white bg-warning mb-3">
+
+                                    <div class="card-body text-center">
+                                        <div class="tituloDiaAnuncio">
+                                            <a (click)="seleccionTipoAnuncio(3)" class="stretched-link"> 30 Dias</a>
+                                        </div>
+                                        <h5 class="card-title">50 Subidas por dia</h5>
+                                        <div class="text-center">
+                                            <span class="basepriceAnterior ">S/. 540</span>
+                                        </div>
+                                        <b class="card-text text-center">OFERTA</b>
+                                        <div class="text-center">
+                                            <span class="baseprice ">S/. 200</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>PREMIUM</h3>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-deck">
+                                <div class="card shadow text-white bg-secondary  mb-3">
+
+                                    <div class="card-body text-center">
+                                        <div class="tituloDiaAnuncio">
+                                            <a (click)="seleccionTipoAnuncio(1)" class="stretched-link"> 7 Dias</a>
+                                        </div>
+                                        <h5 class="card-title">13 Subidas por dia</h5>
+                                        <div class="text-center">
+                                            <span class="basepriceAnterior "> S/. 45</span>
+                                        </div>
+                                        <p class="card-text text-center">OFERTA</p>
+                                        <div class="text-center">
+                                            <span class="baseprice ">S/. 35</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card shadow text-white bg-secondary  mb-3">
+
+                                    <div class="card-body text-center">
+                                        <div class="tituloDiaAnuncio">
+                                            <a (click)="seleccionTipoAnuncio(1)" class="stretched-link"> 7 Dias</a>
+                                        </div>
+                                        <h5 class="card-title">26 Subidas por dia</h5>
+                                        <div class="text-center">
+                                            <span class="basepriceAnterior ">S/. 163</span>
+                                        </div>
+                                        <p class="card-text text-center">OFERTA</p>
+                                        <div class="text-center">
+                                            <span class="baseprice ">S/. 80</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card shadow text-white bg-secondary  mb-3">
+                                    <div class="card-body text-center">
+                                        <div class="tituloDiaAnuncio">
+                                            <a (click)="seleccionTipoAnuncio(1)" class="stretched-link"> 7 Dias</a>
+                                        </div>
+                                        <h5 class="card-title">50 Subidas por dia</h5>
+                                        <div class="text-center">
+                                            <span class="basepriceAnterior ">S/. 540</span>
+                                        </div>
+                                        <p class="card-text text-center">OFERTA</p>
+                                        <div class="text-center">
+                                            <span class="baseprice ">S/. 200</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <h3>VIP</h3>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-deck">
+                                <div class="card shadow text-white bg-info   mb-3">
+                                    <div class="card-body text-center">
+                                        <div class="tituloDiaAnuncio">
+                                            <a (click)="seleccionTipoAnuncio(1)" class="stretched-link"> 7 Dias</a>
+                                        </div>
+                                        <h5 class="card-title">13 Subidas por dia</h5>
+                                        <div class="text-center">
+                                            <span class="basepriceAnterior "> S/. 45</span>
+                                        </div>
+                                        <p class="card-text text-center">OFERTA</p>
+                                        <div class="text-center">
+                                            <span class="baseprice ">S/. 35</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card shadow text-white bg-info   mb-3">
+                                    <div class="card-body text-center">
+                                        <div class="tituloDiaAnuncio">
+                                            <a (click)="seleccionTipoAnuncio(1)" class="stretched-link"> 7 Dias</a>
+                                        </div>
+                                        <h5 class="card-title">26 Subidas por dia</h5>
+                                        <div class="text-center">
+                                            <span class="basepriceAnterior ">S/. 163</span>
+                                        </div>
+                                        <p class="card-text text-center">OFERTA</p>
+                                        <div class="text-center">
+                                            <span class="baseprice ">S/. 80</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card shadow text-white bg-info   mb-3">
+                                    <div class="card-body text-center">
+                                        <div class="tituloDiaAnuncio">
+                                            <a (click)="seleccionTipoAnuncio(1)" class="stretched-link"> 7 Dias</a>
+                                        </div>
+                                        <h5 class="card-title">50 Subidas por dia</h5>
+                                        <div class="text-center">
+                                            <span class="basepriceAnterior ">S/. 540</span>
+                                        </div>
+                                        <p class="card-text text-center">OFERTA</p>
+                                        <div class="text-center">
+                                            <span class="baseprice ">S/. 200</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>BASICO</h3>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-deck">
+                                <div class="card shadow text-white bg-danger    mb-3">
+                                    <div class="card-body text-center">
+                                        <div class="tituloDiaAnuncio">
+                                            <a (click)="seleccionTipoAnuncio(1)" class="stretched-link"> 7 Dias</a>
+                                        </div>
+                                        <h5 class="card-title">13 Subidas por dia</h5>
+                                        <div class="text-center">
+                                            <span class="basepriceAnterior "> S/. 45</span>
+                                        </div>
+                                        <p class="card-text text-center">OFERTA</p>
+                                        <div class="text-center">
+                                            <span class="baseprice ">S/. 35</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card shadow text-white bg-danger    mb-3">
+
+                                    <div class="card-body text-center">
+                                        <div class="tituloDiaAnuncio">
+                                            <a (click)="seleccionTipoAnuncio(1)" class="stretched-link"> 7 Dias</a>
+                                        </div>
+                                        <h5 class="card-title">26 Subidas por dia</h5>
+                                        <div class="text-center">
+                                            <span class="basepriceAnterior ">S/. 163</span>
+                                        </div>
+                                        <p class="card-text text-center">OFERTA</p>
+                                        <div class="text-center">
+                                            <span class="baseprice ">S/. 80</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card shadow text-white bg-danger    mb-3">
+                                    <div class="card-body text-center">
+                                        <div class="tituloDiaAnuncio">
+                                            <a (click)="seleccionTipoAnuncio(1)" class="stretched-link"> 7 Dias</a>
+                                        </div>
+                                        <h5 class="card-title">50 Subidas por dia</h5>
+                                        <div class="text-center">
+                                            <span class="basepriceAnterior ">S/. 540</span>
+                                        </div>
+                                        <p class="card-text text-center">OFERTA</p>
+                                        <div class="text-center">
+                                            <span class="baseprice ">S/. 200</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <h3>GRATUITA</h3>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col align-self-start">
+
+                            </div>
+                            <div class="col align-self-center">
+                                <div class="card-deck">
+                                    <div class="card shadow text-white bg-success  mb-3">
+                                        <div class="card-body text-center">
+                                            <div class="tituloDiaAnuncio">
+                                                <a (click)="seleccionTipoAnuncio(1)" class="stretched-link"> 1 Dia</a>
+                                            </div>
+                                            <h5 class="card-title">3 Subidas por dia</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col align-self-end">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>

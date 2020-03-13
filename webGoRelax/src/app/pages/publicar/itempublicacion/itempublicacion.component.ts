@@ -10,6 +10,7 @@ import { markerI } from 'src/app/model/market.interface';
 import { MapsAPILoader, MouseEvent } from '@agm/core';
 import Swal from 'sweetalert2'
 
+declare var $:any;
 @Component({
   selector: 'app-itempublicacion',
   templateUrl: './itempublicacion.component.html',
@@ -22,7 +23,7 @@ export class ItempublicacionComponent implements OnInit {
   formParamsHorario : FormGroup;
   formParamsMultimedia : FormGroup;
   formParamsCaracteristica : FormGroup;
-  formParamsServicios : FormGroup;
+ 
 
   categorias:any = [];
   departamentos:any = [];
@@ -74,43 +75,35 @@ export class ItempublicacionComponent implements OnInit {
       return;
     }
 
-    //---obtener el parametro que viene por la url
-    this.activatedRoute.params.subscribe(params=>{
-      let urlValor = params['id_anuncio'];
+   //---obtener el parametro que viene por la url
+    let urlValor = this.activatedRoute.snapshot.paramMap.get('id_anuncio');
 
-      if (isNaN(urlValor)) {
-        this.router.navigateByUrl('/home');
-        return;
-      }
+    if (isNaN(Number(urlValor))) {
+      this.router.navigateByUrl('/home');
+      return;
+    }
 
-      if (urlValor ==0) { ///---nuevo 
-        this.idAnuncioGlobal =0; 
-        this.flag_edicion =false;
+    if (Number(urlValor) == 0) { ///---nuevo 
+      this.idAnuncioGlobal =0; 
+      this.flag_edicion =false;
+      console.log('nuevo')
+    }else{  //----edicion
+      this.idAnuncioGlobal = Number(urlValor); 
+      this.flag_edicion =true;
+      console.log('Editar')
+    }
+    //--------------/
 
-        console.log('nuevo')
-      }else{  //----edicion
-        this.idAnuncioGlobal =urlValor; 
-        this.flag_edicion =true;
-        console.log('Editar')
-      }
-    })
 
-    this.inicializarFormularioAnuncio();
-    this.inicializarFormularioTarifa();
-    this.inicializarFormularioHorarios();
-    this.inicializarFormularioMultimedia();
-    this.inicializarFormularioCaracteristica();
-    this.inicializarFormularioServicios();
-
-    ///----combos, listas etc----
+    ///----Formularios , combos, listas etc----
     this.getInicializandoDatos();
-
+    this.getInicializandoFormulariosEdicion();
   }
 
   ngOnInit() { 
     //load Places Autocomplete
-    this.mapsAPILoader.load().then(() => {   
-      this.setCurrentLocation();
+    this.mapsAPILoader.load().then(() => {  
+      this.setCurrentLocation(); 
       this.geoCoder = new google.maps.Geocoder;
  
       let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
@@ -135,8 +128,13 @@ export class ItempublicacionComponent implements OnInit {
     });
   }
 
-
   getInicializandoDatos(){
+    this.inicializarFormularioAnuncio();
+    this.inicializarFormularioTarifa();
+    this.inicializarFormularioHorarios();
+    this.inicializarFormularioMultimedia();
+    this.inicializarFormularioCaracteristica();
+
     this.getCategorias();
     this.getDepartamento();
     this.getEdad();
@@ -150,6 +148,193 @@ export class ItempublicacionComponent implements OnInit {
     this.getPechos();
     this.getPubis();
     this.getServicios();
+  }
+
+  getInicializandoFormulariosEdicion(){
+    if ( this.flag_edicion == true) {  //// EDITAR  
+      Swal.fire({
+        title: 'Sistemas',
+        text: 'Por favor espere ...',
+        icon: 'info',
+      })
+      Swal.showLoading(); 
+     this.publicarService.getEdicionPublicacion(String(this.idAnuncioGlobal))
+          .subscribe(
+            (res:any) => {  
+ 
+              if (res.ok==true) {  
+
+                console.log(res.data);              
+                this.formParams.patchValue(
+                  {
+                      "id_Anuncio" : res.data.list_anuncio[0].id_Anuncio,
+                      "id_Usuario" : res.data.list_anuncio[0].id_Usuario,
+                      "email_usuario"  : res.data.list_anuncio[0].email_usuario,
+                      "id_Categoria"  : res.data.list_anuncio[0].id_Categoria,
+                      "CodigoPostal_Usuario "  : res.data.list_anuncio[0].CodigoPostal_Usuario,
+
+                      "telefono_Anuncion"  : res.data.list_anuncio[0].telefono_Anuncion,
+                      "id_Departemento"  : res.data.list_anuncio[0].id_Departemento,
+                      "id_Distrito"  : res.data.list_anuncio[0].id_Distrito,
+                      "titulo_anuncio"  : res.data.list_anuncio[0].titulo_anuncio,
+                      "descripcion_anuncio"  : res.data.list_anuncio[0].descripcion_anuncio,
+                      "nombre_anuncio"  : res.data.list_anuncio[0].nombre_anuncio,
+                      "edad_anuncio"  : res.data.list_anuncio[0].edad_anuncio,
+
+                      "audio_anuncio"  : res.data.list_anuncio[0].audio_anuncio,
+                      "contactoWhatsapp"  : res.data.list_anuncio[0].contactoWhatsapp,
+                      "estado"  : res.data.list_anuncio[0].estado,                      
+                      "portada"  : res.data.list_anuncio[0].portada,
+                      "tipo_Anuncio"  : res.data.list_anuncio[0].tipo_Anuncio,
+                      "latitud_anuncio"  : res.data.list_anuncio[0].latitud_anuncio,
+                      "longitud_anuncio"  : res.data.list_anuncio[0].longitud_anuncio
+                  });
+
+                  ///------TARIFAS-------
+
+                  this.formParamsTarifa.patchValue({"id_Anuncio": this.idAnuncioGlobal,"descripcion_tarifa":  '', "precio_tarifa" : ''});
+                  this.tarifas =[];
+
+                  if (res.data.list_tarifa.length > 0) {             
+                    this.tarifas = res.data.list_tarifa;  
+                  }
+                  
+                  ///------ HORARIOS-------
+                  if (res.data.list_horario.length > 0) {  
+
+                    let descHorario =  res.data.list_horario[0].descripcion ;
+                    this.flagAllDias = (descHorario.toLowerCase() == 'lunes a domingo') ? true : false;
+  
+                    if (this.flagAllDias ) { //// todos los dias
+  
+                      var cbo_si = (<HTMLInputElement>document.getElementById("cbo_si"))
+                      cbo_si.value = "SI";
+  
+                      var hour = this.hora24Format(res.data.list_horario[0].horaInicial, 1)
+                      var min = this.hora24Format(res.data.list_horario[0].horaInicial, 2)
+                      let timeIni = this.horalFormat(Number(hour), Number(min));
+  
+                      var hour = this.hora24Format(res.data.list_horario[0].horaFinal, 1)
+                      var min = this.hora24Format(res.data.list_horario[0].horaFinal, 2)       
+                      let timeFin = this.horalFormat(Number(hour), Number(min)); 
+                    
+                      this.formParamsHorario.patchValue({"id_Anuncio": this.idAnuncioGlobal,"descripcion":  'Lunes a Domingo', "horaInicial" : timeIni, "horaFinal" :  timeFin});
+                      
+                    }else{
+                      var cbo_si = (<HTMLInputElement>document.getElementById("cbo_si"))
+                      cbo_si.value = "NO";
+                      
+                      this.horarios = [];
+                      this.horarios = res.data.list_horario;
+                    }  
+                }
+                  ///------FOTOS-------
+
+                  this.formParamsMultimedia.patchValue({"id_Anuncio": this.idAnuncioGlobal}); 
+                  this.files = [];
+
+                   for (let foto of res.data.list_multimedia) {
+                      if(foto.tipoArchivo_GaleriaAnuncio == 1){
+                        this.files.push({
+                          'id_GaleriaAnuncio' : foto.id_GaleriaAnuncio,
+                          'file': null,
+                          'namefile': foto.nombre_GaleriaAnuncio,
+                          'urlfile' : foto.url_GaleriaAnuncio,
+                          'portada' : 0,
+                          'status': '',
+                          'message': ''
+                         })
+                      }
+                   }  
+ 
+                     ///------ VIDEOS-------
+
+                     for (let foto of res.data.list_multimedia) {
+                      if(foto.tipoArchivo_GaleriaAnuncio == 2){
+                        this.filesVideos.push({
+                          'id_GaleriaAnuncio' : foto.id_GaleriaAnuncio,
+                          'file': null,
+                          'namefile':foto.nombre_GaleriaAnuncio,
+                          'urlfile' : foto.url_GaleriaAnuncio,
+                          'portada' : 0,
+                          'status': '',
+                          'message': ''
+                         })
+                      }
+                   }  
+
+                    ///------APARIENCIA-------     
+                    
+                if (res.data.list_apariencia.length > 0) {                  
+                  this.formParamsCaracteristica.patchValue(
+                    {
+                      "id_CaracteristicaAnuncio" : res.data.list_apariencia[0].id_CaracteristicaAnuncio,
+                      "id_Anuncio" : res.data.list_apariencia[0].id_Anuncio,
+                      "id_Nacionalidad"  : res.data.list_apariencia[0].id_Nacionalidad,
+                      "id_Piel": res.data.list_apariencia[0].id_Piel,            
+                      "id_Cabello": res.data.list_apariencia[0].id_Cabello,
+                      "id_Estatura" : Number(res.data.list_apariencia[0].id_Estatura),
+                      "id_Cuerpo" : Number(res.data.list_apariencia[0].id_Cuerpo),
+                      "id_Pechos": Number(res.data.list_apariencia[0].id_Pechos),
+  
+                      "id_Pubis" : Number(res.data.list_apariencia[0].id_Pubis), 
+                      "atencion_Mujer" : res.data.list_apariencia[0].atencion_Mujer, 
+                      "atencion_Parejas" : res.data.list_apariencia[0].atencion_Parejas, 
+                      "atencion_Discapacitados" : res.data.list_apariencia[0].atencion_Discapacitados,                       
+                      "atencion_Hombres" : res.data.list_apariencia[0].atencion_Hombres,
+                      "medioPago_Efectivo" : res.data.list_apariencia[0].medioPago_Efectivo,
+                      "medioPago_Tarjeta" : res.data.list_apariencia[0].medioPago_Tarjeta,            
+                      "estado" :  res.data.list_apariencia[0].estado,
+                    });
+                }                    
+
+
+               ///------SERVICIOS-------  
+
+               for (let index = 0; index <   res.data.list_servicios.length; index++) {                   
+                    for (let obj of this.servicios) {
+                        if (obj.grupo_caracteristica == 8 || obj.grupo_caracteristica == 9 ) {
+                          if ( obj.id_caracteristica  ==  res.data.list_servicios[index].id_servicio) {
+                              obj.checkeado = true
+                          }                  
+                        }
+                      }
+                }
+                 
+                 ///------LUGAR DE ENCUENTRO-------  
+
+               for (let index = 0; index <   res.data.list_lugar.length; index++) {                   
+                for (let obj of this.servicios) {
+                    if (obj.grupo_caracteristica == 10 ) {
+                      if ( obj.id_caracteristica  ==  res.data.list_lugar[index].id_lugar) {
+                          obj.checkeado = true
+                      }                  
+                    }
+                  }
+               }
+  
+              this.latitude = Number(res.data.list_anuncio[0].latitud_anuncio)
+              this.longitude = Number(res.data.list_anuncio[0].longitud_anuncio)
+
+              setTimeout(function() {
+                    this.getAddress(this.latitude, this.longitude);
+                    Swal.close();
+              }.bind(this), 1000);               
+     
+    
+              }else{
+                alert('Error Horario :' + JSON.stringify(res.data));
+                Swal.close();
+              }                                         
+            },
+            error => {
+              alert( 'Error Horario :' + JSON.stringify(error))
+              Swal.close();
+            },
+          )
+    }
+
+
   }
 
    // Get Current Location Coordinates
@@ -169,6 +354,40 @@ export class ItempublicacionComponent implements OnInit {
     }
   }
 
+  EliminarMultimedia(objMultimedia:any, opcion:number){
+ 
+
+    if (!objMultimedia.file) {
+      if (objMultimedia.id_GaleriaAnuncio > 0) {
+        this.spinner.show();
+        this.publicarService.deleteItemMultimedia(objMultimedia.id_GaleriaAnuncio)
+            .subscribe((res:any)=>{
+              this.spinner.hide();
+
+              if (opcion ==1) { /// fotos 
+                var pos = this.files.indexOf(objMultimedia);  // (pos) es la posición para abreviar
+                this.files.splice( pos, 1 );
+              }else { /// videos
+                var pos = this.filesVideos.indexOf(objMultimedia);  // (pos) es la posición para abreviar
+                this.filesVideos.splice( pos, 1 );
+              }
+
+             })
+      } 
+    }else{
+
+      if (opcion ==1) { /// fotos 
+        var pos = this.files.indexOf(objMultimedia);  // (pos) es la posición para abreviar
+        this.files.splice( pos, 1 );
+      }else { /// videos
+        var pos = this.filesVideos.indexOf(objMultimedia);  // (pos) es la posición para abreviar
+        this.filesVideos.splice( pos, 1 );
+      }
+
+    }
+
+  }
+
   markerDragEnd($event: MouseEvent) {
     this.latitude = $event.coords.lat;
     this.longitude = $event.coords.lng;
@@ -176,7 +395,6 @@ export class ItempublicacionComponent implements OnInit {
   }
  
   getAddress(latitude, longitude) {
- 
     this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
       if (status === 'OK') {
         if (results[0]) {
@@ -192,7 +410,7 @@ export class ItempublicacionComponent implements OnInit {
   }
 
   inicializarFormularioAnuncio(){
-    if ( this.flag_edicion==false) { //// nuevo
+ 
       this.formParams = new FormGroup({
         id_Anuncio : new FormControl(this.idAnuncioGlobal), 
         id_Usuario : new FormControl(this.idUserGlobal),  
@@ -216,34 +434,6 @@ export class ItempublicacionComponent implements OnInit {
         latitud_anuncio : new FormControl(''),
         longitud_anuncio : new FormControl(''),
        })
-    }else{  ////--- ediciion 
-
-      this.formParams = new FormGroup({
-        id_Anuncio : new FormControl(this.idAnuncioGlobal), 
-        id_Usuario : new FormControl(this.idUserGlobal),  
-        email_usuario : new FormControl(''),
-        id_Categoria : new FormControl('0',[Validators.required]),
-        CodigoPostal_Usuario : new FormControl(''),
-        telefono_Anuncion : new FormControl('',[Validators.required]),
-        id_Departemento : new FormControl('0',[Validators.required]),
-        id_Distrito : new FormControl('0',[Validators.required]),
-        titulo_anuncio : new FormControl('',[Validators.required]),
-        descripcion_anuncio : new FormControl('',[Validators.required]),
-        nombre_anuncio : new FormControl('',[Validators.required]),
-        edad_anuncio : new FormControl('18'),
-        audio_anuncio : new FormControl(''),
-        contactoWhatsapp : new FormControl(''),
-        estado  : new FormControl('1'),
-        usuario_creacion  : new FormControl(this.idUserGlobal),
-        fecha_creacion : new FormControl(''),
-        portada : new FormControl(''),
-        tipo_Anuncio : new FormControl('0'),
-        latitud_anuncio : new FormControl(''),
-        longitud_anuncio : new FormControl(''),
-       })
-
-    }
-
 
   }
 
@@ -312,17 +502,7 @@ export class ItempublicacionComponent implements OnInit {
      })
   }
 
-  inicializarFormularioServicios(){
-    this.formParamsServicios  = this.fb.group({
-      id_AnuncioServicio: ['0'],
-      id_Anuncio: [this.idAnuncioGlobal],
-      idGrupoServicio: [''],
-      id_servicio: ['0'],
-      estado: ['1'],
-      usuario_creacion: [this.idUserGlobal], 
-    });
-
-  } 
+ 
 
   getCategorias(){
     this.spinner.show();
@@ -433,25 +613,24 @@ export class ItempublicacionComponent implements OnInit {
          })
   } 
  
-  saveAnuncios(){
-      this.spinner.show();   
-      
-      this.formParams.patchValue({"id_Anuncio": 325});   
-
+  saveAnuncios(){ 
+    
+      this.spinner.show();  
       this.publicarService.saveAnuncios(this.formParams.value)
       .subscribe(
-        (res:any) => {      
-          this.idAnuncioGlobal = res.id_Anuncio;        
-          
+        (res:any) => {   
+          this.idAnuncioGlobal = res.id_Anuncio;                 
+
           //----- convirtiendo la publicacion en edicion-----
-          this.router.navigateByUrl('/publicacion/' +  this.idAnuncioGlobal);
+          this.router.navigateByUrl('/publicar/' +  this.idAnuncioGlobal);
 
           ///---- inicializando la variable del IdAnuncio-----------------------
+          this.formParams.patchValue({"id_Anuncio": this.idAnuncioGlobal});
           this.formParamsTarifa.patchValue({"id_Anuncio": this.idAnuncioGlobal});
           this.formParamsHorario.patchValue({"id_Anuncio": this.idAnuncioGlobal});
           this.formParamsMultimedia.patchValue({"id_Anuncio": this.idAnuncioGlobal});          
           this.formParamsCaracteristica.patchValue({"id_Anuncio": this.idAnuncioGlobal});
-          this.formParamsServicios.patchValue({"id_Anuncio": this.idAnuncioGlobal});
+ 
           // ///---- Fin de inicializando la variable del IdAnuncio-----------------------
                 this.saveTarifa();
                 this.saveHorarios();
@@ -460,9 +639,17 @@ export class ItempublicacionComponent implements OnInit {
                 this.saveApariencia();
                 this.saveServicios();
                 this.saveLugarEncuentro();
-                this.saveUbicacion();     
+                this.saveUbicacion();    
                 
-                console.log('fin de Todo')
+                setTimeout(function() {
+                  this.spinner.show();  
+                 //----- inicializando el formulario-----
+                 let timeIni = this.horalFormat(24,0);
+                 let timeFin = this.horalFormat(23,59);
+                 this.formParamsHorario.patchValue({"horaInicial": timeIni, "horaFinal":timeFin}); 
+                  Swal.close();
+                  this.spinner.hide();
+                }.bind(this), 5000);       
                 
         },
         error => {
@@ -551,6 +738,22 @@ export class ItempublicacionComponent implements OnInit {
   return timeIni;
  } 
 
+ hora24Format(time,option){
+  var hours = Number(time.match(/^(\d+)/)[1]);
+  var minutes = Number(time.match(/:(\d+)/)[1]);
+
+  var AMPM = time.match(/\s(.*)$/)[1];
+  if(AMPM == "PM" && hours<12) hours = hours+12;
+  if(AMPM == "AM" && hours==12) hours = hours-12;
+  var sHours = hours.toString();
+  var sMinutes = minutes.toString();
+  if(hours<10) sHours = "0" + sHours;
+  if(minutes<10) sMinutes = "0" + sMinutes;
+
+   return (option ==1) ? sHours : sMinutes;
+
+ }
+
  formatAMPM(fecha:Date) {
   var time = new Date(fecha); 
   return time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
@@ -580,13 +783,10 @@ export class ItempublicacionComponent implements OnInit {
   this.formParamsHorario.patchValue({"descripcion":  this.formParamsHorario.value.dia, "horaInicial" : HoraIniFormateado, "horaFinal" :  HoraFinFormateado});
   this.horarios.push(this.formParamsHorario.value)
  //-----
-
    //----- inicializando el formulario-----
    let timeIni = this.horalFormat(24,0);
    let timeFin = this.horalFormat(23,59);
-   this.formParamsHorario.patchValue({"horaInicial": timeIni, "horaFinal":timeFin});
- 
- 
+   this.formParamsHorario.patchValue({"horaInicial": timeIni, "horaFinal":timeFin}); 
    console.log(this.horarios)
 
  }
@@ -661,47 +861,71 @@ export class ItempublicacionComponent implements OnInit {
        
  // FIN DE HORARIO DE TARIFAS
 
+
+
  ///--- MULTIMEDIA--
 
  onFileChange(event:any, opcion:number) {
    
-  var files = event.target.files; //FileList object
+  var filesTemporal = event.target.files; //FileList object
   
    if (opcion==1) {  //----fotos
 
     var fileFoto:InputFileI [] = []; 
-    for (var i = 0; i < files.length; i++) { //for multiple files          
+    for (var i = 0; i < filesTemporal.length; i++) { //for multiple files          
       (function(file) {
           var name = file;
           var reader = new FileReader();  
           reader.onload = function(e) {                 
                let urlImage =e.target ;
                fileFoto.push({
+                    'id_GaleriaAnuncio' : 0,
                     'file': name,
+                    'namefile': name.name,
                     'urlfile' : urlImage['result'],
+                    'portada' : 0,
                     'status': '',
                     'message': ''
                 })  
           }
           reader.readAsDataURL(file);
-      })(files[i]);
+      })(filesTemporal[i]);
     }
+    // this.files = fileFoto;
+
+    var fotoDatos = this.files ;
     this.files = fileFoto;
+
+    //---añadiendo
+    for (let fot of fotoDatos) {
+      console.log('entro')
+      this.files.push(fot);
+    }
     console.log(this.files);  
 
    }else{ ///----videos    
     
-    var fileVideo:InputFileI [] = []; 
-    for (var i = 0; i < files.length; i++) { //for multiple files          
-        fileVideo.push({
-          'file': files[i],
-          'urlfile' : "",
-          'status': '',
-          'message': ''
-      })  
-    }
-    this.filesVideos = fileVideo;
-    console.log(this.filesVideos); 
+      var fileVideo:InputFileI [] = []; 
+      for (var i = 0; i < filesTemporal.length; i++) { //for multiple files          
+          fileVideo.push({
+            'id_GaleriaAnuncio' : 0,
+            'file': filesTemporal[i],
+            'namefile': filesTemporal[i].name,
+            'portada' : 0,
+            'urlfile' : "",
+            'status': '',
+            'message': ''
+        })  
+      }
+      // this.filesVideos = fileVideo;
+      var videoDatos = this.filesVideos ;
+      this.filesVideos = fileVideo;
+  
+      //---añadiendo
+      for (let vid of videoDatos) {
+        this.filesVideos.push(vid);
+      }
+      console.log(this.filesVideos); 
    }  
  }
 
@@ -714,53 +938,71 @@ export class ItempublicacionComponent implements OnInit {
         if (cant == index) {
           this.spinner.hide(); 
             return;
-        }      
-  
-        if (tipoFile ==1) {
-          this.formParamsMultimedia.patchValue({"nombre_GaleriaAnuncio": this.files[index].file.name, "tipoArchivo_GaleriaAnuncio" : 1}); 
+        }                
+
+        var fileMultimedia = (tipoFile==1) ? this.files[index].file   : this.filesVideos[index].file ;
+
+        if (!fileMultimedia) { ////---validamos que sea un nuevo archivo
+          enviarServidor(index+ 1); 
         }else{
-          this.formParamsMultimedia.patchValue({"nombre_GaleriaAnuncio": this.filesVideos[index].file.name, "tipoArchivo_GaleriaAnuncio" : 2}); 
-        }     
-  
-        this.publicarService.upload( (tipoFile==1) ? this.files[index].file   : this.filesVideos[index].file   , this.formParamsMultimedia.value).subscribe(
-          (res) =>{
-            if (res.ok==true) {
-              if (tipoFile ==1) {
-                this.files[index].message = 'Carga Ok 100%';
-                this.files[index].status = 'ok';
-              } else {
-                this.filesVideos[index].message = 'Carga Ok 100%';
-                this.filesVideos[index].status = 'ok';
+
+          if (tipoFile ==1) {
+            this.formParamsMultimedia.patchValue({"nombre_GaleriaAnuncio": this.files[index].file.name, "tipoArchivo_GaleriaAnuncio" : 1}); 
+          }else{
+            this.formParamsMultimedia.patchValue({"nombre_GaleriaAnuncio": this.filesVideos[index].file.name, "tipoArchivo_GaleriaAnuncio" : 2}); 
+          }   
+
+          this.publicarService.upload( fileMultimedia  , this.formParamsMultimedia.value).subscribe(
+            (res) =>{
+              if (res.ok==true) {
+                if (tipoFile ==1) {
+                  this.files[index].message = 'Carga Ok 100%';
+                  this.files[index].status = 'ok';
+                } else {
+                  this.filesVideos[index].message = 'Carga Ok 100%';
+                  this.filesVideos[index].status = 'ok';
+                }
+                enviarServidor(index+ 1);
+              }else{
+    
+                if (tipoFile ==1) {
+                  this.files[index].message = res.data;
+                  this.files[index].status = 'error';
+                } else {
+                  this.filesVideos[index].message = res.data;
+                  this.filesVideos[index].status = 'error';
+                }
+                enviarServidor(index+ 1);
               }
-              enviarServidor(index+ 1);
-            }else{
-  
-              if (tipoFile ==1) {
-                this.files[index].message = res.data;
-                this.files[index].status = 'error';
-              } else {
-                this.filesVideos[index].message = res.data;
-                this.filesVideos[index].status = 'error';
-              }
-              enviarServidor(index+ 1);
-            }
-            },
-          (err) => enviarServidor(index+ 1),
-        );
+              },
+            (err) => enviarServidor(index+ 1),
+          );
+
+        }  
+
+    }
+
+
+    if (this.flag_edicion ==false) { /// nuevo ---
+
+      let tipoArchivo = (tipoFile==1) ? "1" : "2";
+      this.publicarService.verificarMultimedia(this.idAnuncioGlobal,  tipoArchivo )
+      .subscribe(
+        (res:any) => {
+          if (res =="OK") {               
+            enviarServidor(0);
+          }                                        
+        },
+        error => {
+          alert('Error Horario :' + JSON.stringify(error));
+        },
+      )
+
+    }else{
+      enviarServidor(0);
     }
    
-    let tipoArchivo = (tipoFile==1) ? "1" : "2";
-    this.publicarService.verificarMultimedia(this.idAnuncioGlobal,  tipoArchivo )
-    .subscribe(
-      (res:any) => {
-        if (res =="OK") {               
-          enviarServidor(0);
-        }                                        
-      },
-      error => {
-        alert('Error Horario :' + JSON.stringify(error));
-      },
-    )
+
 
   }
 
@@ -770,7 +1012,7 @@ export class ItempublicacionComponent implements OnInit {
   ///---- INICIO DE APARIENCIA ----
 
   saveApariencia(){
-
+        
     let atencionMujer = (this.formParamsCaracteristica.value.atencion_Mujer) ? 'SI' : '';
     let atencionParejas = (this.formParamsCaracteristica.value.atencion_Parejas) ?  'SI' : '';
     let atencionDiscapa = (this.formParamsCaracteristica.value.atencion_Discapacitados) ?  'SI' : '';
@@ -795,31 +1037,30 @@ export class ItempublicacionComponent implements OnInit {
             alert('Error Apariencia :' + JSON.stringify(error))
           },
         )   
-
   }
 
   ///---- FIN DE APARIENCIA -----
 
 
   onCheckChange(event) {
-    const formArray: FormArray = this.formParamsServicios.get('listServicio') as FormArray;  
-    /* Selected */
-    if(event.target.checked){
-      // Add a new control in the arrayForm
-      formArray.push(new FormControl(event.target.value));
-    }else{
-      // find the unselected element
-      let i: number = 0;
+    // const formArray: FormArray = this.formParamsServicios.get('listServicio') as FormArray;  
+    // /* Selected */
+    // if(event.target.checked){
+    //   // Add a new control in the arrayForm
+    //   formArray.push(new FormControl(event.target.value));
+    // }else{
+    //   // find the unselected element
+    //   let i: number = 0;
   
-      formArray.controls.forEach((ctrl: FormControl) => {
-        if(ctrl.value == event.target.value) {
-          // Remove the unselected element from the arrayForm
-          formArray.removeAt(i);
-          return;
-        }  
-        i++;
-      });
-    }
+    //   formArray.controls.forEach((ctrl: FormControl) => {
+    //     if(ctrl.value == event.target.value) {
+    //       // Remove the unselected element from the arrayForm
+    //       formArray.removeAt(i);
+    //       return;
+    //     }  
+    //     i++;
+    //   });
+    // }
   }
 
   saveServicios(){
@@ -828,12 +1069,12 @@ export class ItempublicacionComponent implements OnInit {
       if (obj.grupo_caracteristica == 8 || obj.grupo_caracteristica == 9 ) {
         if (obj.checkeado ==true) {
           serviciosBD.push({
-            id_AnuncioServicio: this.formParamsServicios.value.id_AnuncioServicio,
+            id_AnuncioServicio: 0,
             id_Anuncio: this.idAnuncioGlobal,
             idGrupoServicio: obj.grupo_caracteristica,
             id_servicio: obj.id_caracteristica,
-            estado:this.formParamsServicios.value.estado,
-            usuario_creacion: this.formParamsServicios.value.usuario_creacion,
+            estado: 1,
+            usuario_creacion: this.idUserGlobal
           })
         }
       }
@@ -861,8 +1102,7 @@ export class ItempublicacionComponent implements OnInit {
             )     
       }  
   }
-  
-  
+    
   saveLugarEncuentro(){
     var lugarEncuentros=[];
     for (let obj of this.servicios) {
@@ -1005,8 +1245,25 @@ export class ItempublicacionComponent implements OnInit {
 
   ////--- FIN DE ALMACENAMIENTO GENERAL
 
+  abrilModal_tipoAnuncio(){
+    $('#modalTipoAnuncio').modal('show');
+  }
+
+  seleccionTipoAnuncio(valor:number){
+    alert('elegido' + valor);
+  }
 
 
+  change_seleccionPortada(valor,indice){
 
+    let valorElegido = valor ? 1 :0;
+    for (let index = 0; index < this.files.length; index++) {
+      if (index !=indice) { 
+          this.files[index].portada = 0 
+      } else{
+        this.files[index].portada = valorElegido;
+      }              
+    } 
 
+  }
 }

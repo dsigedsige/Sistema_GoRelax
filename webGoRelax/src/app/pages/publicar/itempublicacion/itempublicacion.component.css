@@ -19,8 +19,9 @@
 }
 
 .bodyAnuncio table {
-    font-size: 12px;
-    font-weight: 500;
+    font-size: 11px;
+    font-weight: 400;
+    font-family: tahoma;
 }
 
 .bodyAnuncio a {
@@ -82,4 +83,42 @@ a {
 
 .gm-style .gm-style-iw {
     color: black;
+}
+
+.imgPhoto {
+    width: 100%;
+    cursor: pointer;
+    max-height: 270px;
+}
+
+.basepriceAnterior {
+    font-size: 17px;
+    margin: 0;
+    color: #bbb;
+    font-weight: 600;
+    text-decoration: line-through;
+}
+
+.baseprice {
+    font-size: 25px;
+    margin: 0;
+    color: #FF6000;
+    font-weight: 800;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: -5px;
+}
+
+.modalContent_TipoAnuncio {
+    background-color: black;
+    border: 1px solid #dc3545;
+}
+
+.tituloDiaAnuncio {
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 800;
+    color: #343a40;
 }

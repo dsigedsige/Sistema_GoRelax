@@ -73,19 +73,19 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>02/18/2020 14:54:05</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
-      <publishTime>09/10/2013 16:29:20</publishTime>
+      <publishTime>10/09/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.pdb">
-      <publishTime>09/10/2013 16:29:20</publishTime>
+      <publishTime>10/09/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/Entidades.dll">
-      <publishTime>03/09/2020 15:01:41</publishTime>
+      <publishTime>03/13/2020 15:57:43</publishTime>
     </File>
     <File Include="bin/Entidades.dll.config">
       <publishTime>02/18/2020 15:07:48</publishTime>
     </File>
     <File Include="bin/Entidades.pdb">
-      <publishTime>03/09/2020 15:01:41</publishTime>
+      <publishTime>03/13/2020 15:57:44</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>11/16/2019 03:00:22</publishTime>
@@ -97,55 +97,55 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>11/28/2018 13:00:46</publishTime>
     </File>
     <File Include="bin/es/System.Web.Helpers.resources.dll">
-      <publishTime>02/01/2018 12:21:06</publishTime>
+      <publishTime>01/02/2018 12:21:06</publishTime>
     </File>
     <File Include="bin/es/System.Web.Http.resources.dll">
       <publishTime>11/28/2018 13:01:14</publishTime>
     </File>
     <File Include="bin/es/System.Web.Http.WebHost.resources.dll">
-      <publishTime>02/01/2018 12:19:34</publishTime>
+      <publishTime>01/02/2018 12:19:34</publishTime>
     </File>
     <File Include="bin/es/System.Web.Mvc.resources.dll">
-      <publishTime>02/01/2018 12:16:42</publishTime>
+      <publishTime>01/02/2018 12:16:42</publishTime>
     </File>
     <File Include="bin/es/System.Web.Optimization.resources.dll">
-      <publishTime>02/11/2014 15:28:40</publishTime>
+      <publishTime>11/02/2014 15:28:40</publishTime>
     </File>
     <File Include="bin/es/System.Web.Razor.resources.dll">
-      <publishTime>02/01/2018 12:17:04</publishTime>
+      <publishTime>01/02/2018 12:17:04</publishTime>
     </File>
     <File Include="bin/es/System.Web.WebPages.Deployment.resources.dll">
-      <publishTime>02/01/2018 12:21:06</publishTime>
+      <publishTime>01/02/2018 12:21:06</publishTime>
     </File>
     <File Include="bin/es/System.Web.WebPages.Razor.resources.dll">
-      <publishTime>02/01/2018 12:21:06</publishTime>
+      <publishTime>01/02/2018 12:21:06</publishTime>
     </File>
     <File Include="bin/es/System.Web.WebPages.resources.dll">
-      <publishTime>02/01/2018 12:21:06</publishTime>
+      <publishTime>01/02/2018 12:21:06</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>05/24/2018 13:38:22</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.dll">
-      <publishTime>11/12/2019 18:46:02</publishTime>
+      <publishTime>12/11/2019 18:46:02</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Host.SystemWeb.dll">
-      <publishTime>11/12/2019 18:47:54</publishTime>
+      <publishTime>12/11/2019 18:47:54</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.dll">
-      <publishTime>11/12/2019 18:45:42</publishTime>
+      <publishTime>12/11/2019 18:45:42</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.OAuth.dll">
-      <publishTime>11/12/2019 18:45:44</publishTime>
+      <publishTime>12/11/2019 18:45:44</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>07/25/2012 11:48:56</publishTime>
     </File>
     <File Include="bin/Negocio.dll">
-      <publishTime>03/09/2020 17:28:53</publishTime>
+      <publishTime>03/13/2020 15:57:44</publishTime>
     </File>
     <File Include="bin/Negocio.pdb">
-      <publishTime>03/09/2020 17:28:53</publishTime>
+      <publishTime>03/13/2020 15:57:44</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>02/18/2018 09:44:54</publishTime>
@@ -298,43 +298,43 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>11/28/2018 12:58:44</publishTime>
     </File>
     <File Include="bin/System.Web.Helpers.dll">
-      <publishTime>02/01/2018 12:20:56</publishTime>
+      <publishTime>01/02/2018 12:20:56</publishTime>
     </File>
     <File Include="bin/System.Web.Http.Cors.dll">
       <publishTime>11/28/2018 13:01:26</publishTime>
     </File>
     <File Include="bin/System.Web.Http.dll">
-      <publishTime>11/28/2018 13:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/System.Web.Http.Owin.dll">
       <publishTime>11/28/2018 13:01:48</publishTime>
     </File>
     <File Include="bin/System.Web.Http.WebHost.dll">
-      <publishTime>02/01/2018 12:19:26</publishTime>
+      <publishTime>01/02/2018 12:19:26</publishTime>
     </File>
     <File Include="bin/System.Web.Mvc.dll">
-      <publishTime>02/01/2018 12:16:32</publishTime>
+      <publishTime>01/02/2018 12:16:32</publishTime>
     </File>
     <File Include="bin/System.Web.Optimization.dll">
-      <publishTime>02/11/2014 15:26:04</publishTime>
+      <publishTime>11/02/2014 15:26:04</publishTime>
     </File>
     <File Include="bin/System.Web.Razor.dll">
-      <publishTime>02/01/2018 12:16:56</publishTime>
+      <publishTime>01/02/2018 12:16:56</publishTime>
     </File>
     <File Include="bin/System.Web.WebPages.Deployment.dll">
-      <publishTime>02/01/2018 12:20:56</publishTime>
+      <publishTime>01/02/2018 12:20:56</publishTime>
     </File>
     <File Include="bin/System.Web.WebPages.dll">
-      <publishTime>02/01/2018 12:20:56</publishTime>
+      <publishTime>01/02/2018 12:20:56</publishTime>
     </File>
     <File Include="bin/System.Web.WebPages.Razor.dll">
-      <publishTime>02/01/2018 12:20:56</publishTime>
+      <publishTime>01/02/2018 12:20:56</publishTime>
     </File>
     <File Include="bin/WebApi_GoRelax.dll">
-      <publishTime>03/10/2020 14:55:23</publishTime>
+      <publishTime>03/13/2020 15:57:44</publishTime>
     </File>
     <File Include="bin/WebApi_GoRelax.pdb">
-      <publishTime>03/10/2020 14:55:23</publishTime>
+      <publishTime>03/13/2020 15:57:44</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>01/23/2014 13:57:34</publishTime>

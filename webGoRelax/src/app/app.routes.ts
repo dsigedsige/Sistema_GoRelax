@@ -5,6 +5,7 @@ import {  AnunciosComponent } from './pages/anuncios/anuncios.component';
 import { ItemanunciosComponent } from './pages/anuncios/itemanuncios/itemanuncios.component';
 import { RegistroComponent } from './pages/registro/registro.component';
 import { ItempublicacionComponent } from './pages/publicar/itempublicacion/itempublicacion.component';
+import { ListpublicacionComponent } from './pages/publicar/listpublicacion/listpublicacion.component';
 
  
 const APP_ROUTERS: Routes = [
@@ -14,8 +15,8 @@ const APP_ROUTERS: Routes = [
     { path: 'anuncios/:id', component: AnunciosComponent},  
     { path: 'anunciosDetalle/:id_anuncio', component: ItemanunciosComponent},  
     { path: 'registro', component: RegistroComponent},  
-    { path: 'publicacion/:id_anuncio', component: ItempublicacionComponent},  
-    { path: 'listarpublicacion', component: ItempublicacionComponent},  
+    { path: 'publicar/:id_anuncio', component: ItempublicacionComponent},  
+    { path: 'publicaciones', component: ListpublicacionComponent},  
     { path: '', pathMatch:'full', redirectTo:'inicio' },
     { path: '**', pathMatch:'full', redirectTo:'inicio' },
   ];

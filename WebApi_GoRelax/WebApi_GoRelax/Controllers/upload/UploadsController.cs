@@ -46,7 +46,8 @@ namespace WebApi_GoRelax.Controllers.upload
 
                 //--------
                 tbl_Anuncio_Galeria obj_files = JsonConvert.DeserializeObject<tbl_Anuncio_Galeria>(objMultimedia);
-                obj_files.nombre_GaleriaAnuncio = nombreFile;
+                obj_files.nombre_GaleriaAnuncio = file.FileName;
+                obj_files.url_GaleriaAnuncio = nombreFile;
 
                 //-------almacenando la archivo---
                 //sPath = System.Web.Hosting.HostingEnvironment.MapPath("~/Multimedia/" + nombreFile);

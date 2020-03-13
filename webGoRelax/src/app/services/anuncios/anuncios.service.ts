@@ -6,8 +6,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 })
 export class AnunciosService {
 
-  URL:any= "http://192.168.0.4:8089/api/";
-  //URL:any= " http://www.dsige.com/WebApi_GoRelax/api/";
+  //URL:any= "http://192.168.0.4:8089/api/";
+  URL:any= " http://www.dsige.com/WebApi_GoRelax/api/";
 
  
   constructor(private http:HttpClient) {

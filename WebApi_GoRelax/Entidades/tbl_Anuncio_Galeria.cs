@@ -21,5 +21,6 @@ namespace Entidades
         public Nullable<int> estado { get; set; }
         public Nullable<int> usuario_creacion { get; set; }
         public Nullable<System.DateTime> fecha_creacion { get; set; }
+        public string url_GaleriaAnuncio { get; set; }
     }
 }

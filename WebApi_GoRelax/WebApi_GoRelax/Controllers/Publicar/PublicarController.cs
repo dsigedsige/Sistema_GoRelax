@@ -43,8 +43,6 @@ namespace WebApi_GoRelax.Controllers.Publicar
                                  a.id_departamento,
                                  a.descripcion_departamento
 
-
-
                              }).ToList();
 
                 }
@@ -116,17 +114,38 @@ namespace WebApi_GoRelax.Controllers.Publicar
                     string[] parametros = filtro.Split('|');
                     int idAnuncio = Convert.ToInt32(parametros[0].ToString());
                     string tipoArchivo = parametros[1].ToString();
-
-                    
+                                    
 
                     /// eliminando en bloque ------
                     db.tbl_Anuncio_Galeria.RemoveRange(db.tbl_Anuncio_Galeria.Where(c => c.id_Anuncio == idAnuncio  &&  c.tipoArchivo_GaleriaAnuncio == tipoArchivo));
                     db.SaveChanges();
                     /// eliminando en bloque ------
-
                     resul = "OK";
 
                 }
+                else if (opcion == 9)
+                {
+                    string[] parametros = filtro.Split('|');
+                    int id_GaleriaAnuncio = Convert.ToInt32(parametros[0].ToString()); 
+                    
+                    /// eliminando en bloque ------
+                    db.tbl_Anuncio_Galeria.RemoveRange(db.tbl_Anuncio_Galeria.Where(c => c.id_GaleriaAnuncio == id_GaleriaAnuncio));
+                    db.SaveChanges();
+                    /// eliminando en bloque ------
+                    resul = "OK";
+
+                }
+                else if (opcion == 10)
+                {
+                    string[] parametros = filtro.Split('|');
+                    int idUsuario = Convert.ToInt32(parametros[0].ToString());
+                    int pageindex = Convert.ToInt32(parametros[1].ToString());
+                    int pageSise = Convert.ToInt32(parametros[2].ToString());
+
+                    Registro_BL obj_negocio = new Registro_BL();
+                    resul = obj_negocio.get_listadoPublicaciones(idUsuario, pageindex, pageSise);
+                }
+
                 else
                 {
                     resul = "Opcion seleccionada invalida";
@@ -250,10 +269,10 @@ namespace WebApi_GoRelax.Controllers.Publicar
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
-                }
-                if (db.tbl_Anuncio.Count((a) => a.id_Anuncio == tbl_Anuncio_Caracteristicas.id_Anuncio) == 0) //---- nuevo
-                {
+                } 
 
+                if (db.tbl_Anuncio_Caracteristicas.Count((a) => a.id_Anuncio == tbl_Anuncio_Caracteristicas.id_Anuncio) == 0) //---- nuevo
+                {
                     tbl_Anuncio_Caracteristicas.fecha_creacion = DateTime.Now;
                     db.tbl_Anuncio_Caracteristicas.Add(tbl_Anuncio_Caracteristicas);
                     db.SaveChanges();
